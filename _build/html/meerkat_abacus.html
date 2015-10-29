@@ -1,0 +1,182 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Meerkat Abacus &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="index.html" />
+    <link rel="next" title="Specifications" href="specifications.html" />
+    <link rel="prev" title="Install" href="install.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="specifications.html" title="Specifications"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Install"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Meerkat Abacus</a><ul>
+<li><a class="reference internal" href="#structure">Structure</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Install</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="specifications.html"
+                        title="next chapter">Specifications</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/meerkat_abacus.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="meerkat-abacus">
+<h1>Meerkat Abacus<a class="headerlink" href="#meerkat-abacus" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of the abacus compenent of meerkat is to set up the database, import all data and then translate raw data into defined variables and aggregate the data.</p>
+<div class="section" id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<p>config.py: generic and country specific config</p>
+<p>model.py: specifies the database model</p>
+<p>manage.py is a command-line tool to set-up the database and import data. Usage as follows:</p>
+<pre class="literal-block">
+usage: manage.py [-h] [--drop-db]
+                 {create-db,import-locations,fake-data,import-data,import-variables,all}
+</pre>
+<dl class="docutils">
+<dt>Positional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd>action</kbd></td>
+<td><p class="first">Choose action</p>
+<p class="last">Possible choices: create-db, import-locations, fake-data, import-data, import-variables, all</p>
+</td></tr>
+</tbody>
+</table>
+</dd>
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--drop-db=False</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Use flag to drop DB for create-db or all</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p>taske_queue.py: implements taske queue for adding new data and aggregating new data</p>
+<p>database_util: various utility functions used</p>
+<p>aggregate: helper scripts for aggregation</p>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>The main abstraction in meerkat_abacus is that we translate raw data from forms by specifically defined codes or variables. After the raw data from the form has been mapped to the correct variables one should not need to know anything about the form sturcutre any more.</p>
+<p>The codes are specified in a codes.csv file, e.g data/demo_codes.csv. Abacus currently supports the following codes:</p>
+<ul class="simple">
+<li>count - Counts all rows with non-zero entry in the specified field of the form</li>
+<li>count_occurence - Counts rows where condtion appears in field</li>
+<li>count_occurence_in - Counts rows where condition is a substring of the value in the field</li>
+<li>int_between - An integer between the two numbers specified in condition</li>
+<li>count_occurence_int_between - must both fullfill a count_occurence and a int_between on two different columns</li>
+<li>count_occurence_in_int_between - must both fullfill a count_occurence_in and a int_between on two different columns</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="specifications.html" title="Specifications"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Install"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

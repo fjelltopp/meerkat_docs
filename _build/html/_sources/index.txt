@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to WHO-MEERKAT's documentation!
-====================================
+=========================================
 
 This documentation describes how to set-up, run and continue develop the WHO-EMST software.
 
@@ -15,7 +15,8 @@ Contents:
 
    overview
    install
-
+   meerkat_abacus
+   specifications
 
 Indices and tables
 ==================

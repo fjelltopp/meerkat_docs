@@ -13,10 +13,11 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   overview
-   install
-   meerkat_abacus
-   specifications
+   src/overview
+   src/install
+   src/meerkat_abacus
+   src/meerkat_api
+   src/specifications
 
 Indices and tables
 ==================

@@ -40,3 +40,9 @@ The codes are specified in a codes.csv file, e.g data/demo_codes.csv. Abacus cur
 * count_occurence_in_int_between - must both fullfill a count_occurence_in and a int_between on two different columns
 
 For each variable we can also have a secondary condition which requires that a specified column has a specified value.
+----------------------------
+Documentation
+----------------------------
+To see the specific  `documentation`_.
+
+.. _documentation: abacus/modules.html 

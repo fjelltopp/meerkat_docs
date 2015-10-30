@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Overview &mdash; WHO-MEERKAT 0.1 documentation</title>
+    <title>HTTP Routing Table &mdash; WHO-MEERKAT 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,12 +27,17 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="index.html" />
-    <link rel="next" title="Install" href="install.html" />
-    <link rel="prev" title="Welcome to WHO-MEERKAT’s documentation!" href="index.html" />
+
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
+
+    <script type="text/javascript">
+      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
+    </script>
+
+
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -42,29 +47,16 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="install.html" title="Install"
-             accesskey="N">next</a> |</li>
+          <a href="#" title="HTTP Routing Table"
+             >routing table</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to WHO-MEERKAT’s documentation!"
-             accesskey="P">previous</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to WHO-MEERKAT&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="next chapter">Install</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/overview.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -86,11 +78,32 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>The purpose of WHO-MEERKAT is to make data on epidemiological surveillance available in a useful way to varied group of stakeholders. We use cased based data submitted from mobile devices. The data is then aggregated, and presented to the user via websites and reports. The system is currently implemented in Jordan with over 300 clinics reporting.</p>
-<p>All the data is submitted via ODK Collect to an ODK Aggregate Instance. From there the data is anonomised and passed on to the server running WHO-MEERKAT. Meerkat consits of three different parts meerkat_abacus for importing and aggregating data, meerkat_api gives an api for accessing aggregated data and meerkat_frontend which serves the data to the users</p>
-</div>
+
+   <h1>HTTP Routing Table</h1>
+
+   <div class="modindex-jumpbox">
+   <a href="#cap-/location"><strong>/location</strong></a> | 
+   <a href="#cap-/locations"><strong>/locations</strong></a>
+   </div>
+
+   <table class="indextable modindextable" cellspacing="0" cellpadding="2">
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/location"><td></td><td>
+       <strong>/location</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--location-(location_id)"><code class="xref">GET /location/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/locations"><td></td><td>
+       <strong>/locations</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--locations"><code class="xref">GET /locations</code></a></td><td>
+       <em></em></td></tr>
+   </table>
 
 
           </div>
@@ -105,11 +118,11 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="install.html" title="Install"
-             >next</a> |</li>
+          <a href="#" title="HTTP Routing Table"
+             >routing table</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to WHO-MEERKAT’s documentation!"
-             >previous</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

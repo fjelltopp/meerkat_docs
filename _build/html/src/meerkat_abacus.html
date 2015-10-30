@@ -9,25 +9,25 @@
     
     <title>Meerkat Abacus &mdash; WHO-MEERKAT 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
+        URL_ROOT:    '../',
         VERSION:     '0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="index.html" />
-    <link rel="next" title="Specifications" href="specifications.html" />
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Meerkat API" href="meerkat_api.html" />
     <link rel="prev" title="Install" href="install.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
@@ -39,24 +39,34 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="specifications.html" title="Specifications"
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="meerkat_api.html" title="Meerkat API"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="install.html" title="Install"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Meerkat Abacus</a><ul>
 <li><a class="reference internal" href="#structure">Structure</a></li>
-<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#variables">Variables</a><ul>
+<li><a class="reference internal" href="#for-each-variable-we-can-also-have-a-secondary-condition-which-requires-that-a-specified-column-has-a-specified-value">For each variable we can also have a secondary condition which requires that a specified column has a specified value.</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -65,18 +75,18 @@
   <p class="topless"><a href="install.html"
                         title="previous chapter">Install</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="specifications.html"
-                        title="next chapter">Specifications</a></p>
+  <p class="topless"><a href="meerkat_api.html"
+                        title="next chapter">Meerkat API</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/meerkat_abacus.txt"
+      <li><a href="../_sources/src/meerkat_abacus.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -104,8 +114,8 @@
 <p>model.py: specifies the database model</p>
 <p>manage.py is a command-line tool to set-up the database and import data. Usage as follows:</p>
 <pre class="literal-block">
-usage: manage.py [-h] [--drop-db]
-                 {create-db,import-locations,fake-data,import-data,import-variables,all}
+usage: manage.py [-h] [--drop-db] [--leave-if-data]
+                 {create-db,import-locations,fake-data,import-data,import-variables,to-codes,all}
 </pre>
 <dl class="docutils">
 <dt>Positional arguments:</dt>
@@ -116,7 +126,7 @@ usage: manage.py [-h] [--drop-db]
 <tr><td class="option-group">
 <kbd>action</kbd></td>
 <td><p class="first">Choose action</p>
-<p class="last">Possible choices: create-db, import-locations, fake-data, import-data, import-variables, all</p>
+<p class="last">Possible choices: create-db, import-locations, fake-data, import-data, import-variables, to-codes, all</p>
 </td></tr>
 </tbody>
 </table>
@@ -130,6 +140,10 @@ usage: manage.py [-h] [--drop-db]
 <kbd><span class="option">--drop-db=False</span></kbd></td>
 </tr>
 <tr><td>&nbsp;</td><td>Use flag to drop DB for create-db or all</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--leave-if-data=False</span>, <span class="option">-l=False</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>A flag for all action, if there is data in data table do nothing</td></tr>
 </tbody>
 </table>
 </dd>
@@ -150,6 +164,13 @@ usage: manage.py [-h] [--drop-db]
 <li>count_occurence_int_between - must both fullfill a count_occurence and a int_between on two different columns</li>
 <li>count_occurence_in_int_between - must both fullfill a count_occurence_in and a int_between on two different columns</li>
 </ul>
+<div class="section" id="for-each-variable-we-can-also-have-a-secondary-condition-which-requires-that-a-specified-column-has-a-specified-value">
+<h3>For each variable we can also have a secondary condition which requires that a specified column has a specified value.<a class="headerlink" href="#for-each-variable-we-can-also-have-a-secondary-condition-which-requires-that-a-specified-column-has-a-specified-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>To see the specific  <a class="reference external" href="abacus/modules.html">documentation</a>.</p>
+</div>
 </div>
 </div>
 
@@ -163,15 +184,21 @@ usage: manage.py [-h] [--drop-db]
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="specifications.html" title="Specifications"
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="meerkat_api.html" title="Meerkat API"
              >next</a> |</li>
         <li class="right" >
           <a href="install.html" title="Install"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

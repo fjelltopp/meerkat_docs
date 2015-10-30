@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Overview: module code &mdash; WHO-MEERKAT 0.1 documentation</title>
+    <title>Meerkat API &mdash; WHO-MEERKAT 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,6 +27,8 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Specifications" href="specifications.html" />
+    <link rel="prev" title="Meerkat Abacus" href="meerkat_abacus.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -43,13 +45,37 @@
           <a href="../http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
+          <a href="specifications.html" title="Specifications"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="meerkat_abacus.html" title="Meerkat Abacus"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Meerkat API</a><ul>
+<li><a class="reference internal" href="#api-documentation">API documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="meerkat_abacus.html"
+                        title="previous chapter">Meerkat Abacus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="specifications.html"
+                        title="next chapter">Specifications</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/src/meerkat_api.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -71,20 +97,29 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="meerkat_abacus/aggregation/to_codes.html">meerkat_abacus.aggregation.to_codes</a></li>
-<li><a href="meerkat_abacus/aggregation/variable.html">meerkat_abacus.aggregation.variable</a></li>
-<li><a href="meerkat_abacus/database_util.html">meerkat_abacus.database_util</a></li>
-<ul><li><a href="meerkat_abacus/database_util/create_fake_data.html">meerkat_abacus.database_util.create_fake_data</a></li>
-<li><a href="meerkat_abacus/database_util/import_locations.html">meerkat_abacus.database_util.import_locations</a></li>
-</ul><li><a href="meerkat_abacus/manage.html">meerkat_abacus.manage</a></li>
-<li><a href="meerkat_abacus/model.html">meerkat_abacus.model</a></li>
-<li><a href="meerkat_abacus/test/db_test.html">meerkat_abacus.test.db_test</a></li>
-<li><a href="meerkat_abacus/test/to_codes_test.html">meerkat_abacus.test.to_codes_test</a></li>
-<li><a href="meerkat_abacus/test/util_test.html">meerkat_abacus.test.util_test</a></li>
-<li><a href="meerkat_abacus/test/variable_test.html">meerkat_abacus.test.variable_test</a></li>
-<li><a href="sqlalchemy/orm/attributes.html">sqlalchemy.orm.attributes</a></li>
-</ul>
+  <div class="section" id="meerkat-api">
+<h1>Meerkat API<a class="headerlink" href="#meerkat-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="api-documentation">
+<h2>API documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="get">
+<dt id="get--locations">
+<code class="descname">GET </code><code class="descname">/locations</code><a class="headerlink" href="#get--locations" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of all locations</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--location-(location_id)">
+<code class="descname">GET </code><code class="descname">/location/</code><span class="sig-paren">(</span><em>location_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--location-(location_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location by location_id</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>location_id: id of location</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
 
           </div>
         </div>
@@ -101,8 +136,11 @@
           <a href="../http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
+          <a href="specifications.html" title="Specifications"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="meerkat_abacus.html" title="Meerkat Abacus"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

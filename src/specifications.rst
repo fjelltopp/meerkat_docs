@@ -4,7 +4,7 @@ Specifications
 The aim of the project is to enable real-time public health surveillance in various settings. Data is submitted using ODK collect on tablets in health centres and clinics. We then want to make this data useful by aggregating and displaying it. The project needs to be able to serve data in a useful format to different groups from doctors to administration to funders. 
 
 ------------------------
-Front Page (Microsite)
+Home Page (Microsite)
 ------------------------
 The project should have a front page which gives a quick overview of the project for any intersted parties. This will include some text describing the project and some dynamically updated key indicators. These include total number of consultations and cases, as well as a map of coverage.
 

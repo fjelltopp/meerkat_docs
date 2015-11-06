@@ -17,6 +17,7 @@ Contents:
    src/install
    src/meerkat_abacus
    src/meerkat_api
+   src/meerkat_frontend
    src/specifications
 
 Indices and tables

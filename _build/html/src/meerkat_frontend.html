@@ -1,0 +1,161 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Meerkat Frontend &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Specifications" href="specifications.html" />
+    <link rel="prev" title="Meerkat API" href="meerkat_api.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="specifications.html" title="Specifications"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="meerkat_api.html" title="Meerkat API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Meerkat Frontend</a><ul>
+<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#structure">Structure</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="meerkat_api.html"
+                        title="previous chapter">Meerkat API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="specifications.html"
+                        title="next chapter">Specifications</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/src/meerkat_frontend.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="meerkat-frontend">
+<h1>Meerkat Frontend<a class="headerlink" href="#meerkat-frontend" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of Meerkat Frontend is to present Meerkat&#8217;s data for analysis and surveilance.  It does this through a series of web pages. At the heart of the frontend is the &#8220;Technical Site&#8221;, which offers the most complete means to explore the data through a large array of selection tools and graphs. The frontend has several components though, and has been built by multiple people.</p>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>The Homepage</strong> gives a quick overview of the project for any interested parties. This includes: some text describing the project, a dynamically updated map showing where the data is coming from, and some dynamically updated key indicators for the project. The indicators we show are the total number of: consultations, cases, facilities and alerts in the data.</li>
+<li><strong>The Reports</strong> Pages generate neat detailed summaries of the data in the system that can be shared publicly with other people. Weekly reports are generated for all different location levels from the country to the clinic.</li>
+<li><strong>The Technical Site</strong> displays detailed information and is only accesible with a password. It can display data on all location levels from the country to the individual clinic, and includes demographics, disease distributions, geographical distributions and epi-curves.</li>
+</ul>
+</div>
+<div class="section" id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<p>Meerkat Frontend is structured as a Python Flask app, and as such, is primarily made up of static assets, Jinja2 templates and Python modules. The static assets are assembled from the &#8220;src&#8221; folder and the &#8220;bower_components&#8221; folder using Gulp. Further folders and files exist to manage the app&#8217;s testing, and to abstract country specifics into configuration files. The whole thing is further structured so it can be bundled up as a python package.  Here&#8217;s some information regarding particular core files and folders of note:</p>
+<p><strong>runserver.py</strong> - Runs the development/testing server for the app.</p>
+<p><strong>config.py</strong> - Specifies a host of configuration variables used throughout Meerkat Frontend.  Allows you to distinguish between a development,testing and production environment.</p>
+<p><strong>homepage_&lt;country&gt;.json</strong> - These files include the homepage data for each country.  The homepage is built around the data specified in these files. Abstracting this data into a seperate file means it is easier to replicate for multiple countries.</p>
+<p><strong>meerkat_frontend/</strong></p>
+<blockquote>
+<div><p><strong>common.py</strong> - A file containing a number of python methods that could be useful across all components.</p>
+<p><strong>apiData/</strong>  A folder containing data for a static API, used for testing and development instead of the live API.</p>
+<p><strong>test/</strong> A folder  containing our testing harness for Meerkat_Frontend</p>
+</div></blockquote>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>To see the specific  <a class="reference external" href="frontend/modules.html">documentation</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="specifications.html" title="Specifications"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="meerkat_api.html" title="Meerkat API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -41,9 +41,6 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -107,9 +104,6 @@
                     <span class="n">help</span><span class="o">=</span><span class="s">&quot;Choose action&quot;</span> <span class="p">)</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--drop-db&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span>
                     <span class="n">help</span><span class="o">=</span><span class="s">&quot;Use flag to drop DB for create-db or all&quot;</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--leave-if-data&quot;</span><span class="p">,</span> <span class="s">&quot;-l&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span>
-                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;A flag for all action, if there is data &quot;</span>
-                    <span class="s">&quot;in data table do nothing&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="create_db"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.create_db">[docs]</a><span class="k">def</span> <span class="nf">create_db</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -117,13 +111,13 @@
 <span class="sd">    The function creates and sets up the datbase.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        base: An SQLAlchmey declarative base with the db schema</span>
-<span class="sd">        url : the database_url</span>
-<span class="sd">        country_config: A contry config dictionary</span>
-<span class="sd">        drop: Flag to drop the database before setting it up</span>
+<span class="sd">    base: An SQLAlchmey declarative base with the db schema</span>
+<span class="sd">    url : the database_url</span>
+<span class="sd">    country_config: A contry config dictionary</span>
+<span class="sd">    drop: Flag to drop the database before setting it up</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Boolean: True</span>
+<span class="sd">    True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">drop</span> <span class="ow">and</span> <span class="n">database_exists</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
         <span class="n">drop_database</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
@@ -139,8 +133,8 @@
 <span class="sd">    Creates csv files with fake data</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        country_config: A country configuration object</span>
-<span class="sd">        form_directory: the directory to store the from data</span>
+<span class="sd">    country_config: A country configuration object</span>
+<span class="sd">    form_directory: the directory to store the from data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
     <span class="n">deviceids</span> <span class="o">=</span> <span class="n">get_deviceids</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">case_report</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -175,14 +169,14 @@
 <span class="sd">    Adds data to table with name</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        filename: name of table</span>
-<span class="sd">        table: table class</span>
-<span class="sd">        directory: directory where the csv file is</span>
-<span class="sd">        engine: SqlAlchemy engine</span>
-<span class="sd">        session: SqlAlchemy session</span>
-<span class="sd">        deviceids: if we should only add rows with a one of the deviceids</span>
-<span class="sd">        table_name: name of table if different from filename</span>
-<span class="sd">        form: if this is a form table</span>
+<span class="sd">    filename: name of table</span>
+<span class="sd">    table: table class</span>
+<span class="sd">    directory: directory where the csv file is</span>
+<span class="sd">    engine: SqlAlchemy engine</span>
+<span class="sd">    session: SqlAlchemy session</span>
+<span class="sd">    deviceids: if we should only add rows with a one of the deviceids</span>
+<span class="sd">    table_name: name of table if different from filename</span>
+<span class="sd">    form: if this is a form table</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">table_name</span><span class="p">:</span>
@@ -216,8 +210,8 @@
 <span class="sd">    from csv files into the database.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        country_config: configuration</span>
-<span class="sd">        form_directory: directory to find the forms</span>
+<span class="sd">    country_config: configuration</span>
+<span class="sd">    form_directory: directory to find the forms</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
@@ -238,8 +232,8 @@
 <span class="sd">    from csv files into the database.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        country_config: configuration</span>
-<span class="sd">        form_directory: directory to find the forms</span>
+<span class="sd">    country_config: configuration</span>
+<span class="sd">    form_directory: directory to find the forms</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
@@ -265,8 +259,8 @@
 <span class="sd">    Imports all locations from csv-files</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        country_config: A country configuration object</span>
-<span class="sd">        engine: SQLAlchemy connection engine</span>
+<span class="sd">    country_config: A country configuration object</span>
+<span class="sd">    engine: SQLAlchemy connection engine</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
@@ -320,23 +314,14 @@
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;to-codes&quot;</span><span class="p">:</span>
         <span class="n">raw_data_to_variables</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">:</span>
-        <span class="n">set_up</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">leave_if_data</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">database_exists</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">):</span>
-                <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
-                <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
-                <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Data</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">set_up</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">if</span> <span class="n">set_up</span><span class="p">:</span>
-            <span class="n">create_db</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drop_db</span><span class="p">)</span>
-            <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
-            <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
-            <span class="n">import_locations</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
-            <span class="n">fake_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">)</span>
-            <span class="n">import_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
-            <span class="n">import_variables</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
-            <span class="n">raw_data_to_variables</span><span class="p">()</span>
+        <span class="n">create_db</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drop_db</span><span class="p">)</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_locations</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">fake_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">)</span>
+        <span class="n">import_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_variables</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">raw_data_to_variables</span><span class="p">()</span>
 </pre></div>
 
           </div>
@@ -350,9 +335,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

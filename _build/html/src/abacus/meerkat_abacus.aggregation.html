@@ -40,9 +40,6 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
@@ -101,42 +98,20 @@
 <dt id="meerkat_abacus.aggregation.to_codes.get_variables">
 <code class="descclassname">meerkat_abacus.aggregation.to_codes.</code><code class="descname">get_variables</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/to_codes.html#get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.to_codes.get_variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>get variables out of db turn them into Variable classes</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; db-session</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>variables</strong> &#8211;
-dict of id:Variable</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+session: db-session</p>
+<p>Returns:
+variables: dict of id:Variable</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.aggregation.to_codes.to_code">
 <code class="descclassname">meerkat_abacus.aggregation.to_codes.</code><code class="descname">to_code</code><span class="sig-paren">(</span><em>row</em>, <em>variables</em>, <em>locations</em>, <em>date_column</em>, <em>table_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/to_codes.html#to_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.to_codes.to_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a row and transforms it into a data row</p>
-<dl class="docutils">
-<dt>Args;</dt>
-<dd>row: row of raw data
+<p>Args;
+row: row of raw data
 variables: dict of variables to check
-locations: list of locations</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>new_record</strong> &#8211;
-Data record</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="meerkat_abacus.html#meerkat_abacus.model.Data" title="meerkat_abacus.model.Data">model.Data</a></td>
-</tr>
-</tbody>
-</table>
+locations: list of locations</p>
 </dd></dl>
 
 </div>
@@ -153,19 +128,10 @@ specified by codes file</p>
 <dt id="meerkat_abacus.aggregation.variable.Variable.test">
 <code class="descname">test</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests if current variable is true for row</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong> &#8211; a row from a form</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>id</strong> &#8211;
-0 if false and 1 (or sum) if true</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+row: a row from a form</p>
+<p>Returns:
+id: 0 if false and id if true</p>
 </dd></dl>
 
 <dl class="method">
@@ -223,9 +189,6 @@ specified by codes file</p>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

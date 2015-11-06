@@ -40,9 +40,6 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
-        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
@@ -101,10 +98,11 @@
 <dt id="meerkat_abacus.database_util.create_fake_data.create_form">
 <code class="descclassname">meerkat_abacus.database_util.create_fake_data.</code><code class="descname">create_form</code><span class="sig-paren">(</span><em>fields</em>, <em>data=None</em>, <em>N=500</em>, <em>odk=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/create_fake_data.html#create_form"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.create_fake_data.create_form" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a csv file with data form the given fields</p>
-<p>The types for fields are:</p>
+<p>The types for fields are:
+{&#8220;integer&#8221;: [lower, upper]}</p>
+<blockquote>
+<div>random int between upper and lower</div></blockquote>
 <dl class="docutils">
-<dt>{&#8220;integer&#8221;: [lower, upper]}</dt>
-<dd>random int between upper and lower</dd>
 <dt>{&#8220;one&#8221;: [&#8220;choice1&#8221;,choice2&#8221;,....]}</dt>
 <dd>one random choice from the list</dd>
 <dt>{&#8220;multiple: [&#8220;choice1&#8221;,choice2&#8221;,....]}</dt>
@@ -112,52 +110,25 @@
 <dt>{&#8220;data: &#8220;key&#8221;}</dt>
 <dd>a random choice from key in data</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>from_name</strong> &#8211; name of the form</li>
-<li><strong>fields</strong> &#8211; list of fields to include</li>
-<li><strong>previous_data</strong> &#8211; data from other forms</li>
-<li><strong>N</strong> &#8211; number of rows to generate</li>
-<li><strong>odk</strong> &#8211; Does the form come from odk</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>list_of_records</strong> &#8211;
-list of dicts with data</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+from_name: name of the form
+fields: list of fields to include
+previous_data: data from other forms
+N: number of rows to generate
+odk: Does the form come from odk</p>
+<p>Returns:
+list_of_records: list of dicts with data</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.create_fake_data.get_value">
 <code class="descclassname">meerkat_abacus.database_util.create_fake_data.</code><code class="descname">get_value</code><span class="sig-paren">(</span><em>field</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/create_fake_data.html#get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.create_fake_data.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a field and returns the value</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; a field</li>
-<li><strong>data</strong> &#8211; data to be used for certain field types</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A random value for the field</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="meerkat_abacus.html#meerkat_abacus.model.Aggregation.value" title="meerkat_abacus.model.Aggregation.value">value</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+field: a field
+data: data to be used for certain field types
+Returns:
+value: A random value for the field</p>
 </dd></dl>
 
 </div>
@@ -168,56 +139,29 @@ list of dicts with data</p>
 <dt id="meerkat_abacus.database_util.import_locations.import_clinics">
 <code class="descclassname">meerkat_abacus.database_util.import_locations.</code><code class="descname">import_clinics</code><span class="sig-paren">(</span><em>csv_file</em>, <em>session</em>, <em>country_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/import_locations.html#import_clinics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.import_locations.import_clinics" title="Permalink to this definition">¶</a></dt>
 <dd><p>import fistricts from csv</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>csv_file</strong> &#8211; path to csv file with regions</li>
-<li><strong>session</strong> &#8211; SQLAlchemy session</li>
-<li><strong>country_id</strong> &#8211; id of the country</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+csv_file: path to csv file with regions
+session: SQLAlchemy session
+country_id: id of the country</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.import_locations.import_districts">
 <code class="descclassname">meerkat_abacus.database_util.import_locations.</code><code class="descname">import_districts</code><span class="sig-paren">(</span><em>csv_file</em>, <em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/import_locations.html#import_districts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.import_locations.import_districts" title="Permalink to this definition">¶</a></dt>
 <dd><p>import fistricts from csv</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>csv_file</strong> &#8211; path to csv file with regions</li>
-<li><strong>session</strong> &#8211; SQLAlchemy session</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+csv_file: path to csv file with regions
+session: SQLAlchemy session</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.import_locations.import_regions">
 <code class="descclassname">meerkat_abacus.database_util.import_locations.</code><code class="descname">import_regions</code><span class="sig-paren">(</span><em>csv_file</em>, <em>session</em>, <em>parent_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/import_locations.html#import_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.import_locations.import_regions" title="Permalink to this definition">¶</a></dt>
 <dd><p>import regions from csv</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>csv_file</strong> &#8211; path to csv file with regions</li>
-<li><strong>session</strong> &#8211; SQLAlchemy session</li>
-<li><strong>parent_id</strong> &#8211; The id of the country</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+csv_file: path to csv file with regions
+session: SQLAlchemy session
+parent_id: The id of the country</p>
 </dd></dl>
 
 </div>
@@ -228,165 +172,84 @@ list of dicts with data</p>
 <dt id="meerkat_abacus.database_util.add_new_data">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">add_new_data</code><span class="sig-paren">(</span><em>form</em>, <em>data</em>, <em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#add_new_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.add_new_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>adds rows in data that has a uuid not already in the form</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>form</strong> &#8211; form to add to</li>
-<li><strong>data</strong> &#8211; data to potentially be added</li>
-<li><strong>session</strong> &#8211; db session</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>new_rows</strong> &#8211;
-a list of rows added</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+form: form to add to
+data: data to potentially be added
+session: db session</p>
+<p>Returns:
+new_rows: a list of rows added</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.all_location_data">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">all_location_data</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#all_location_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.all_location_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>get all location data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; db session</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>locations</strong> &#8211;
-(loction_dict,loc_by_deviceid, regions, districts)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+session: db session</p>
+<p>Returns:
+(loction_dict,loc_by_deviceid, regions, districts)</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.get_deviceids">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_deviceids</code><span class="sig-paren">(</span><em>session</em>, <em>case_report=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_deviceids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_deviceids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of deviceids</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>session</strong> &#8211; SQLAlchemy session</li>
-<li><strong>case_report</strong> &#8211; flag to only get deviceids from case
-reporing clinics</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>list_of_deviceids</strong> &#8211;
-list of deviceids</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+session: SQLAlchemy session
+case_report: flag to only get deviceids from case</p>
+<blockquote>
+<div>reporing clinics</div></blockquote>
+<p>Returns:
+list_of_deviceids</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.get_locations">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_locations</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_locations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_locations" title="Permalink to this definition">¶</a></dt>
 <dd><p>get a location dict</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; db session</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>locations</strong> &#8211;
-id:location dict</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+session: db session</p>
+<p>Returns:
+locations : id:location dict</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.get_locations_by_deviceid">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_locations_by_deviceid</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_locations_by_deviceid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_locations_by_deviceid" title="Permalink to this definition">¶</a></dt>
 <dd><p>get a dict with deviceid: locatino:id</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; db session</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>locations</strong> &#8211;
-deviceid:location_id</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+session: db session</p>
+<p>Returns:
+locations : deviceid:location_id</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.get_regions_districts">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_regions_districts</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_regions_districts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_regions_districts" title="Permalink to this definition">¶</a></dt>
 <dd><p>get list of ids for regions and districts</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>session</strong> &#8211; db session</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>regions_district</strong> &#8211;
-(regions,districts)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+session: db session</p>
+<p>Returns:
+(regions,districts)</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.read_csv">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">read_csv</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#read_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.read_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads csvfile and returns list of rows</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> &#8211; path of file to read</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>rows</strong> &#8211;
-list of rows</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+file_path: path of file to read</p>
+<p>Returns:
+rows: list of rows</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="meerkat_abacus.database_util.write_csv">
 <code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">write_csv</code><span class="sig-paren">(</span><em>rows</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#write_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.write_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes rows to csvfile</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>rows</strong> &#8211; list of dicts with data</li>
-<li><strong>file_path</strong> &#8211; path to write file to</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Args:
+rows: list of dicts with data
+file_path: path to write file to</p>
 </dd></dl>
 
 </div>
@@ -404,9 +267,6 @@ list of rows</td>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

@@ -41,9 +41,6 @@
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
-        <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -87,10 +84,10 @@
 <span class="sd">    get variables out of db turn them into Variable classes</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        session: db-session</span>
+<span class="sd">    session: db-session</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        variables(dict): dict of id:Variable</span>
+<span class="sd">    variables: dict of id:Variable</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">)</span>
     <span class="n">variables</span> <span class="o">=</span><span class="p">{}</span>
@@ -104,11 +101,9 @@
 <span class="sd">    Takes a row and transforms it into a data row</span>
 
 <span class="sd">    Args;</span>
-<span class="sd">        row: row of raw data</span>
-<span class="sd">        variables: dict of variables to check</span>
-<span class="sd">        locations: list of locations</span>
-<span class="sd">    return:</span>
-<span class="sd">        new_record(model.Data): Data record</span>
+<span class="sd">    row: row of raw data</span>
+<span class="sd">    variables: dict of variables to check</span>
+<span class="sd">    locations: list of locations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">locations</span><span class="p">,</span> <span class="n">locations_by_deviceid</span><span class="p">,</span> <span class="n">regions</span><span class="p">,</span> <span class="n">districts</span> <span class="o">=</span> <span class="n">locations</span>
     <span class="n">clinic_id</span> <span class="o">=</span> <span class="n">locations_by_deviceid</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;deviceid&quot;</span><span class="p">]]</span>
@@ -147,9 +142,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
-             >routing table</a> |</li>
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

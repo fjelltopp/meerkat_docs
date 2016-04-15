@@ -41,6 +41,9 @@
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -93,7 +96,7 @@
 <span class="sd">        Store variable dictionary</span>
 <span class="sd">        </span>
 <span class="sd">        Args: </span>
-<span class="sd">        variable: model.AggregationVariable object</span>
+<span class="sd">            variable: model.AggregationVariable object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">variable</span> <span class="o">=</span> <span class="n">variable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">db_column</span>
@@ -158,10 +161,10 @@
 <span class="sd">        Tests if current variable is true for row</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">        row: a row from a form</span>
+<span class="sd">            row: a row from a form</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">        id: 0 if false and id if true</span>
+<span class="sd">            id(int): 0 if false and 1 (or sum) if true</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable</span>
         <span class="k">if</span> <span class="n">variable</span><span class="o">.</span><span class="n">secondary_condition</span><span class="p">:</span>
@@ -247,6 +250,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

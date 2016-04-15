@@ -1,0 +1,152 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>meerkat_frontend.views.technical &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="meerkat_frontend" href="../../meerkat_frontend.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../../meerkat_frontend.html" accesskey="U">meerkat_frontend</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for meerkat_frontend.views.technical</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">technical.py</span>
+
+<span class="sd">A Flask Blueprint module for the technical site.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">current_app</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">Response</span>
+
+<span class="n">technical</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s">&#39;technical&#39;</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="check_auth"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.technical.check_auth">[docs]</a><span class="k">def</span> <span class="nf">check_auth</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is called to check if a username /</span>
+<span class="sd">    password combination is valid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">username</span> <span class="o">==</span> <span class="s">&#39;admin&#39;</span> <span class="ow">and</span> <span class="n">password</span> <span class="o">==</span> <span class="s">&#39;secret&#39;</span>
+</div>
+<div class="viewcode-block" id="authenticate"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.technical.authenticate">[docs]</a><span class="k">def</span> <span class="nf">authenticate</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Sends a 401 response that enables basic auth&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+    <span class="s">&#39;Could not verify your access level for that URL.</span><span class="se">\n</span><span class="s">&#39;</span>
+    <span class="s">&#39;You have to login with proper credentials&#39;</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span>
+    <span class="p">{</span><span class="s">&#39;WWW-Authenticate&#39;</span><span class="p">:</span> <span class="s">&#39;Basic realm=&quot;Login Required&quot;&#39;</span><span class="p">})</span>
+</div>
+<span class="nd">@technical.before_request</span>
+<div class="viewcode-block" id="requires_auth"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.technical.requires_auth">[docs]</a><span class="k">def</span> <span class="nf">requires_auth</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Checks that the user has authenticated before returning any page from the technical site.&quot;&quot;&quot;</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">authorization</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">auth</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">check_auth</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">authenticate</span><span class="p">()</span>
+</div>
+<span class="nd">@technical.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="nd">@technical.route</span><span class="p">(</span><span class="s">&#39;/&lt;tab&gt;&#39;</span><span class="p">)</span>
+<span class="nd">@technical.route</span><span class="p">(</span><span class="s">&#39;/&lt;tab&gt;/loc_&lt;int:locID&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.technical.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">tab</span><span class="o">=</span><span class="s">&quot;demographics&quot;</span><span class="p">,</span> <span class="n">locID</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">pageState</span> <span class="o">=</span> <span class="s">&quot;{ type: &#39;tab&#39;, dataID: &#39;&quot;</span> <span class="o">+</span> <span class="n">tab</span> <span class="o">+</span> <span class="s">&quot;&#39;, locID: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">locID</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; }&quot;</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;technical/index.html&#39;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;TECHNICAL_CONFIG&#39;</span><span class="p">],</span> <span class="n">page</span><span class="o">=</span><span class="n">pageState</span><span class="p">)</span>
+</div>
+<span class="nd">@technical.route</span><span class="p">(</span><span class="s">&#39;/alerts/alert_&lt;int:alertID&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="alert"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.technical.alert">[docs]</a><span class="k">def</span> <span class="nf">alert</span><span class="p">(</span> <span class="n">alertID</span><span class="o">=</span><span class="mi">1</span> <span class="p">):</span>
+	<span class="n">pageState</span> <span class="o">=</span> <span class="s">&quot;{ type: &#39;alert&#39;, dataID: &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">alertID</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;&#39; }&quot;</span>
+	<span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;technical/index.html&#39;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;TECHNICAL_CONFIG&#39;</span><span class="p">],</span> <span class="n">page</span><span class="o">=</span><span class="n">pageState</span><span class="p">)</span>
+</div>
+<span class="nd">@technical.route</span><span class="p">(</span><span class="s">&#39;/communicable_diseases/disease_&lt;int:diseaseID&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="disease"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.technical.disease">[docs]</a><span class="k">def</span> <span class="nf">disease</span><span class="p">(</span> <span class="n">diseaseID</span><span class="o">=</span><span class="mi">1</span> <span class="p">):</span>
+	<span class="n">pageState</span> <span class="o">=</span> <span class="s">&quot;{ type: &#39;disease&#39;, dataID: &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">diseaseID</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;&#39; }&quot;</span>
+	<span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;technical/index.html&#39;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;TECHNICAL_CONFIG&#39;</span><span class="p">],</span> <span class="n">page</span><span class="o">=</span><span class="n">pageState</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../../meerkat_frontend.html" >meerkat_frontend</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

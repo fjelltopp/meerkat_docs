@@ -82,11 +82,81 @@
    <h1>HTTP Routing Table</h1>
 
    <div class="modindex-jumpbox">
+   <a href="#cap-/aggregate"><strong>/aggregate</strong></a> | 
+   <a href="#cap-/aggregate_category"><strong>/aggregate_category</strong></a> | 
+   <a href="#cap-/aggregate_year"><strong>/aggregate_year</strong></a> | 
+   <a href="#cap-/alert"><strong>/alert</strong></a> | 
+   <a href="#cap-/alerts"><strong>/alerts</strong></a> | 
+   <a href="#cap-/clinics"><strong>/clinics</strong></a> | 
    <a href="#cap-/location"><strong>/location</strong></a> | 
-   <a href="#cap-/locations"><strong>/locations</strong></a>
+   <a href="#cap-/locations"><strong>/locations</strong></a> | 
+   <a href="#cap-/locationtree"><strong>/locationtree</strong></a> | 
+   <a href="#cap-/map"><strong>/map</strong></a> | 
+   <a href="#cap-/query_category"><strong>/query_category</strong></a> | 
+   <a href="#cap-/query_variable"><strong>/query_variable</strong></a> | 
+   <a href="#cap-/variable"><strong>/variable</strong></a> | 
+   <a href="#cap-/variables"><strong>/variables</strong></a>
    </div>
 
    <table class="indextable modindextable" cellspacing="0" cellpadding="2">
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/aggregate"><td></td><td>
+       <strong>/aggregate</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--aggregate-(variable_id)-(location_id)"><code class="xref">GET /aggregate/(variable_id)/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/aggregate_category"><td></td><td>
+       <strong>/aggregate_category</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--aggregate_category-(category)-(location_id)"><code class="xref">GET /aggregate_category/(category)/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--aggregate_category-(category)-(location_id)-(year)"><code class="xref">GET /aggregate_category/(category)/(location_id)/(year)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/aggregate_year"><td></td><td>
+       <strong>/aggregate_year</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--aggregate_year-(variable_id)-(location_id)"><code class="xref">GET /aggregate_year/(variable_id)/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--aggregate_year-(variable_id)-(location_id)-(year)"><code class="xref">GET /aggregate_year/(variable_id)/(location_id)/(year)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/alert"><td></td><td>
+       <strong>/alert</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--alert-(alert_id)"><code class="xref">GET /alert/(alert_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/alerts"><td></td><td>
+       <strong>/alerts</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--alerts"><code class="xref">GET /alerts</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/clinics"><td></td><td>
+       <strong>/clinics</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--clinics-(location_id)"><code class="xref">GET /clinics/(location_id)</code></a></td><td>
+       <em></em></td></tr>
      <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
      <tr class="cap" id="cap-/location"><td></td><td>
        <strong>/location</strong></td><td></td></tr>
@@ -102,6 +172,64 @@
        <td></td>
        <td>
        <a href="src/meerkat_api.html#get--locations"><code class="xref">GET /locations</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/locationtree"><td></td><td>
+       <strong>/locationtree</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--locationtree"><code class="xref">GET /locationtree</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/map"><td></td><td>
+       <strong>/map</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--map-(variable_id)"><code class="xref">GET /map/(variable_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/query_category"><td></td><td>
+       <strong>/query_category</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--query_category-(group_by1)-(group_by2)"><code class="xref">GET /query_category/(group_by1)/(group_by2)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)"><code class="xref">GET /query_category/(group_by1)/(group_by2)/(start_date)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/query_variable"><td></td><td>
+       <strong>/query_variable</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--query_variable-(variable)-(group_by)"><code class="xref">GET /query_variable/(variable)/(group_by)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--query_variable-(variable)-(group_by)-(start_date)-(end_date)"><code class="xref">GET /query_variable/(variable)/(group_by)/(start_date)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/variable"><td></td><td>
+       <strong>/variable</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--variable-(variable_id)"><code class="xref">GET /variable/(variable_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/variables"><td></td><td>
+       <strong>/variables</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--variables-(category)"><code class="xref">GET /variables/(category)</code></a></td><td>
        <em></em></td></tr>
    </table>
 

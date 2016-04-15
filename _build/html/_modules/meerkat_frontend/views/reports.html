@@ -1,0 +1,372 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>meerkat_frontend.views.reports &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="meerkat_frontend" href="../../meerkat_frontend.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../../meerkat_frontend.html" accesskey="U">meerkat_frontend</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for meerkat_frontend.views.reports</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">reports.py</span>
+
+<span class="sd">A Flask Blueprint module for reports.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">abort</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">send_file</span><span class="p">,</span> <span class="n">current_app</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">dateutil.parser</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">common</span> <span class="k">as</span> <span class="n">c</span>
+
+<span class="n">reports</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s">&#39;reports&#39;</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="c"># NORMAL ROUTES</span>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="c"># Hacky hard-coded redirect.</span>
+    <span class="c"># TODO: Replace in config with something elegant</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span>
+        <span class="s">&#39;.report&#39;</span><span class="p">,</span>
+        <span class="n">project</span><span class="o">=</span><span class="s">&#39;jordan&#39;</span><span class="p">,</span>
+        <span class="n">report</span><span class="o">=</span><span class="s">&#39;public_health&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+</div>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/test/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="test"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Serves a test report page using a static JSON file.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test_report.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">report</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s">&quot;IOError with test report JSON file.&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s">&quot;Error parsing test report JSON file: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">msg</span><span class="p">))</span>
+    <span class="c"># Extra parsing for natural language bullet points in email templates</span>
+    <span class="n">patient_status</span> <span class="o">=</span> <span class="p">{</span><span class="n">item</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">):</span> <span class="p">{</span><span class="s">&#39;percent&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;percent&#39;</span><span class="p">],</span> <span class="s">&#39;quantity&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;quantity&#39;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;patient_status&#39;</span><span class="p">]}</span>
+    <span class="n">extras</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;patient_status&#39;</span><span class="p">:</span> <span class="n">patient_status</span>
+        <span class="p">}</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;reports/report_jordan_public_health_profile.html&#39;</span><span class="p">,</span>
+                           <span class="n">report</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                           <span class="n">extras</span><span class="o">=</span><span class="n">extras</span><span class="p">)</span>
+
+</div>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/email/&lt;project&gt;/&lt;report&gt;/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="send_email_report"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.send_email_report">[docs]</a><span class="k">def</span> <span class="nf">send_email_report</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">report</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sends an email via Mailchimp with the latest report&quot;&quot;&quot;</span>
+    <span class="n">projects</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;REPORT_LIST&#39;</span><span class="p">]</span>
+    <span class="c"># Hacky hard-coded value to add some semblance of access control...</span>
+    <span class="k">if</span> <span class="s">&#39;apikey&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s">&#39;apikey&#39;</span><span class="p">]</span> \
+       <span class="o">!=</span> <span class="s">&#39;simbasucksass&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span> <span class="ow">and</span> <span class="n">report</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">]:</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;default_location&#39;</span><span class="p">]</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">epi_week_to_date</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">date_to_epi_week</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">api_request</span> <span class="o">=</span> <span class="s">&#39;/reports/{report}/{loc}/{end}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">report</span><span class="o">=</span><span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;api_name&#39;</span><span class="p">],</span>
+            <span class="n">loc</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">api</span><span class="p">(</span><span class="n">api_request</span><span class="p">,</span> <span class="n">project</span><span class="p">)</span>
+        <span class="n">epi_week</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;epi_week_num&#39;</span><span class="p">]</span>
+        <span class="n">epi_year</span> <span class="o">=</span> <span class="n">format_datetime</span><span class="p">(</span>
+            <span class="n">datetime_from_json</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;epi_week_date&#39;</span><span class="p">]),</span>
+            <span class="n">format</span><span class="o">=</span><span class="s">&#39;%Y&#39;</span><span class="p">)</span>
+        <span class="n">epi_date</span> <span class="o">=</span> <span class="n">format_datetime</span><span class="p">(</span>
+            <span class="n">datetime_from_json</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;epi_week_date&#39;</span><span class="p">]),</span>
+            <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%-d</span><span class="s"> %B %Y&#39;</span><span class="p">)</span>
+        <span class="n">relative_url</span> <span class="o">=</span> <span class="n">url_for</span><span class="p">(</span><span class="s">&#39;.report&#39;</span><span class="p">,</span>
+                               <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+                               <span class="n">report</span><span class="o">=</span><span class="n">report</span><span class="p">,</span>
+                               <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+                               <span class="n">year</span><span class="o">=</span><span class="n">epi_year</span><span class="p">,</span>
+                               <span class="n">week</span><span class="o">=</span><span class="n">epi_week</span><span class="p">)</span>
+        <span class="n">report_url</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;ROOT_URL&#39;</span><span class="p">],</span> <span class="n">relative_url</span><span class="p">])</span>
+        <span class="c"># RENDER!</span>
+        <span class="c"># Extra parsing for natural language bullet points in email templates</span>
+        <span class="n">patient_status</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">item</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">):</span>
+                <span class="p">{</span><span class="s">&#39;percent&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;percent&#39;</span><span class="p">],</span>
+                 <span class="s">&#39;quantity&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;quantity&#39;</span><span class="p">]}</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;patient_status&#39;</span><span class="p">]}</span>
+        <span class="n">extras</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;patient_status&#39;</span><span class="p">:</span> <span class="n">patient_status</span>
+            <span class="p">}</span>
+        <span class="n">html_email_body</span> <span class="o">=</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;template_email_html&#39;</span><span class="p">],</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">extras</span><span class="o">=</span><span class="n">extras</span><span class="p">,</span>
+            <span class="n">report_url</span><span class="o">=</span><span class="n">report_url</span>
+        <span class="p">)</span>
+        <span class="n">plain_email_body</span> <span class="o">=</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;template_email_plain&#39;</span><span class="p">],</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">extras</span><span class="o">=</span><span class="n">extras</span><span class="p">,</span>
+            <span class="n">report_url</span><span class="o">=</span><span class="n">report_url</span>
+        <span class="p">)</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;WHO Jordan | Public Health Profile Epi Week {} ({})&#39;</span>
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epi_week</span><span class="p">,</span> <span class="n">epi_date</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c"># Send email as Mailchimp campaign</span>
+        <span class="c"># First create the campaign</span>
+        <span class="n">endpoint</span> <span class="o">=</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;api_endpoints&#39;</span><span class="p">][</span><span class="s">&#39;mailchimp_campaign&#39;</span><span class="p">]</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;apikey&quot;</span><span class="p">:</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;keys&#39;</span><span class="p">][</span><span class="s">&#39;mailchimp&#39;</span><span class="p">],</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;regular&quot;</span><span class="p">,</span>
+            <span class="s">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;list_id&quot;</span><span class="p">:</span>
+                    <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;mailchimp_list_id&#39;</span><span class="p">],</span>
+                <span class="s">&quot;subject&quot;</span><span class="p">:</span> <span class="n">subject</span><span class="p">,</span>
+                <span class="s">&quot;from_email&quot;</span><span class="p">:</span>
+                    <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;email_from_address&#39;</span><span class="p">],</span>
+                <span class="s">&quot;from_name&quot;</span><span class="p">:</span>
+                    <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;email_from_name&#39;</span><span class="p">],</span>
+                <span class="s">&quot;folder_id&quot;</span><span class="p">:</span>
+                    <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;mailchimp_dir_id&#39;</span><span class="p">],</span>
+                <span class="s">&quot;authenticate&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;auto_footer&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;inline_css&quot;</span><span class="p">:</span> <span class="bp">True</span>
+            <span class="p">},</span>
+            <span class="s">&quot;content&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;html&quot;</span><span class="p">:</span> <span class="n">html_email_body</span><span class="p">,</span>
+                <span class="s">&quot;text&quot;</span><span class="p">:</span> <span class="n">plain_email_body</span>
+            <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">endpoint</span><span class="p">,</span> <span class="s">&#39;create.json&#39;</span><span class="p">]),</span>
+                <span class="n">json</span><span class="o">=</span><span class="n">message</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+            <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+        <span class="c"># If we&#39;ve successfully created the campaign, let&#39;s now Send it.</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">campaign</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+            <span class="n">send</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&quot;apikey&quot;</span><span class="p">:</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;keys&#39;</span><span class="p">][</span><span class="s">&#39;mailchimp&#39;</span><span class="p">],</span>
+                <span class="s">&quot;cid&quot;</span><span class="p">:</span> <span class="n">campaign</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">endpoint</span><span class="p">,</span> <span class="s">&#39;send.json&#39;</span><span class="p">]),</span>
+                    <span class="n">json</span><span class="o">=</span><span class="n">send</span>
+                <span class="p">)</span>
+                <span class="k">pass</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+                <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">abort</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;OK&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
+
+</div>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/&lt;project&gt;/&lt;report&gt;/&#39;</span><span class="p">)</span>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/&lt;project&gt;/&lt;report&gt;/&lt;location&gt;/&#39;</span><span class="p">)</span>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/&lt;project&gt;/&lt;report&gt;/&lt;location&gt;/&lt;int:year&gt;/&#39;</span><span class="p">)</span>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/&lt;project&gt;/&lt;report&gt;/&lt;location&gt;/&lt;int:year&gt;/&lt;int:week&gt;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="report"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.report">[docs]</a><span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">report</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">week</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Serves dynamic report for a location and date&quot;&quot;&quot;</span>
+    <span class="c"># Check that the requested project and report are valid</span>
+    <span class="n">projects</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;REPORT_LIST&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span> <span class="ow">and</span> <span class="n">report</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">location</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;default_location&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">week</span> <span class="ow">or</span> <span class="n">year</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">week</span><span class="p">:</span>
+                <span class="n">end_date</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">epi_week_to_date</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">end_date</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">epi_week_to_date</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
+            <span class="n">api_request</span> <span class="o">=</span> <span class="s">&#39;/reports/{report}/{loc}/{end}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">report</span><span class="o">=</span><span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;api_name&#39;</span><span class="p">],</span>
+                <span class="n">loc</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+                <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Return most recent epiweek</span>
+            <span class="n">api_request</span> <span class="o">=</span> <span class="s">&#39;/reports/{report}/{loc}/{end}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">report</span><span class="o">=</span><span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;api_name&#39;</span><span class="p">],</span>
+                <span class="n">loc</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+                <span class="n">end</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">epi_week_to_date</span><span class="p">(</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">date_to_epi_week</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">api</span><span class="p">(</span><span class="n">api_request</span><span class="p">,</span> <span class="n">project</span><span class="p">)</span>
+        <span class="c"># Extra parsing for natural language bullet points in email templates</span>
+        <span class="n">patient_status</span> <span class="o">=</span> <span class="p">{</span><span class="n">item</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">):</span> <span class="p">{</span><span class="s">&#39;percent&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;percent&#39;</span><span class="p">],</span> <span class="s">&#39;quantity&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;quantity&#39;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;patient_status&#39;</span><span class="p">]}</span>
+        <span class="n">extras</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;patient_status&#39;</span><span class="p">:</span> <span class="n">patient_status</span>
+            <span class="p">}</span>
+        <span class="c"># Render correct template for the report</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="n">projects</span><span class="p">[</span><span class="n">project</span><span class="p">][</span><span class="s">&#39;reports&#39;</span><span class="p">][</span><span class="n">report</span><span class="p">][</span><span class="s">&#39;template&#39;</span><span class="p">],</span>
+            <span class="n">report</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">extras</span><span class="o">=</span><span class="n">extras</span>
+        <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
+
+</div>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/error/&lt;int:error&gt;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="error_test"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.error_test">[docs]</a><span class="k">def</span> <span class="nf">error_test</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Serves requested error page for testing&quot;&quot;&quot;</span>
+    <span class="n">abort</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+
+<span class="c"># STATIC ROUTES</span></div>
+<span class="nd">@reports.route</span><span class="p">(</span><span class="s">&#39;/assets/&lt;path:filepath&gt;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="serve_static"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.serve_static">[docs]</a><span class="k">def</span> <span class="nf">serve_static</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Serves static assets (js, css, img etc)&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+
+<span class="c"># UTILITY ROUTES</span></div>
+<span class="nd">@reports.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<div class="viewcode-block" id="error404"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.error404">[docs]</a><span class="k">def</span> <span class="nf">error404</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Serves page for Error 404&quot;&quot;&quot;</span>
+    <span class="n">error</span><span class="o">.</span><span class="n">body</span> <span class="o">+=</span> <span class="s">&quot;. We’ve misplaced that page or it doesn’t exist.&quot;</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;reports/error.html&#39;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">),</span> <span class="mi">404</span>
+
+
+<span class="c"># @reports.errorhandler(500)</span></div>
+<span class="nd">@reports.errorhandler</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
+<span class="nd">@reports.errorhandler</span><span class="p">(</span><span class="mi">418</span><span class="p">)</span>
+<div class="viewcode-block" id="error500"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.error500">[docs]</a><span class="k">def</span> <span class="nf">error500</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Serves page for generic error&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;reports/error.html&#39;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">),</span> <span class="n">error</span>
+
+
+<span class="c"># FILTERS</span></div>
+<span class="nd">@reports.app_template_filter</span><span class="p">(</span><span class="s">&#39;datetime&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="format_datetime"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.format_datetime">[docs]</a><span class="k">def</span> <span class="nf">format_datetime</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;%H:%M </span><span class="si">%d</span><span class="s">-%m-%Y&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns formatted timestamp&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+
+</div>
+<span class="nd">@reports.app_template_filter</span><span class="p">(</span><span class="s">&#39;datetime_from_json&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="datetime_from_json"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.datetime_from_json">[docs]</a><span class="k">def</span> <span class="nf">datetime_from_json</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns Python datetime object from JSON timestamp in ISO8601 format&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dateutil</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+</div>
+<span class="nd">@reports.app_template_filter</span><span class="p">(</span><span class="s">&#39;commas&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="format_thousands"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.format_thousands">[docs]</a><span class="k">def</span> <span class="nf">format_thousands</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds thousands separator to values&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">&quot;{:,}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+
+<span class="c"># FUNCTIONS</span></div>
+<div class="viewcode-block" id="list_reports"><a class="viewcode-back" href="../../../src/frontend/meerkat_frontend.views.html#meerkat_frontend.views.reports.list_reports">[docs]</a><span class="k">def</span> <span class="nf">list_reports</span><span class="p">(</span><span class="n">region</span><span class="p">,</span>
+                 <span class="n">start</span><span class="o">=</span><span class="n">date</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                 <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a list of reports&quot;&quot;&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../../meerkat_frontend.html" >meerkat_frontend</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

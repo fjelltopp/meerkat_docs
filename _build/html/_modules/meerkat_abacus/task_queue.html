@@ -1,0 +1,281 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>meerkat_abacus.task_queue &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for meerkat_abacus.task_queue</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Task queue</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">Celery</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">meerkat_abacus.config</span> <span class="kn">import</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">DATABASE_URL</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.celeryconfig</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus</span> <span class="kn">import</span> <span class="n">model</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.aggregation.to_codes</span> <span class="kn">as</span> <span class="nn">to_codes</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus</span> <span class="kn">import</span> <span class="n">database_util</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Celery</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config_from_object</span><span class="p">(</span><span class="n">meerkat_abacus</span><span class="o">.</span><span class="n">celeryconfig</span><span class="p">)</span>
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">import_new_data</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    task to check csv files and insert any new data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+    <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">form</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span>
+                     <span class="n">form_directory</span> <span class="o">+</span> <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="n">form</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.csv&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">database_util</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">database_util</span><span class="o">.</span><span class="n">add_new_data</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="n">form</span><span class="p">],</span>
+                                         <span class="n">data</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">new_data_to_codes</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    add any new data in form tables to data table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+    <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">variables</span> <span class="o">=</span> <span class="n">to_codes</span><span class="o">.</span><span class="n">get_variables</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="n">database_util</span><span class="o">.</span><span class="n">all_location_data</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+    <span class="n">uuids</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">alerts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">uuids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">form</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="n">form</span><span class="p">]</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
+                               <span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="n">form</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">uuid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uuids</span><span class="p">:</span>
+                <span class="n">new_data</span><span class="p">,</span> <span class="n">alert</span> <span class="o">=</span> <span class="n">to_codes</span><span class="o">.</span><span class="n">to_code</span><span class="p">(</span>
+                    <span class="n">row</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                    <span class="n">variables</span><span class="p">,</span>
+                    <span class="n">locations</span><span class="p">,</span>
+                    <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;form_dates&quot;</span><span class="p">][</span><span class="n">form</span><span class="p">],</span>
+                    <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="n">form</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">new_data</span><span class="o">.</span><span class="n">variables</span> <span class="o">!=</span> <span class="p">{}:</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">alert</span><span class="p">:</span>
+                    <span class="n">alerts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span>
+    <span class="n">add_alerts</span><span class="p">(</span><span class="n">alerts</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">add_new_links</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    add any new data in form tables to data table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+    <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">link_defs</span> <span class="o">=</span> <span class="n">database_util</span><span class="o">.</span><span class="n">get_link_definitions</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Links</span><span class="p">)</span>
+
+    <span class="n">to_ids</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">links_by_link_value</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">to_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">to_id</span><span class="p">)</span>
+        <span class="n">links_by_link_value</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">link_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+    <span class="k">for</span> <span class="n">link_def_id</span> <span class="ow">in</span> <span class="n">link_defs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">link_def</span> <span class="o">=</span> <span class="n">link_defs</span><span class="p">[</span><span class="n">link_def_id</span><span class="p">]</span>
+        <span class="n">link_from</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">link_def</span><span class="o">.</span><span class="n">from_table</span><span class="p">))</span>
+        <span class="n">link_from_values</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">link_from</span><span class="p">:</span>
+            <span class="n">link_from_values</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">link_def</span><span class="o">.</span><span class="n">from_column</span><span class="p">)]</span> <span class="o">=</span> <span class="n">row</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="n">link_def</span><span class="o">.</span><span class="n">to_table</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">uuid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">to_ids</span><span class="p">:</span>
+                <span class="n">link_to_value</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">link_def</span><span class="o">.</span><span class="n">to_column</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">link_to_value</span> <span class="ow">in</span> <span class="n">link_from_values</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">sort_data</span><span class="p">(</span><span class="n">link_def</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">linked_record</span> <span class="o">=</span> <span class="n">link_from_values</span><span class="p">[</span><span class="n">link_to_value</span><span class="p">]</span>
+                    <span class="n">to_date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">link_def</span><span class="o">.</span><span class="n">to_date</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">link_to_value</span> <span class="ow">in</span> <span class="n">links_by_link_value</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">old_link</span> <span class="o">=</span> <span class="n">links_by_link_value</span><span class="p">[</span><span class="n">link_to_value</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">link_def</span><span class="o">.</span><span class="n">which</span> <span class="o">==</span> <span class="s">&quot;last&quot;</span> <span class="ow">and</span> <span class="n">old_link</span><span class="o">.</span><span class="n">to_date</span> <span class="o">&lt;=</span> <span class="n">to_date</span><span class="p">:</span>
+                            <span class="n">old_link</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+                            <span class="n">old_link</span><span class="o">.</span><span class="n">to_date</span> <span class="o">=</span> <span class="n">to_date</span>
+                            <span class="n">old_link</span><span class="o">.</span><span class="n">to_id</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s">&quot;uuid&quot;</span><span class="p">),</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">new_link</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Links</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+                            <span class="s">&quot;link_value&quot;</span><span class="p">:</span> <span class="n">link_to_value</span><span class="p">,</span>
+                            <span class="s">&quot;to_id&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s">&quot;uuid&quot;</span><span class="p">),</span>
+                            <span class="s">&quot;to_date&quot;</span><span class="p">:</span> <span class="n">to_date</span><span class="p">,</span>
+                            <span class="s">&quot;from_date&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">linked_record</span><span class="p">,</span>
+                                                 <span class="n">link_def</span><span class="o">.</span><span class="n">from_date</span><span class="p">),</span>
+                            <span class="s">&quot;link_def&quot;</span><span class="p">:</span> <span class="n">link_def_id</span><span class="p">,</span>
+                            <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
+                        <span class="n">links_by_link_value</span><span class="p">[</span><span class="n">link_to_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_link</span>
+                        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_link</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+
+<div class="viewcode-block" id="sort_data"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.task_queue.sort_data">[docs]</a><span class="k">def</span> <span class="nf">sort_data</span><span class="p">(</span><span class="n">data_def</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns row translated to data after data_def</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        data_def: dictionary with data definition</span>
+<span class="sd">        row: a row to be translated</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        data(dict): the data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data_def</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data_def</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">value_dict</span> <span class="o">=</span> <span class="n">data_def</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">value</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_def</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">value</span><span class="p">][</span><span class="s">&quot;condition&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">value_dict</span><span class="p">[</span><span class="s">&quot;column&quot;</span><span class="p">]]</span> <span class="ow">in</span> <span class="n">value_dict</span><span class="p">[</span><span class="s">&quot;condition&quot;</span><span class="p">]:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value_dict</span><span class="p">[</span><span class="s">&quot;condition&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="n">value_dict</span><span class="p">[</span><span class="s">&quot;column&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">):</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+                    </div>
+<div class="viewcode-block" id="add_alerts"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.task_queue.add_alerts">[docs]</a><span class="k">def</span> <span class="nf">add_alerts</span><span class="p">(</span><span class="n">alerts</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inserts all the alerts table. If another record from the same</span>
+<span class="sd">    day, disease and clinic already exists we create one big record.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uuid: uuid of case_record</span>
+<span class="sd">        clinic: clinic id</span>
+<span class="sd">        disease: variable id</span>
+<span class="sd">        date: date</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">to_insert</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">alert</span> <span class="ow">in</span> <span class="n">alerts</span><span class="p">:</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">clinic</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">to_insert</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">to_insert</span><span class="p">[</span><span class="n">check</span><span class="p">]</span><span class="o">.</span><span class="n">uuids</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="n">to_insert</span><span class="p">[</span><span class="n">check</span><span class="p">][</span><span class="s">&quot;uuids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="n">alert</span><span class="o">.</span><span class="n">uuids</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">to_insert</span><span class="p">[</span><span class="n">check</span><span class="p">]</span> <span class="o">=</span> <span class="n">alert</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Alerts</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">alert</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">clinic</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">alert</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">to_insert</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="n">to_insert</span><span class="p">[</span><span class="n">check</span><span class="p">][</span><span class="s">&quot;uuids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="n">alert</span><span class="o">.</span><span class="n">uuids</span><span class="p">]))</span>
+            <span class="n">alert</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span><span class="p">[</span><span class="o">-</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;alert_id_length&quot;</span><span class="p">]:]</span>
+            <span class="n">to_insert</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">check</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">alert</span> <span class="ow">in</span> <span class="n">to_insert</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">alert</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span><span class="p">[</span><span class="o">-</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;alert_id_length&quot;</span><span class="p">]:]</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">alert</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

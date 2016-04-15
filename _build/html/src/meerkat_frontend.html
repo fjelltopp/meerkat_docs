@@ -42,6 +42,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
@@ -101,26 +104,37 @@
             
   <div class="section" id="meerkat-frontend">
 <h1>Meerkat Frontend<a class="headerlink" href="#meerkat-frontend" title="Permalink to this headline">¶</a></h1>
-<p>The purpose of Meerkat Frontend is to present Meerkat&#8217;s data for analysis and surveilance.  It does this through a series of web pages. At the heart of the frontend is the &#8220;Technical Site&#8221;, which offers the most complete means to explore the data through a large array of selection tools and graphs. The frontend has several components though, and has been built by multiple people.</p>
+<p><strong>Meerkat Frontend</strong> presents the data drawn from <strong>Meerkat API</strong> and <strong>Meerkat Abacus</strong> in a web app.   It has been designed in collaboration with our various stakeholders to meet their speicifc needs (most notably the Jordinian Ministry of Health). At the heart of the frontend is the &#8220;Technical Site&#8221;, which offers the most complete means to explore the data through a large array of tools, including a &#8220;dashboard&#8221; of tables and charts, auto-generated summary reports, an alerts notification service, and specialist tools for visualisaing and downloading data.</p>
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>The Homepage</strong> gives a quick overview of the project for any interested parties. This includes: some text describing the project, a dynamically updated map showing where the data is coming from, and some dynamically updated key indicators for the project. The indicators we show are the total number of: consultations, cases, facilities and alerts in the data.</li>
-<li><strong>The Reports</strong> Pages generate neat detailed summaries of the data in the system that can be shared publicly with other people. Weekly reports are generated for all different location levels from the country to the clinic.</li>
-<li><strong>The Technical Site</strong> displays detailed information and is only accesible with a password. It can display data on all location levels from the country to the individual clinic, and includes demographics, disease distributions, geographical distributions and epi-curves.</li>
+<li><strong>The Homepage</strong> gives a public brief overview of the specific country&#8217;s project, and acts as a splash page to the secured technical site. This includes: some text describing the project, a dynamically updated map showing where the data is coming from, and some dynamically updated key indicators for the project.</li>
+<li><strong>The Technical Dashboard</strong> displays detailed information and is only accesible with a password. It can display data for any selected location from the country to the individual clinic, and includes pages showing demographics, disease distributions, geographical distributions and epi-curves.</li>
+<li><strong>The Reports</strong> component generates neat detailed summaries of the data in the system that can be shared publicly with other people. Weekly reports can be generated for user&#8217;s desired time period and location.</li>
+<li><strong>The Notifications</strong> or <strong>Messaging</strong> service subscribes users to receive email and sms updates of system alerts and reports. The messages are sent by our purpose built Meerkat Hermes module, controlled through a secured REST API.</li>
+<li><strong>The Explore Data</strong> component allows users to draw and export the tables and charts that they want to see, picking which categories to show along each access and filtering/ording the records as they desire.</li>
+<li><strong>The Download Data</strong> component provides a means of downloading pre-pared data sets and any raw data that the user desires for their own analysis.</li>
 </ul>
 </div>
 <div class="section" id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
-<p>Meerkat Frontend is structured as a Python Flask app, and as such, is primarily made up of static assets, Jinja2 templates and Python modules. The static assets are assembled from the &#8220;src&#8221; folder and the &#8220;bower_components&#8221; folder using Gulp. Further folders and files exist to manage the app&#8217;s testing, and to abstract country specifics into configuration files. The whole thing is further structured so it can be bundled up as a python package.  Here&#8217;s some information regarding particular core files and folders of note:</p>
-<p><strong>runserver.py</strong> - Runs the development/testing server for the app.</p>
+<p>As a Python flask app, Meerkat Frontend is made up of static assets, Jinja2 templates and Python modules.  Further folders and files exist to manage the app&#8217;s testing, and to abstract country specifics into configuration files, and bundle it up as a python package.</p>
+<p>Meerkat Frontend depends upon three package management systems: Python&#8217;s PIP, Javascript&#8217;s Node Package Manager (NPM) and the client-side package manager Bower.  The dependieces required from each package manager are stored in the files <strong>setup.py</strong>, <strong>package.json</strong> and <strong>bower.json</strong> respectively. After pulling the repository from <strong>GitHub</strong>, the following commands need to be run from the package&#8217;s root folder to install the necessary dependancies, <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code>, <code class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span></code>, and <code class="docutils literal"><span class="pre">bower</span> <span class="pre">install</span></code>.</p>
+<p>One of the packages installed by NPM is the build tool <strong>Gulp</strong>. Gulp performs a number of build-related processes specified in the file <strong>gulp.js</strong>. Among other things Gulp optimises images, builds the SASS files into CSS files, runs <strong>JSHint</strong> on the Javascript, draws all the Javascript and CSS files together into large single files (reducing the number of requests to load a web page), cleans out our static assets folder, and then re-assembles the updated static assets ready to be used. <em>NOTE:</em> static assets are assembled from the <strong>meerkat_frontend/src</strong> folder, <strong>bower_components</strong> folder and <strong>node_modules</strong> folder, and then placed in the <strong>meerkat_frontend/static</strong> folder; <em>there is no need to directly edit anything in the static assets folder</em>.  In order to run Gulp, you must first clean the static assets using the <strong>clean</strong> task specified in gulp.js, we therefore suggest using the following command to build the project <code class="docutils literal"><span class="pre">gulp</span> <span class="pre">clean</span> <span class="pre">&amp;&amp;</span> <span class="pre">gulp</span></code>.</p>
+<p>Files and folders of particular note include:</p>
+<p><strong>runserver.py</strong> - Runs a development/testing server for the app. Note that it is advised to run this inside the development or production environments built in the Meerkat Infrastructure repository.</p>
 <p><strong>config.py</strong> - Specifies a host of configuration variables used throughout Meerkat Frontend.  Allows you to distinguish between a development,testing and production environment.</p>
-<p><strong>homepage_&lt;country&gt;.json</strong> - These files include the homepage data for each country.  The homepage is built around the data specified in these files. Abstracting this data into a seperate file means it is easier to replicate for multiple countries.</p>
 <p><strong>meerkat_frontend/</strong></p>
 <blockquote>
 <div><p><strong>common.py</strong> - A file containing a number of python methods that could be useful across all components.</p>
 <p><strong>apiData/</strong>  A folder containing data for a static API, used for testing and development instead of the live API.</p>
-<p><strong>test/</strong> A folder  containing our testing harness for Meerkat_Frontend</p>
+<p><strong>test/</strong> A folder containing our testing harness for Meerkat_Frontend</p>
+<p><strong>views/</strong> A folder containing the python flask view modules. There is a different view for each component.  This is where much of the server-side work happens.</p>
+<p><strong>templates/</strong> A folder containing Jinja2 templates that are rendered in the Python view files.  There is a seperate folder of templates for each component.</p>
+<blockquote>
+<div><p><strong>base.html</strong> A file containing the base template that is extended by other templates in each component. Jinja2 templates are hereditary, reducing the need to re-write the same bits of template multiple times. This base tamplate includes the header, footer, navigation bar and other core fragments of layout etc...</p>
+<p><strong>includes/</strong> A folder containing recurring fragments of templates.</p>
+</div></blockquote>
 </div></blockquote>
 </div>
 <div class="section" id="documentation">
@@ -141,6 +155,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

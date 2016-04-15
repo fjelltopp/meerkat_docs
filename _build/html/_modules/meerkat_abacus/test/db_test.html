@@ -41,6 +41,9 @@
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -76,6 +79,8 @@
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.dialects.postgresql</span> <span class="kn">import</span> <span class="n">JSONB</span>
+<span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">from</span> <span class="nn">meerkat_abacus</span> <span class="kn">import</span> <span class="n">manage</span>
 <span class="kn">from</span> <span class="nn">meerkat_abacus</span> <span class="kn">import</span> <span class="n">model</span>
@@ -114,6 +119,9 @@
                 <span class="k">assert</span> <span class="n">r</span><span class="o">.</span><span class="n">parent_location</span> <span class="o">==</span> <span class="mi">2</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="n">r</span><span class="o">.</span><span class="n">deviceid</span> <span class="o">==</span> <span class="s">&quot;1,6&quot;</span>
+
+        <span class="n">manage</span><span class="o">.</span><span class="n">fake_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">country_config</span><span class="p">,</span>
+                         <span class="n">config</span><span class="o">.</span><span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
         <span class="n">manage</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">country_config</span><span class="p">,</span>
                            <span class="n">config</span><span class="o">.</span><span class="n">form_directory</span><span class="p">,</span>
                            <span class="n">engine</span><span class="p">)</span>
@@ -127,8 +135,13 @@
         <span class="n">manage</span><span class="o">.</span><span class="n">import_variables</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
         <span class="n">agg_var</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">agg_var</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;Total&quot;</span>
-        <span class="n">manage</span><span class="o">.</span><span class="n">raw_data_to_variables</span><span class="p">()</span>
 
+        <span class="n">manage</span><span class="o">.</span><span class="n">import_links</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">link_defs</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">LinkDefinitions</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">link_defs</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;Alert Investigation&quot;</span>
+
+
+        <span class="n">manage</span><span class="o">.</span><span class="n">raw_data_to_variables</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
         <span class="n">agg_var_female</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;Female&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
         <span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Data</span><span class="p">)</span>
@@ -146,9 +159,59 @@
         <span class="n">female</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="s">&quot;case&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="s">&quot;case&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
                 <span class="p">{</span><span class="s">&quot;intro./visit_type&quot;</span><span class="p">:</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="s">&quot;pt1./gender&quot;</span><span class="p">:</span> <span class="s">&#39;female&#39;</span><span class="p">}))</span>
-        <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">female</span><span class="o">.</span><span class="n">all</span><span class="p">()),</span> <span class="n">number_of_female</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">number_of_totals</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">total</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
-        <span class="k">assert</span> <span class="n">number_of_female</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">female</span><span class="o">.</span><span class="n">all</span><span class="p">())</span></div></div>
+        <span class="k">assert</span> <span class="n">number_of_female</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">female</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+        
+        <span class="n">manage</span><span class="o">.</span><span class="n">add_links</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">link_query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Links</span><span class="p">)</span>
+        <span class="n">links</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">link_query</span><span class="p">:</span>
+            <span class="n">links</span><span class="p">[</span><span class="n">link</span><span class="o">.</span><span class="n">link_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">link</span>
+        
+        <span class="n">alert_query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Alerts</span><span class="p">)</span>
+        <span class="n">alerts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alert_query</span><span class="p">:</span>
+            <span class="n">alerts</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="n">alert_inv_query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">form_tables</span><span class="p">[</span><span class="s">&quot;alert&quot;</span><span class="p">])</span>
+        <span class="n">alert_invs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alert_inv_query</span><span class="p">:</span>
+            <span class="n">alert_invs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;pt./alert_id&quot;</span><span class="p">],</span> <span class="p">[])</span>
+            <span class="n">alert_invs</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;pt./alert_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">alert_id</span> <span class="ow">in</span> <span class="n">alerts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">alert_id</span> <span class="ow">in</span> <span class="n">alert_invs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">assert</span> <span class="n">alert_id</span> <span class="ow">in</span> <span class="n">links</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">alert_invs</span><span class="p">[</span><span class="n">alert_id</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">assert</span><span class="p">(</span><span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">to_date</span>
+                           <span class="o">==</span> <span class="n">parse</span><span class="p">(</span><span class="n">alert_invs</span><span class="p">[</span><span class="n">alert_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;end&quot;</span><span class="p">]))</span>
+                    <span class="n">labs</span> <span class="o">=</span> <span class="p">(</span><span class="n">alert_invs</span><span class="p">[</span><span class="n">alert_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;alert_labs./return_lab&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">labs</span> <span class="o">==</span> <span class="s">&quot;unsure&quot;</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="p">[</span><span class="s">&quot;Ongoing&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Status&quot;</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">labs</span> <span class="o">==</span> <span class="s">&quot;yes&quot;</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="p">[</span><span class="s">&quot;Confirmed&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Status&quot;</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">labs</span> <span class="o">==</span> <span class="s">&quot;no&quot;</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="p">[</span><span class="s">&quot;Discarded&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Status&quot;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">investigations</span> <span class="o">=</span> <span class="n">alert_invs</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span>
+                    <span class="n">largest_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">latest_inv</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="k">for</span> <span class="n">inv</span> <span class="ow">in</span> <span class="n">investigations</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">parse</span><span class="p">(</span><span class="n">inv</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;end&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">largest_date</span><span class="p">:</span>
+                            <span class="n">largest_date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">inv</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;end&quot;</span><span class="p">])</span>
+                            <span class="n">largest_inv</span> <span class="o">=</span> <span class="n">inv</span>
+                    <span class="k">assert</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">to_date</span> <span class="o">==</span> <span class="n">largest_date</span>
+                    <span class="n">labs</span> <span class="o">=</span> <span class="p">(</span><span class="n">largest_inv</span>
+                            <span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;alert_labs./return_lab&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">labs</span> <span class="o">==</span> <span class="s">&quot;unsure&quot;</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="p">[</span><span class="s">&quot;Ongoing&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Status&quot;</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">labs</span> <span class="o">==</span> <span class="s">&quot;yes&quot;</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="p">[</span><span class="s">&quot;Confirmed&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Status&quot;</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">labs</span> <span class="o">==</span> <span class="s">&quot;no&quot;</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="p">[</span><span class="s">&quot;Discarded&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">links</span><span class="p">[</span><span class="n">alert_id</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;Status&quot;</span><span class="p">]</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">alert_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">links</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div></div>
 </pre></div>
 
           </div>
@@ -162,6 +225,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

@@ -40,6 +40,9 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
@@ -51,8 +54,8 @@
   <ul>
 <li><a class="reference internal" href="#">meerkat_abacus.aggregation package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-meerkat_abacus.aggregation.to_codes">meerkat_abacus.aggregation.to_codes module</a></li>
-<li><a class="reference internal" href="#module-meerkat_abacus.aggregation.variable">meerkat_abacus.aggregation.variable module</a></li>
+<li><a class="reference internal" href="#meerkat-abacus-aggregation-to-codes-module">meerkat_abacus.aggregation.to_codes module</a></li>
+<li><a class="reference internal" href="#meerkat-abacus-aggregation-variable-module">meerkat_abacus.aggregation.variable module</a></li>
 <li><a class="reference internal" href="#module-meerkat_abacus.aggregation">Module contents</a></li>
 </ul>
 </li>
@@ -91,86 +94,11 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-meerkat_abacus.aggregation.to_codes">
-<span id="meerkat-abacus-aggregation-to-codes-module"></span><h2>meerkat_abacus.aggregation.to_codes module<a class="headerlink" href="#module-meerkat_abacus.aggregation.to_codes" title="Permalink to this headline">¶</a></h2>
-<p>Functionality to turn raw data into codes</p>
-<dl class="function">
-<dt id="meerkat_abacus.aggregation.to_codes.get_variables">
-<code class="descclassname">meerkat_abacus.aggregation.to_codes.</code><code class="descname">get_variables</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/to_codes.html#get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.to_codes.get_variables" title="Permalink to this definition">¶</a></dt>
-<dd><p>get variables out of db turn them into Variable classes</p>
-<p>Args:
-session: db-session</p>
-<p>Returns:
-variables: dict of id:Variable</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.aggregation.to_codes.to_code">
-<code class="descclassname">meerkat_abacus.aggregation.to_codes.</code><code class="descname">to_code</code><span class="sig-paren">(</span><em>row</em>, <em>variables</em>, <em>locations</em>, <em>date_column</em>, <em>table_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/to_codes.html#to_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.to_codes.to_code" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a row and transforms it into a data row</p>
-<p>Args;
-row: row of raw data
-variables: dict of variables to check
-locations: list of locations</p>
-</dd></dl>
-
+<div class="section" id="meerkat-abacus-aggregation-to-codes-module">
+<h2>meerkat_abacus.aggregation.to_codes module<a class="headerlink" href="#meerkat-abacus-aggregation-to-codes-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-meerkat_abacus.aggregation.variable">
-<span id="meerkat-abacus-aggregation-variable-module"></span><h2>meerkat_abacus.aggregation.variable module<a class="headerlink" href="#module-meerkat_abacus.aggregation.variable" title="Permalink to this headline">¶</a></h2>
-<p>Functionality to translate raw data into codes
-specified by codes file</p>
-<dl class="class">
-<dt id="meerkat_abacus.aggregation.variable.Variable">
-<em class="property">class </em><code class="descclassname">meerkat_abacus.aggregation.variable.</code><code class="descname">Variable</code><span class="sig-paren">(</span><em>variable</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>A class for storing variables for use in checking records</p>
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test">
-<code class="descname">test</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tests if current variable is true for row</p>
-<p>Args:
-row: a row from a form</p>
-<p>Returns:
-id: 0 if false and id if true</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_count">
-<code class="descname">test_count</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_count" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_count_occurence">
-<code class="descname">test_count_occurence</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_count_occurence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_count_occurence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_count_occurence_in">
-<code class="descname">test_count_occurence_in</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_count_occurence_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_count_occurence_in" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_count_occurence_in_int_between">
-<code class="descname">test_count_occurence_in_int_between</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_count_occurence_in_int_between"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_count_occurence_in_int_between" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_count_occurence_int_between">
-<code class="descname">test_count_occurence_int_between</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_count_occurence_int_between"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_count_occurence_int_between" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_int_between">
-<code class="descname">test_int_between</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_int_between"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_int_between" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="meerkat_abacus.aggregation.variable.Variable.test_sum">
-<code class="descname">test_sum</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/aggregation/variable.html#Variable.test_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.aggregation.variable.Variable.test_sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="meerkat-abacus-aggregation-variable-module">
+<h2>meerkat_abacus.aggregation.variable module<a class="headerlink" href="#meerkat-abacus-aggregation-variable-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-meerkat_abacus.aggregation">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-meerkat_abacus.aggregation" title="Permalink to this headline">¶</a></h2>
@@ -189,6 +117,9 @@ id: 0 if false and id if true</p>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>

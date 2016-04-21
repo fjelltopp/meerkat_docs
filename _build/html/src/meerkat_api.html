@@ -87,9 +87,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -121,7 +118,7 @@
 <dl class="get">
 <dt id="get--consultation_map">
 <code class="descname">GET </code><code class="descname">/consultation_map</code><a class="headerlink" href="#get--consultation_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get map fro frontpage</p>
+<dd><p>Get map for frontpage</p>
 </dd></dl>
 
 <dl class="get">
@@ -148,7 +145,7 @@ Returns:</p>
 <dl class="get">
 <dt id="get--num_alerts">
 <code class="descname">GET </code><code class="descname">/num_alerts</code><a class="headerlink" href="#get--num_alerts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get map fro frontpage</p>
+<dd><p>Number of Alerts for frontpage</p>
 </dd></dl>
 
 <dl class="get">
@@ -177,7 +174,7 @@ Returns:</p>
 <dl class="get">
 <dt id="get--tot_map">
 <code class="descname">GET </code><code class="descname">/tot_map</code><a class="headerlink" href="#get--tot_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get map fro frontpage</p>
+<dd><p>Get map for frontpage</p>
 </dd></dl>
 
 <dl class="get">
@@ -187,6 +184,37 @@ Returns:</p>
 Returns:</p>
 <blockquote>
 <div>alerts</div></blockquote>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)-(only_loc)">
+<code class="descname">GET </code><code class="descname">/query_category/</code><span class="sig-paren">(</span><em>group_by1</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>group_by2</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>only_loc</em><span class="sig-paren">)</span><a class="headerlink" href="#get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)-(only_loc)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)">
+<code class="descname">GET </code><code class="descname">/query_category/</code><span class="sig-paren">(</span><em>group_by1</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>group_by2</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--query_category-(group_by1)-(group_by2)-(only_loc)">
+<code class="descname">GET </code><code class="descname">/query_category/</code><span class="sig-paren">(</span><em>group_by1</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>group_by2</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>only_loc</em><span class="sig-paren">)</span><a class="headerlink" href="#get--query_category-(group_by1)-(group_by2)-(only_loc)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--query_category-(group_by1)-(group_by2)">
+<code class="descname">GET </code><code class="descname">/query_category/</code><span class="sig-paren">(</span><em>group_by1</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>group_by2</em><span class="sig-paren">)</span><a class="headerlink" href="#get--query_category-(group_by1)-(group_by2)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a table with category1 x category2 and is broken down by
+group_by. Start and end data gives option to specifiy time period</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>variable: the variable all records need to fulfill
+group_by: category to group by
+start_date: start date
+end_date: end_date</dd>
+<dt>Returns:</dt>
+<dd>data: {variable_1: {total: X, weeks: {12:X,13:X}}....}</dd>
+</dl>
 </dd></dl>
 
 <dl class="get">
@@ -211,24 +239,71 @@ end_date: end_date</dd>
 </dd></dl>
 
 <dl class="get">
-<dt id="get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)">
-<code class="descname">GET </code><code class="descname">/query_category/</code><span class="sig-paren">(</span><em>group_by1</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>group_by2</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dt id="get--reports-refugee_public_health-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_public_health-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="get">
-<dt id="get--query_category-(group_by1)-(group_by2)">
-<code class="descname">GET </code><code class="descname">/query_category/</code><span class="sig-paren">(</span><em>group_by1</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>group_by2</em><span class="sig-paren">)</span><a class="headerlink" href="#get--query_category-(group_by1)-(group_by2)" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a table with category1 x category2 and is broken down by
-group_by. Start and end data gives option to specifiy time period</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>variable: the variable all records need to fulfill
-group_by: category to group by
-start_date: start date
-end_date: end_date</dd>
-<dt>Returns:</dt>
-<dd>data: {variable_1: {total: X, weeks: {12:X,13:X}}....}</dd>
-</dl>
+<dt id="get--reports-refugee_public_health-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_public_health-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_public_health-(location)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_public_health-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates date for the refugee public health report for the year 
+up to epi_week for the given location</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--reports-ncd_public_health-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/ncd_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-ncd_public_health-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-ncd_public_health-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/ncd_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-ncd_public_health-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-ncd_public_health-(location)">
+<code class="descname">GET </code><code class="descname">/reports/ncd_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-ncd_public_health-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates date for the ncd public health report for the year 
+up to epi_week for the given location</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--reports-cd_public_health-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/cd_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-cd_public_health-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-cd_public_health-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/cd_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-cd_public_health-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-cd_public_health-(location)">
+<code class="descname">GET </code><code class="descname">/reports/cd_public_health/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-cd_public_health-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates date for the public health report for the year 
+up to epi_week for the given location</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_detail-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_detail/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_detail-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_detail-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_detail/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_detail-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_detail-(location)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_detail/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_detail-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates date for the refugee public health report for the year 
+up to epi_week for the given location</p>
 </dd></dl>
 
 <dl class="get">
@@ -249,6 +324,39 @@ up to epi_week for the given location</p>
 </dd></dl>
 
 <dl class="get">
+<dt id="get--reports-ncd_report-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/ncd_report/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-ncd_report-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-ncd_report-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/ncd_report/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-ncd_report-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-ncd_report-(location)">
+<code class="descname">GET </code><code class="descname">/reports/ncd_report/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-ncd_report-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for ncd report</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_cd-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_cd/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_cd-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_cd-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_cd/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_cd-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-refugee_cd-(location)">
+<code class="descname">GET </code><code class="descname">/reports/refugee_cd/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-refugee_cd-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates date for the refugee public health report for the year 
+up to epi_week for the given location</p>
+</dd></dl>
+
+<dl class="get">
 <dt id="get--reports-cd_report-(location)-(end_date)-(start_date)">
 <code class="descname">GET </code><code class="descname">/reports/cd_report/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-cd_report-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -262,6 +370,23 @@ up to epi_week for the given location</p>
 <dt id="get--reports-cd_report-(location)">
 <code class="descname">GET </code><code class="descname">/reports/cd_report/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-cd_report-(location)" title="Permalink to this definition">¶</a></dt>
 <dd><p>generates data for the CD report for the year until the end date for the given location</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--reports-pip-(location)-(end_date)-(start_date)">
+<code class="descname">GET </code><code class="descname">/reports/pip/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>start_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-pip-(location)-(end_date)-(start_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-pip-(location)-(end_date)">
+<code class="descname">GET </code><code class="descname">/reports/pip/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>end_date</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-pip-(location)-(end_date)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--reports-pip-(location)">
+<code class="descname">GET </code><code class="descname">/reports/pip/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--reports-pip-(location)" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates date for the pip report for the year 
+up to epi_week for the given location</p>
 </dd></dl>
 
 <dl class="get">
@@ -301,6 +426,20 @@ year: year</dd>
 </dl>
 <p>Reutrns:
 result_dict: {&#8220;weeks&#8221;:{1:0....}, &#8220;year&#8221;:0}</p>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--export-category-(category)-(download_name)">
+<code class="descname">GET </code><code class="descname">/export/category/</code><span class="sig-paren">(</span><em>category</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>download_name</em><span class="sig-paren">)</span><a class="headerlink" href="#get--export-category-(category)-(download_name)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export cases from case form that matches a category</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li>category: category to match</li>
+<li>variables: variable dictionary</li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="get">
@@ -350,6 +489,30 @@ location: location_id</dd>
 </dd></dl>
 
 <dl class="get">
+<dt id="get--records-(variable)-(location_id)">
+<code class="descname">GET </code><code class="descname">/records/</code><span class="sig-paren">(</span><em>variable</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>location_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--records-(variable)-(location_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the records with a variable for locations</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>variable: variable_id
+location: location</dd>
+<dt>Returns: </dt>
+<dd>list_of_records</dd>
+</dl>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--clinics-(location_id)-(clinic_type)">
+<code class="descname">GET </code><code class="descname">/clinics/</code><span class="sig-paren">(</span><em>location_id</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>clinic_type</em><span class="sig-paren">)</span><a class="headerlink" href="#get--clinics-(location_id)-(clinic_type)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--clinics-(location_id)">
+<code class="descname">GET </code><code class="descname">/clinics/</code><span class="sig-paren">(</span><em>location_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--clinics-(location_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>geojson for all clinics that are sublocation of location</p>
+</dd></dl>
+
+<dl class="get">
 <dt id="get--export-form-(form)">
 <code class="descname">GET </code><code class="descname">/export/form/</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#get--export-form-(form)" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows one to export a form,
@@ -359,6 +522,17 @@ Args:</p>
 <li>form: the form to export</li>
 </ul>
 </div></blockquote>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--map-(variable_id)-(location)">
+<code class="descname">GET </code><code class="descname">/map/</code><span class="sig-paren">(</span><em>variable_id</em><span class="sig-paren">)</span><code class="descname">/</code><span class="sig-paren">(</span><em>location</em><span class="sig-paren">)</span><a class="headerlink" href="#get--map-(variable_id)-(location)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--map-(variable_id)">
+<code class="descname">GET </code><code class="descname">/map/</code><span class="sig-paren">(</span><em>variable_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--map-(variable_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>json object with a map of variable id</p>
 </dd></dl>
 
 <dl class="get">
@@ -405,9 +579,15 @@ Args:</p>
 </dd></dl>
 
 <dl class="get">
-<dt id="get--clinics-(location_id)">
-<code class="descname">GET </code><code class="descname">/clinics/</code><span class="sig-paren">(</span><em>location_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--clinics-(location_id)" title="Permalink to this definition">¶</a></dt>
-<dd><p>geojson for all clinics that are sublocation of location</p>
+<dt id="get--links-(links_id)">
+<code class="descname">GET </code><code class="descname">/links/</code><span class="sig-paren">(</span><em>links_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--links-(links_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get links with certain type</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>links_id</dd>
+<dt>Returns:</dt>
+<dd>link</dd>
+</dl>
 </dd></dl>
 
 <dl class="get">
@@ -423,9 +603,15 @@ Args:</p>
 </dd></dl>
 
 <dl class="get">
-<dt id="get--map-(variable_id)">
-<code class="descname">GET </code><code class="descname">/map/</code><span class="sig-paren">(</span><em>variable_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--map-(variable_id)" title="Permalink to this definition">¶</a></dt>
-<dd><p>json object with a map of variable id</p>
+<dt id="get--link-(link_id)">
+<code class="descname">GET </code><code class="descname">/link/</code><span class="sig-paren">(</span><em>link_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--link-(link_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get links with id</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>link_id</dd>
+<dt>Returns:</dt>
+<dd>link</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -460,7 +646,7 @@ Args:</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

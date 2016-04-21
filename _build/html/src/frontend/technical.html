@@ -1,0 +1,161 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Technical Component &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Technical Component</a><ul>
+<li><a class="reference internal" href="#page-management">Page Management</a></li>
+<li><a class="reference internal" href="#chart-table-map-management">Chart/Table/Map Management</a></li>
+<li><a class="reference internal" href="#other-javascript">Other Javascript</a></li>
+<li><a class="reference internal" href="#the-configuration-file">The Configuration File</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/src/frontend/technical.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-technical-component">
+<h1>The Technical Component<a class="headerlink" href="#the-technical-component" title="Permalink to this headline">¶</a></h1>
+<p>The technical component presents data from the api in a &#8220;Dashboard&#8221; interface, with tabs and links enabling the user to navigate through a series of tables and graphs that detail the state of health in the given country. <strong>The pages and URLs in this component are managed client-side by the Javascript</strong> (the static assets <em>pageManager.js</em> and <em>locationManager.js</em>), not server-side by the python. A number of other Javascript files are served as static assets to help draw the many graphs, tables and maps used in this component.</p>
+<div class="section" id="page-management">
+<h2>Page Management<a class="headerlink" href="#page-management" title="Permalink to this headline">¶</a></h2>
+<p>The Javascript <em>history</em> object stores an array of <em>page states</em> on the client-side, each mapped to a URL and a page title. A page state is a small Javascript object that allows you store data with the URL, and thus render the correct desired page. The browser&#8217;s forward and backward buttons, can than navigate through this array, rendering a new page for each page state.  This is the basis of our page management system.</p>
+<p>The workhorse of our page management system is the <cite>loadPage()</cite> function in the <em>static/js/technical/pageManager.js</em> file. Three different types of pages are managed by this method: a tab page, an alert page (detailing a single alert) and a disease page (detailing a single disease/aggregation variable).  Each type of page requires a different URL and page state structure, and is edited differently after initial html template is rendered.  The html templates for these pages are stored in the <em>static/files/pages</em> folder. The process involved in loading a page involves the following steps:</p>
+<ol class="arabic simple">
+<li>Assembly of the correct page state.</li>
+<li>Assembly of the correct URL.</li>
+<li>Storing of the page state and url in the history object.</li>
+<li>Rendering of the html template.</li>
+<li>Updating of any dynamic content in the page, by calling methods such as <em>loadLocation()</em>.</li>
+<li>Any additional page updates required (such as highlighting a new tab).</li>
+</ol>
+<p>Steps 1-3 and 4-6 are seperated into different methods for each page type, so that the content can be rendered without storing a page state if necessary.</p>
+<p>The file <em>static/js/technical/locationManager.js</em> includes two methods that perfrom an analagous process for rendering the page using a new location.  The <em>loadLocation()</em> method (called after loading a new location-dependant page) performs steps 1-3 of the above process and then the method <em>loadLocationContent()</em> draws the new updated location selector and calls the HTML template&#8217;s <em>drawCharts()</em> function.  This function, which is defined in each page&#8217;s HTML template, re-draws the page&#8217;s dynamic content using the new location ID.</p>
+<p>Upon loading the technical component&#8217;s Jinja2 template from the server, the method <em>loadLocationTree()</em> from the file <em>locationManager.js</em> is called (within the template istelf). This method calls the Meerkat API for the location tree information, stores the tree in a Javascript global variable, and then loads the initial tab to be viewed. <em>Tree Model</em> is a Javascript package installed with NPM (not available in Bower) that allows you to create a tree model and navigate through the model in sensible ways (e.g. find children and parents).  It is used to draw and update the location selector.</p>
+</div>
+<div class="section" id="chart-table-map-management">
+<h2>Chart/Table/Map Management<a class="headerlink" href="#chart-table-map-management" title="Permalink to this headline">¶</a></h2>
+<p>The charts, tables and maps are drawn by functions in the files <em>chartManager.js</em>, <em>tableManager.js</em>, and <em>mapManager.js</em> in the <em>static/js/technical</em> folder.In the majority of cases these functions are accessed through the function <em>categorySummation()</em> in the file <em>static/js/technical/misc.js</em>. There are a number of cases where tables have to be drawn that can&#8217;t be easily generalised into this function.  In these cases, specific functions are called from these files to draw tables such as the Alerts Aggregation Table under the Alerts tab, which is drawn by the function <em>alertsAggTable()</em> in <em>tableManager.js</em>.</p>
+<p>The <em>categorySummation()</em> function can draw table and charts for aggregations over a complete category of variables as specified in <em>Meerkat Abacus</em>. Arguments are passed to this function in a single object called <em>details</em>.  Full documentation for this function can be found here. It is recommended that you use this function as it handles the AJAX requests efficiently, sending them off in parallel rather than series.</p>
+</div>
+<div class="section" id="other-javascript">
+<h2>Other Javascript<a class="headerlink" href="#other-javascript" title="Permalink to this headline">¶</a></h2>
+<p>The file <em>static/js/technical/misc.js</em> contains a number of other javascript functions that are used throughout the technical dashboard. For instance</p>
+<ul class="simple">
+<li><cite>get_api_week()</cite> - a function that returns the current epi week. This value was initially calulated in javascript, based upon the date and the year.  As the system developed, we realised different countries would require different ways of calculating the epi week, so this is now served through the API.  This javascript function now returns the value of a global variable that is set by data passed to the Jinja2 template - the api call to caluclate the epi week is made server-side in the python. Keeping the function means that any referencing code didn&#8217;t have to be re-written.</li>
+<li><cite>last_weeks(week, n)</cite> - a function that returns the epi week numbers of the <cite>n</cite> weeks before the specified <cite>week</cite>.  This is needed because when the specified <cite>week</cite> is lower than <cite>n</cite> then we will need to return the last weeks of the previous year <em>e.g.</em> <cite>last_weeks(2, 3)</cite> will return week 52 (of the previous year) and week 1 and 2 of the current year. It&#8217;s used in <em>makeDataObject()</em> to select the right data from the API responses.</li>
+<li><cite>makeDataObject( *args*)</cite> - a function that orders all the data given in the arguments into a uniform pattern that can be understood by multiple drawing functions from the files <em>chartManager.js</em> and <em>tableManager.js</em>. The same data object that this function returns can be used to draw both a table and a chart. These data objects are also used in the <em>categorySummation()</em> method.</li>
+</ul>
+<p>The code should be well commented. <strong>Detailed documention for key javascript functions are available here.</strong></p>
+</div>
+<div class="section" id="the-configuration-file">
+<h2>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file is a json file loaded into the flask app in the meerkat_frontend module when the server is started up.  It is passed as a Python dictionary to the Jinja2 template and used to correctly render the pages for a specific country.  The configuration file should contain all country specifics including text, images, titles and map details.  Of particular note are the following settings:</p>
+<ul class="simple">
+<li><strong>New Tabs</strong> can be added to the <em>tabs</em> array.  Each new tab must have a <em>name</em> and a <em>template</em>.  The template is the file name for a html template stored in the <em>static/files/pages</em> folder e.g. &#8220;demographics.html*.  Each country can therefore have it&#8217;s own selection of tabs to display.</li>
+<li><strong>The Footer</strong> follows the same model across all countries, but shows a different list of supporters and logos.</li>
+<li><strong>Map</strong> details are stored for the <em>Map</em> tab, should it be included in the specified array of tabs.</li>
+<li><strong>Central Reviews</strong> are required by Jordan only.  A flag specifying whether they should be included in the technical site is specified here.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
+    </div>
+  </body>
+</html>

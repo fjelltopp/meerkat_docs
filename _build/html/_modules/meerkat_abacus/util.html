@@ -105,7 +105,9 @@
             <span class="n">adjustment</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">adjustment</span>
         <span class="k">return</span> <span class="n">first_of_year</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">adjustment</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="get_link_definitions"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.util.html#meerkat_abacus.util.get_link_definitions">[docs]</a><span class="k">def</span> <span class="nf">get_link_definitions</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.model</span> <span class="kn">import</span> <span class="n">Locations</span><span class="p">,</span> <span class="n">LinkDefinitions</span>
+
+<div class="viewcode-block" id="get_link_definitions"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.database_util.html#meerkat_abacus.database_util.get_link_definitions">[docs]</a><span class="k">def</span> <span class="nf">get_link_definitions</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    get a links dict</span>
 
@@ -119,11 +121,11 @@
     <span class="n">links</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
         <span class="n">links</span><span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
-    <span class="k">return</span> <span class="n">links</span></div>
+    <span class="k">return</span> <span class="n">links</span>
     
 
-
-<div class="viewcode-block" id="add_new_data"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.util.html#meerkat_abacus.util.add_new_data">[docs]</a><span class="k">def</span> <span class="nf">add_new_data</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="add_new_data"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.database_util.html#meerkat_abacus.database_util.add_new_data">[docs]</a><span class="k">def</span> <span class="nf">add_new_data</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    adds rows in data that has a uuid not already in the form</span>
 

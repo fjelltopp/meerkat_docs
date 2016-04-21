@@ -81,9 +81,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -100,11 +97,18 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="meerkat_abacus.codes.html">meerkat_abacus.codes package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.codes.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.codes.html#module-meerkat_abacus.codes.to_codes">meerkat_abacus.codes.to_codes module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.codes.html#module-meerkat_abacus.codes.variable">meerkat_abacus.codes.variable module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.codes.html#module-meerkat_abacus.codes">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meerkat_abacus.aggregation.html">meerkat_abacus.aggregation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.aggregation.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.aggregation.html#meerkat-abacus-aggregation-to-codes-module">meerkat_abacus.aggregation.to_codes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.aggregation.html#meerkat-abacus-aggregation-variable-module">meerkat_abacus.aggregation.variable module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.aggregation.html#module-meerkat_abacus.aggregation">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="meerkat_abacus.database_util.html">meerkat_abacus.database_util package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.database_util.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.database_util.html#meerkat-abacus-database-util-create-fake-data-module">meerkat_abacus.database_util.create_fake_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.database_util.html#meerkat-abacus-database-util-import-locations-module">meerkat_abacus.database_util.import_locations module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.database_util.html#module-meerkat_abacus.database_util">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="meerkat_abacus.test.html">meerkat_abacus.test package</a><ul>
@@ -161,317 +165,6 @@ environemental variables:</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>env_var</strong> &#8211; name of envrionment variable</li>
 <li><strong>default</strong> &#8211; the default value</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-meerkat_abacus.data_management">
-<span id="meerkat-abacus-data-management-module"></span><h2>meerkat_abacus.data_management module<a class="headerlink" href="#module-meerkat_abacus.data_management" title="Permalink to this headline">¶</a></h2>
-<p>Functions to create the database, populate the db tables and proccess data.</p>
-<dl class="function">
-<dt id="meerkat_abacus.data_management.add_alerts">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">add_alerts</code><span class="sig-paren">(</span><em>alerts</em>, <em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#add_alerts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.add_alerts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Inserts all the alerts table. If another record from the same
-day, disease and clinic already exists we create one big record.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>alerts</strong> &#8211; list of alerts</li>
-<li><strong>session</strong> &#8211; db session</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.add_links">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">add_links</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#add_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.add_links" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turn raw data in forms into structured data with codes using
-the code from the celery app.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>engine</strong> &#8211; db engine</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.add_new_fake_data">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">add_new_fake_data</code><span class="sig-paren">(</span><em>to_add</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#add_new_fake_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.add_new_fake_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a new fake data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>to_add</strong> &#8211; number of new records to add</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.add_new_links">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">add_new_links</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#add_new_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.add_new_links" title="Permalink to this definition">¶</a></dt>
-<dd><p>add any new data in form tables to data table</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.category_to_list">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">category_to_list</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#category_to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.category_to_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms category to list in row</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong> &#8211; row of data</td>
-</tr>
-</tbody>
-</table>
-<dl class="docutils">
-<dt>Reutrns:</dt>
-<dd>row: modified row</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.create_db">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">create_db</code><span class="sig-paren">(</span><em>url</em>, <em>base</em>, <em>country_config</em>, <em>drop=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#create_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.create_db" title="Permalink to this definition">¶</a></dt>
-<dd><p>The function creates and sets up the datbase.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>base</strong> &#8211; An SQLAlchmey declarative base with the db schema</li>
-<li><strong>url</strong> &#8211; the database_url</li>
-<li><strong>country_config</strong> &#8211; A contry config dictionary</li>
-<li><strong>drop</strong> &#8211; Flag to drop the database before setting it up</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Boolean</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.fake_data">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">fake_data</code><span class="sig-paren">(</span><em>country_config</em>, <em>data_directory</em>, <em>engine</em>, <em>N=500</em>, <em>new=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#fake_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.fake_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates csv files with fake data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>country_config</strong> &#8211; A country configuration object</li>
-<li><strong>data_directory</strong> &#8211; the directory to store the from data</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.get_data_from_s3">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">get_data_from_s3</code><span class="sig-paren">(</span><em>bucket</em>, <em>data_directory</em>, <em>country_config</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#get_data_from_s3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.get_data_from_s3" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get form data from s3 bucket</p>
-<p>To run, needs to be authenticated with AWS.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>bucket</strong> &#8211; bucket_name</li>
-<li><strong>data_directory</strong> &#8211; directory to store the downloaded files</li>
-<li><strong>country_config</strong> &#8211; country configs to find the form files</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.import_data">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">import_data</code><span class="sig-paren">(</span><em>country_config</em>, <em>data_directory</em>, <em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#import_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.import_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete current data and then import form data
-from csv files into the database.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>country_config</strong> &#8211; configuration</li>
-<li><strong>data_directory</strong> &#8211; directory to find the forms</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.import_links">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">import_links</code><span class="sig-paren">(</span><em>country_config</em>, <em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#import_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.import_links" title="Permalink to this definition">¶</a></dt>
-<dd><p>Imports all links from links-file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>country_config</strong> &#8211; A country configuration object</li>
-<li><strong>engine</strong> &#8211; SQLAlchemy connection engine</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.import_locations">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">import_locations</code><span class="sig-paren">(</span><em>country_config</em>, <em>config_directory</em>, <em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#import_locations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.import_locations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Imports all locations from csv-files</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>country_config</strong> &#8211; A country configuration object</li>
-<li><strong>engine</strong> &#8211; SQLAlchemy connection engine</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.import_new_data">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">import_new_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#import_new_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.import_new_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>task to check csv files and insert any new data</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.import_variables">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">import_variables</code><span class="sig-paren">(</span><em>country_config</em>, <em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#import_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.import_variables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete current data and then import form data
-from csv files into the database.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>country_config</strong> &#8211; configuration</li>
-<li><strong>data_directory</strong> &#8211; directory to find the forms</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.new_data_to_codes">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">new_data_to_codes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#new_data_to_codes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.new_data_to_codes" title="Permalink to this definition">¶</a></dt>
-<dd><p>add any new data in form tables to data table</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.raw_data_to_variables">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">raw_data_to_variables</code><span class="sig-paren">(</span><em>engine</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#raw_data_to_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.raw_data_to_variables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turn raw data in forms into structured data with codes using
-the code from the celery app.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>engine</strong> &#8211; db engine</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.set_up_everything">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">set_up_everything</code><span class="sig-paren">(</span><em>url</em>, <em>leave_if_data</em>, <em>drop_db</em>, <em>N</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#set_up_everything"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.set_up_everything" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set up everything by calling all the other functions</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>url</strong> &#8211; db url</li>
-<li><strong>leave_if_data</strong> &#8211; do nothing if data is there</li>
-<li><strong>drop_db</strong> &#8211; shall db be dropped before created</li>
-<li><strong>N</strong> &#8211; number of data points to create</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.sort_data">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">sort_data</code><span class="sig-paren">(</span><em>data_def</em>, <em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#sort_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.sort_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns row translated to data after data_def</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data_def</strong> &#8211; dictionary with data definition</li>
-<li><strong>row</strong> &#8211; a row to be translated</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>data</strong> &#8211;
-the data</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.data_management.table_data_from_csv">
-<code class="descclassname">meerkat_abacus.data_management.</code><code class="descname">table_data_from_csv</code><span class="sig-paren">(</span><em>filename</em>, <em>table</em>, <em>directory</em>, <em>session</em>, <em>engine</em>, <em>deviceids=None</em>, <em>table_name=None</em>, <em>form=True</em>, <em>row_function=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/data_management.html#table_data_from_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.data_management.table_data_from_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds data to table with name</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>filename</strong> &#8211; name of table</li>
-<li><strong>table</strong> &#8211; table class</li>
-<li><strong>directory</strong> &#8211; directory where the csv file is</li>
-<li><strong>engine</strong> &#8211; SqlAlchemy engine</li>
-<li><strong>session</strong> &#8211; SqlAlchemy session</li>
-<li><strong>deviceids</strong> &#8211; if we should only add rows with a one of the deviceids</li>
-<li><strong>table_name</strong> &#8211; name of table if different from filename</li>
-<li><strong>form</strong> &#8211; if this is a form table</li>
-<li><strong>row_function</strong> &#8211; function to appy to the rows before inserting</li>
 </ul>
 </td>
 </tr>
@@ -664,6 +357,11 @@ the data</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.region">
+<code class="descname">region</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.region" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="meerkat_abacus.model.Alerts.uuids">
 <code class="descname">uuids</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.uuids" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -731,6 +429,11 @@ the data</p>
 <em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">LinkDefinitions</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#LinkDefinitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
 <dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.compare_lower">
+<code class="descname">compare_lower</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.compare_lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="meerkat_abacus.model.LinkDefinitions.data">
 <code class="descname">data</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -738,6 +441,11 @@ the data</p>
 <dl class="attribute">
 <dt id="meerkat_abacus.model.LinkDefinitions.from_column">
 <code class="descname">from_column</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.from_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.from_condition">
+<code class="descname">from_condition</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.from_condition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -763,6 +471,11 @@ the data</p>
 <dl class="attribute">
 <dt id="meerkat_abacus.model.LinkDefinitions.to_column">
 <code class="descname">to_column</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.to_condition">
+<code class="descname">to_condition</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_condition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -858,6 +571,11 @@ the data</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.level">
+<code class="descname">level</code><a class="headerlink" href="#meerkat_abacus.model.Locations.level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="meerkat_abacus.model.Locations.name">
 <code class="descname">name</code><a class="headerlink" href="#meerkat_abacus.model.Locations.name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -912,7 +630,7 @@ the data</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

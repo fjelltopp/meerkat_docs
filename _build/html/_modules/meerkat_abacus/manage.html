@@ -1,0 +1,482 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>meerkat_abacus.manage &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for meerkat_abacus.manage</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy_utils</span> <span class="kn">import</span> <span class="n">database_exists</span><span class="p">,</span> <span class="n">create_database</span><span class="p">,</span> <span class="n">drop_database</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+
+<span class="kn">from</span> <span class="nn">meerkat_abacus.database_util.import_locations</span> <span class="kn">import</span> <span class="n">import_regions</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.database_util.import_locations</span> <span class="kn">import</span> <span class="n">import_clinics</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.database_util.import_locations</span> <span class="kn">import</span> <span class="n">import_districts</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.database_util</span> <span class="kn">import</span> <span class="n">create_fake_data</span><span class="p">,</span> <span class="n">get_deviceids</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.database_util</span> <span class="kn">import</span> <span class="n">write_csv</span><span class="p">,</span> <span class="n">read_csv</span><span class="p">,</span> <span class="n">all_location_data</span>
+
+<span class="kn">import</span> <span class="nn">meerkat_abacus.model</span> <span class="kn">as</span> <span class="nn">model</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.task_queue</span> <span class="kn">as</span> <span class="nn">task_queue</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.model</span> <span class="kn">import</span> <span class="n">form_tables</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.config</span> <span class="kn">import</span> <span class="n">DATABASE_URL</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.aggregation.variable</span> <span class="kn">import</span> <span class="n">Variable</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.aggregation.to_codes</span> <span class="kn">as</span> <span class="nn">to_codes</span>
+
+<span class="n">data_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;/data/&quot;</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;action&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;create-db&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;import-locations&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;fake-data&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;import-data&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;import-variables&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;import-links&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;to-codes&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;add-links&quot;</span><span class="p">,</span>
+                                       <span class="s">&quot;all&quot;</span><span class="p">],</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;Choose action&quot;</span> <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--drop-db&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;Use flag to drop DB for create-db or all&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--leave-if-data&quot;</span><span class="p">,</span> <span class="s">&quot;-l&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;A flag for all action, if there is data &quot;</span>
+                    <span class="s">&quot;in data table do nothing&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-N&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s">&quot;A flag for all action, if there is data &quot;</span>
+                    <span class="s">&quot;in data table do nothing&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="create_db"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.create_db">[docs]</a><span class="k">def</span> <span class="nf">create_db</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function creates and sets up the datbase.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        base: An SQLAlchmey declarative base with the db schema</span>
+<span class="sd">        url : the database_url</span>
+<span class="sd">        country_config: A contry config dictionary</span>
+<span class="sd">        drop: Flag to drop the database before setting it up</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Boolean: True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">drop</span> <span class="ow">and</span> <span class="n">database_exists</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+        <span class="n">drop_database</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">database_exists</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+        <span class="n">create_database</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+</div>
+<div class="viewcode-block" id="fake_data"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.fake_data">[docs]</a><span class="k">def</span> <span class="nf">fake_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates csv files with fake data</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_config: A country configuration object</span>
+<span class="sd">        form_directory: the directory to store the from data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">deviceids</span> <span class="o">=</span> <span class="n">get_deviceids</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">case_report</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">case</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">create_form</span><span class="p">(</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;fake_data&quot;</span><span class="p">][</span><span class="s">&quot;case&quot;</span><span class="p">],</span>
+                                        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;deviceids&quot;</span><span class="p">:</span> <span class="n">deviceids</span><span class="p">},</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">register</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">create_form</span><span class="p">(</span>
+        <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;fake_data&quot;</span><span class="p">][</span><span class="s">&quot;register&quot;</span><span class="p">],</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;deviceids&quot;</span><span class="p">:</span> <span class="n">deviceids</span><span class="p">},</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">form_directory</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+                      <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">form_directory</span><span class="p">)</span>
+    <span class="n">alert_ids</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">case</span><span class="p">:</span>
+        <span class="n">alert_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">c</span><span class="p">[</span><span class="s">&quot;meta/instanceID&quot;</span><span class="p">][</span><span class="o">-</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;alert_id_length&quot;</span><span class="p">]:])</span>
+    <span class="n">alert</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">create_form</span><span class="p">(</span>
+        <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;fake_data&quot;</span><span class="p">][</span><span class="s">&quot;alert&quot;</span><span class="p">],</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;deviceids&quot;</span><span class="p">:</span> <span class="n">deviceids</span><span class="p">,</span> <span class="s">&quot;uuids&quot;</span><span class="p">:</span> <span class="n">alert_ids</span><span class="p">},</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">case_file_name</span> <span class="o">=</span> <span class="n">form_directory</span> <span class="o">+</span> <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="s">&quot;case&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.csv&quot;</span>
+    <span class="n">register_file_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">form_directory</span> <span class="o">+</span>
+                          <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="s">&quot;register&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.csv&quot;</span><span class="p">)</span>
+    <span class="n">alert_file_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">form_directory</span> <span class="o">+</span>
+                       <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="s">&quot;alert&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;.csv&quot;</span><span class="p">)</span>
+
+    <span class="n">write_csv</span><span class="p">(</span><span class="n">case</span><span class="p">,</span> <span class="n">case_file_name</span><span class="p">)</span>
+    <span class="n">write_csv</span><span class="p">(</span><span class="n">register</span><span class="p">,</span> <span class="n">register_file_name</span><span class="p">)</span>
+    <span class="n">write_csv</span><span class="p">(</span><span class="n">alert</span><span class="p">,</span> <span class="n">alert_file_name</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="table_data_from_csv"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.table_data_from_csv">[docs]</a><span class="k">def</span> <span class="nf">table_data_from_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span>
+                        <span class="n">engine</span><span class="p">,</span> <span class="n">deviceids</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                        <span class="n">row_function</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds data to table with name</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename: name of table</span>
+<span class="sd">        table: table class</span>
+<span class="sd">        directory: directory where the csv file is</span>
+<span class="sd">        engine: SqlAlchemy engine</span>
+<span class="sd">        session: SqlAlchemy session</span>
+<span class="sd">        deviceids: if we should only add rows with a one of the deviceids</span>
+<span class="sd">        table_name: name of table if different from filename</span>
+<span class="sd">        form: if this is a form table</span>
+<span class="sd">        row_function: function to appy to the rows before inserting</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">table_name</span><span class="p">:</span>
+        <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;ALTER SEQUENCE {}_id_seq RESTART WITH 1;&quot;</span>
+                       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;ALTER SEQUENCE {}_id_seq RESTART WITH 1;&quot;</span>
+                       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">table_name</span><span class="p">))</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span>
+                    <span class="n">directory</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s">&quot;.csv&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">row_function</span><span class="p">:</span>
+            <span class="n">insert_row</span> <span class="o">=</span> <span class="n">row_function</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">insert_row</span> <span class="o">=</span> <span class="n">row</span>
+        <span class="k">if</span> <span class="n">form</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">deviceids</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">insert_row</span><span class="p">[</span><span class="s">&quot;deviceid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">deviceids</span><span class="p">:</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="n">insert_row</span><span class="p">,</span>
+                                         <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">insert_row</span><span class="p">[</span><span class="s">&quot;meta/instanceID&quot;</span><span class="p">]</span>
+                                     <span class="p">}))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="n">insert_row</span><span class="p">,</span>
+                                     <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">insert_row</span><span class="p">[</span><span class="s">&quot;meta/instanceID&quot;</span><span class="p">]}))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">insert_row</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="o">**</span><span class="n">insert_row</span><span class="p">))</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        </div>
+<div class="viewcode-block" id="category_to_list"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.category_to_list">[docs]</a><span class="k">def</span> <span class="nf">category_to_list</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transforms category to list in row</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        row: row of data</span>
+<span class="sd">    Reutrns:</span>
+<span class="sd">        row: modified row</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;category&quot;</span><span class="p">]:</span>
+        <span class="n">row</span><span class="p">[</span><span class="s">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;category&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">row</span><span class="p">[</span><span class="s">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;category&quot;</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">row</span>
+
+</div>
+<div class="viewcode-block" id="import_variables"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.import_variables">[docs]</a><span class="k">def</span> <span class="nf">import_variables</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delete current data and then import form data</span>
+<span class="sd">    from csv files into the database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_config: configuration</span>
+<span class="sd">        form_directory: directory to find the forms</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+        
+    <span class="n">table_data_from_csv</span><span class="p">(</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;codes_file&quot;</span><span class="p">],</span>
+                        <span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">,</span>
+                        <span class="s">&quot;data/&quot;</span><span class="p">,</span>
+                        <span class="n">session</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span>
+                        <span class="n">table_name</span><span class="o">=</span><span class="s">&quot;aggregation_variables&quot;</span><span class="p">,</span>
+                        <span class="n">form</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">row_function</span><span class="o">=</span><span class="n">category_to_list</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="import_data"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.import_data">[docs]</a><span class="k">def</span> <span class="nf">import_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delete current data and then import form data</span>
+<span class="sd">    from csv files into the database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_config: configuration</span>
+<span class="sd">        form_directory: directory to find the forms</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">deviceids_case</span> <span class="o">=</span> <span class="n">get_deviceids</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">case_report</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">deviceids</span> <span class="o">=</span> <span class="n">get_deviceids</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">case_report</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">form</span> <span class="ow">in</span> <span class="n">form_tables</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">form</span> <span class="o">==</span> <span class="s">&quot;case&quot;</span><span class="p">:</span>
+            <span class="n">form_deviceids</span> <span class="o">=</span> <span class="n">deviceids_case</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">form_deviceids</span> <span class="o">=</span> <span class="n">deviceids</span>
+        <span class="n">table_data_from_csv</span><span class="p">(</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="n">form</span><span class="p">],</span>
+                            <span class="n">form_tables</span><span class="p">[</span><span class="n">form</span><span class="p">],</span>
+                            <span class="n">form_directory</span><span class="p">,</span>
+                            <span class="n">session</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span>
+                            <span class="n">deviceids</span><span class="o">=</span><span class="n">form_deviceids</span><span class="p">)</span>
+
+        </div>
+<div class="viewcode-block" id="import_links"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.import_links">[docs]</a><span class="k">def</span> <span class="nf">import_links</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imports all links from links-file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_config: A country configuration object</span>
+<span class="sd">        engine: SQLAlchemy connection engine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">LinkDefinitions</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;ALTER SEQUENCE link_definitions_id_seq RESTART WITH 1;&quot;</span><span class="p">)</span>
+    <span class="n">link_config</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&quot;meerkat_abacus.&quot;</span><span class="o">+</span>
+                             <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;links_file&quot;</span><span class="p">]</span> <span class="p">)</span>
+    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">link_config</span><span class="o">.</span><span class="n">links</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">LinkDefinitions</span><span class="p">(</span><span class="o">**</span><span class="n">link</span><span class="p">))</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+<div class="viewcode-block" id="import_locations"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.import_locations">[docs]</a><span class="k">def</span> <span class="nf">import_locations</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imports all locations from csv-files</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        country_config: A country configuration object</span>
+<span class="sd">        engine: SQLAlchemy connection engine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;ALTER SEQUENCE locations_id_seq RESTART WITH 1;&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">country_config</span><span class="p">[</span><span class="s">&quot;country_name&quot;</span><span class="p">]))</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">regions_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_directory</span> <span class="o">+</span> <span class="s">&quot;locations/&quot;</span> <span class="o">+</span>
+                    <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;locations&quot;</span><span class="p">][</span><span class="s">&quot;regions&quot;</span><span class="p">])</span>
+    <span class="n">districts_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_directory</span> <span class="o">+</span> <span class="s">&quot;locations/&quot;</span> <span class="o">+</span>
+                      <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;locations&quot;</span><span class="p">][</span><span class="s">&quot;districts&quot;</span><span class="p">])</span>
+    <span class="n">clinics_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_directory</span> <span class="o">+</span> <span class="s">&quot;locations/&quot;</span> <span class="o">+</span>
+                    <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;locations&quot;</span><span class="p">][</span><span class="s">&quot;clinics&quot;</span><span class="p">])</span>
+    <span class="n">import_regions</span><span class="p">(</span><span class="n">regions_file</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">import_districts</span><span class="p">(</span><span class="n">districts_file</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
+    <span class="n">import_clinics</span><span class="p">(</span><span class="n">clinics_file</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="raw_data_to_variables"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.raw_data_to_variables">[docs]</a><span class="k">def</span> <span class="nf">raw_data_to_variables</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Turn raw data in forms into structured data with codes using</span>
+<span class="sd">    the code from the celery app.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        engine: db engine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Data</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;ALTER SEQUENCE data_id_seq RESTART WITH 1;&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">task_queue</span><span class="o">.</span><span class="n">new_data_to_codes</span><span class="p">()</span></div>
+<div class="viewcode-block" id="add_links"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.add_links">[docs]</a><span class="k">def</span> <span class="nf">add_links</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Turn raw data in forms into structured data with codes using</span>
+<span class="sd">    the code from the celery app.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        engine: db engine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Links</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;ALTER SEQUENCE links_id_seq RESTART WITH 1;&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">task_queue</span><span class="o">.</span><span class="n">add_new_links</span><span class="p">()</span>
+
+    </div>
+<div class="viewcode-block" id="set_up_everything"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.manage.set_up_everything">[docs]</a><span class="k">def</span> <span class="nf">set_up_everything</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">leave_if_data</span><span class="p">,</span> <span class="n">drop_db</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set up everything by calling all the other functions</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url: db url</span>
+<span class="sd">        leave_if_data: do nothing if data is there</span>
+<span class="sd">        drop_db: shall db be dropped before created</span>
+<span class="sd">        N: number of data points to create</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">set_up</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">leave_if_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">database_exists</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+            <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+            <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">Data</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">set_up</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="n">set_up</span><span class="p">:</span>
+        <span class="n">create_db</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="n">drop_db</span><span class="p">)</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+        <span class="n">import_locations</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">fake_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">import_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_variables</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_links</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="n">raw_data_to_variables</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">add_links</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+    </div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;create-db&quot;</span><span class="p">:</span>
+        <span class="n">create_db</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">Base</span><span class="p">,</span> <span class="n">country_config</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drop_db</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;import-locations&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_locations</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;fake-data&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">fake_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;import-data&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_data</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">form_directory</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;import-variables&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_variables</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;import-links&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">import_links</span><span class="p">(</span><span class="n">country_config</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;to-codes&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">raw_data_to_variables</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;add-links&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+        <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">add_links</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&quot;all&quot;</span><span class="p">:</span>
+        <span class="n">set_up_everything</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">,</span><span class="n">args</span><span class="o">.</span><span class="n">leave_if_data</span><span class="p">,</span>
+                          <span class="n">args</span><span class="o">.</span><span class="n">drop_db</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

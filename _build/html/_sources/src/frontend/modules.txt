@@ -1,9 +1,10 @@
-=================
 meerkat_frontend
-=================
+================
 
 .. toctree::
    :maxdepth: 4
 
+   config
    meerkat_frontend
-	homepage
+   runserver
+   setup

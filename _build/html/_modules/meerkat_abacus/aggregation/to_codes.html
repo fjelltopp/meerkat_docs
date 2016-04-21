@@ -117,13 +117,11 @@
 <span class="sd">        alert(model.Alerts): Alert record if created</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">locations</span><span class="p">,</span> <span class="n">locations_by_deviceid</span><span class="p">,</span> <span class="n">regions</span><span class="p">,</span> <span class="n">districts</span> <span class="o">=</span> <span class="n">locations</span>
-    <span class="n">clinic_id</span> <span class="o">=</span> <span class="n">locations_by_deviceid</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;deviceid&quot;</span><span class="p">],</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">clinic_id</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">clinic_id</span> <span class="o">=</span> <span class="n">locations_by_deviceid</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;deviceid&quot;</span><span class="p">]]</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">date_column</span><span class="p">])</span>
     <span class="n">new_record</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span>
         <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
-        <span class="n">uuid</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;meta/instanceID&quot;</span><span class="p">],</span>
+        <span class="n">uuid</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;meta/instanceID&quot;</span><span class="p">],</span>
         <span class="n">clinic</span><span class="o">=</span><span class="n">clinic_id</span><span class="p">,</span>
         <span class="n">clinic_type</span><span class="o">=</span><span class="n">locations</span><span class="p">[</span><span class="n">clinic_id</span><span class="p">]</span><span class="o">.</span><span class="n">clinic_type</span><span class="p">,</span>
         <span class="n">country</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
@@ -137,32 +135,19 @@
         <span class="n">new_record</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">locations</span><span class="p">[</span><span class="n">clinic_id</span><span class="p">]</span><span class="o">.</span><span class="n">parent_location</span>
     <span class="n">variable_json</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">alert</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">if</span> <span class="n">table_name</span> <span class="ow">in</span> <span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">[</span><span class="n">table_name</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="c1">#All variables in group have same secondary conndition, so only check once</span>
-            <span class="n">first_variable</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">variables</span><span class="p">[</span><span class="n">table_name</span><span class="p">][</span><span class="n">group</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-            <span class="k">if</span> <span class="n">first_variable</span><span class="o">.</span><span class="n">secondary_condition</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">first_variable</span><span class="o">.</span><span class="n">column</span><span class="p">,</span> <span class="s2">&quot;neppe&quot;</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">[</span><span class="n">table_name</span><span class="p">][</span><span class="n">group</span><span class="p">]:</span>
-                    <span class="n">test_outcome</span> <span class="o">=</span> <span class="n">variables</span><span class="p">[</span><span class="n">table_name</span><span class="p">][</span><span class="n">group</span><span class="p">][</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">test_type</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">test_outcome</span><span class="p">:</span>
-                        <span class="n">variable_json</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">test_outcome</span><span class="p">)</span>
-                        <span class="k">if</span> <span class="n">variables</span><span class="p">[</span><span class="n">table_name</span><span class="p">][</span><span class="n">group</span><span class="p">][</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">variable</span><span class="o">.</span><span class="n">alert</span><span class="p">:</span>
-                            <span class="n">data_alert</span> <span class="o">=</span> <span class="p">{}</span>
-                            <span class="k">for</span> <span class="n">data_var</span> <span class="ow">in</span> <span class="n">alert_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                                <span class="n">data_alert</span><span class="p">[</span><span class="n">data_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">alert_data</span><span class="p">[</span><span class="n">data_var</span><span class="p">]]</span>
-                            <span class="n">alert</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Alerts</span><span class="p">(</span>
-                                <span class="n">uuids</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;meta/instanceID&quot;</span><span class="p">],</span>
-                                <span class="n">clinic</span><span class="o">=</span><span class="n">clinic_id</span><span class="p">,</span>
-                                <span class="n">reason</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
-                                <span class="n">data</span><span class="o">=</span><span class="n">data_alert</span><span class="p">,</span>
-                                <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
-                        <span class="k">break</span>
-    <span class="n">new_record</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variable_json</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">table_name</span> <span class="o">==</span> <span class="n">variables</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">variable</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+            <span class="n">test_outcome</span> <span class="o">=</span> <span class="n">variables</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">test_outcome</span><span class="p">:</span>
+                <span class="n">variable_json</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span> <span class="o">=</span> <span class="n">test_outcome</span>
+                <span class="k">if</span> <span class="n">variables</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">variable</span><span class="o">.</span><span class="n">alert</span><span class="p">:</span>
+                    <span class="n">alert</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Alerts</span><span class="p">(</span>
+                        <span class="n">uuids</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s">&quot;meta/instanceID&quot;</span><span class="p">],</span>
+                        <span class="n">clinic</span><span class="o">=</span><span class="n">clinic_id</span><span class="p">,</span>
+                        <span class="n">reason</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
+                        <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
+        <span class="n">new_record</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variable_json</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">new_record</span><span class="p">,</span> <span class="n">alert</span><span class="p">)</span></div>
-
-
-    
 </pre></div>
 
           </div>

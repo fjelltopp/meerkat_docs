@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>setup module &mdash; WHO-MEERKAT 0.1 documentation</title>
+    <title>The Download Data Component &mdash; WHO-MEERKAT 0.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -50,10 +50,19 @@
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Download Data Component</a><ul>
+<li><a class="reference internal" href="#the-configuration-file">The Configuration File</a></li>
+<li><a class="reference internal" href="#data-dependancies">Data Dependancies</a></li>
+</ul>
+</li>
+</ul>
+
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/src/abacus/setup.txt"
+      <li><a href="../../_sources/src/frontend/download.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -75,8 +84,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="setup-module">
-<h1>setup module<a class="headerlink" href="#setup-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="the-download-data-component">
+<h1>The Download Data Component<a class="headerlink" href="#the-download-data-component" title="Permalink to this headline">¶</a></h1>
+<p>The Download Data component provides a means for the user to download both prepared and raw data sets for use in their own alaysis. It&#8217;s a very simple component that provides a html form to enable interaction with functionality from the API. All the Javascript required for the page is included in the Jinja2 template.</p>
+<div class="section" id="the-configuration-file">
+<h2>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file is a json file loaded into the flask app in the meerkat_frontend module when the server is started up.  It is passed as a Python dictionary to the Jinja2 template and used to correctly render the homepage for a specific country.  The configuration file should contain all country specifics including text, images, titles and map details.</p>
+<p>There are two main properties in this configuration file:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>prepared</cite> - An array holding objects that detail each prepared data set that is made available to the user for download. Each object has the following properties:</dt>
+<dd><ul class="first last simple">
+<li><cite>title</cite> - A string used in the form&#8217;s data set selector.</li>
+<li><cite>api</cite> - The url of the Meerkat API call that will provide the data set.</li>
+<li><cite>name_category</cite> -</li>
+<li><cite>fields</cite> - An array of two element arrays, in which the first element is the raw data coloumn heading and the second element is the replacement string for column header in the downloadable data file.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>forms</cite> - An object of objects that detail each form whose data can be downloaded.  Each object has the following properties:</dt>
+<dd><ul class="first last simple">
+<li><cite>name</cite> - A string identifying the form to be downloaded, to be used in the html selector element.</li>
+<li><cite>default</cite> - A list of field ID&#8217;s to be made available to the user by default (their checkboxes are pre-checked) when choosing which data to be downloaded.  Given there&#8217;s so much data to download, this speeds up the process of making a sensible selection.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="data-dependancies">
+<h2>Data Dependancies<a class="headerlink" href="#data-dependancies" title="Permalink to this headline">¶</a></h2>
+<p>The download data component uses the Meerkat API <em>export_data.py</em> resource.</p>
+</div>
 </div>
 
 

@@ -1,8 +1,8 @@
 =============
-Home Page
+The Home Page Component
 =============
 
-The Home Page is essentially a Jinja2 template that includes a significant amount of Javascript.  Only a small amount of core python code is used to render the Jinja2 template using variables from the configuration file.  Much of the javascript is included in the Jinja2 template, rather than served as a static asset, as it depends upon the config variables specified in the configuration file and sent from the server. 
+The Home Page is a Jinja2 template with a significant amount of Javascript.  Only a small amount of core python code is used to render the Jinja2 template using variables from the configuration file.  Much of the javascript is included in the Jinja2 template, rather than served as a static asset, as it depends upon the config variables specified in the configuration file and sent from the server. 
 
 The Configuration File
 ----------------------
@@ -16,10 +16,10 @@ We recommend taking an already existing config file and editing it to create a n
 * **Section Type: Indicators** This type of section is only used when you wish to show the key indicators slider. The "title" and "content" as in a "html" section, but is then followed by the key indicators slider.
 * **Section Type: Acknowledgements** This type section typically comes at the end of the page, and displays the "content" with the partner logos as specified elsewhere in the file.
 
-Data Dependancies
------------------
+Dependancies
+------------
 
-The homepage requires some other data to readily available:
+The homepage requires some other data to be readily available:
 
 * The key indicator data is taken from the Meerkat_API which should be available at the HOMEPAGE_API_ROOT as specified in the config.py file.
 * The map data is also taken from the Meerkat_API which should be available at the HOMEPAGE_API_ROOT as specified in the config.py file.

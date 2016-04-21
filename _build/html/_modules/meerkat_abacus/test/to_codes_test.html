@@ -60,9 +60,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -74,36 +71,36 @@
           <div class="body" role="main">
             
   <h1>Source code for meerkat_abacus.test.to_codes_test</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">unittest</span>
+<span></span><span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
 <span class="kn">from</span> <span class="nn">meerkat_abacus</span> <span class="kn">import</span> <span class="n">model</span>
-<span class="kn">from</span> <span class="nn">meerkat_abacus.aggregation.to_codes</span> <span class="kn">import</span> <span class="n">to_code</span>
-<span class="kn">from</span> <span class="nn">meerkat_abacus.aggregation.variable</span> <span class="kn">import</span> <span class="n">Variable</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.codes.to_codes</span> <span class="kn">import</span> <span class="n">to_code</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.codes.variable</span> <span class="kn">import</span> <span class="n">Variable</span>
 
 <div class="viewcode-block" id="TocodeTest"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.to_codes_test.TocodeTest">[docs]</a><span class="k">class</span> <span class="nc">TocodeTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test setting up database functionality</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="TocodeTest.setUp"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.to_codes_test.TocodeTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-</div>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="TocodeTest.tearDown"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.to_codes_test.TocodeTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-    </div>
+        <span class="k">pass</span></div>
+    
 <div class="viewcode-block" id="TocodeTest.test_count"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.to_codes_test.TocodeTest.test_count">[docs]</a>    <span class="k">def</span> <span class="nf">test_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">locations</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Demo&quot;</span><span class="p">),</span>
-                     <span class="mi">2</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Region 1&quot;</span><span class="p">,</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Demo&quot;</span><span class="p">),</span>
+                     <span class="mi">2</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Region 1&quot;</span><span class="p">,</span>
                                         <span class="n">parent_location</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                     <span class="mi">3</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Region 2&quot;</span><span class="p">,</span>
+                     <span class="mi">3</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Region 2&quot;</span><span class="p">,</span>
                                         <span class="n">parent_location</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                     <span class="mi">4</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;District 1&quot;</span><span class="p">,</span>
+                     <span class="mi">4</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;District 1&quot;</span><span class="p">,</span>
                                         <span class="n">parent_location</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-                     <span class="mi">5</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;District 2&quot;</span><span class="p">,</span>
+                     <span class="mi">5</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;District 2&quot;</span><span class="p">,</span>
                                         <span class="n">parent_location</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-                     <span class="mi">6</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Clinic 1&quot;</span><span class="p">,</span>
+                     <span class="mi">6</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Clinic 1&quot;</span><span class="p">,</span>
                                         <span class="n">parent_location</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
-                     <span class="mi">7</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Clinic 2&quot;</span><span class="p">,</span>
+                     <span class="mi">7</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">Locations</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Clinic 2&quot;</span><span class="p">,</span>
                                         <span class="n">parent_location</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
                      <span class="p">}</span>
         <span class="n">locations_by_deviceid</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
@@ -113,76 +110,79 @@
         <span class="n">agg_variables</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">secondary_condition</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">method</span><span class="o">=</span><span class="s">&quot;count&quot;</span><span class="p">,</span>
-                <span class="n">db_column</span><span class="o">=</span><span class="s">&quot;index&quot;</span><span class="p">,</span>
-                <span class="n">form</span><span class="o">=</span><span class="s">&quot;form1&quot;</span><span class="p">),</span>
+                <span class="n">secondary_condition</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+                <span class="n">db_column</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
+                <span class="n">form</span><span class="o">=</span><span class="s2">&quot;form1&quot;</span><span class="p">),</span>
             <span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                <span class="n">secondary_condition</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">method</span><span class="o">=</span><span class="s">&quot;count_occurence&quot;</span><span class="p">,</span>
-                <span class="n">db_column</span><span class="o">=</span><span class="s">&quot;column1&quot;</span><span class="p">,</span>
+                <span class="n">secondary_condition</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;count_occurence&quot;</span><span class="p">,</span>
+                <span class="n">db_column</span><span class="o">=</span><span class="s2">&quot;column1&quot;</span><span class="p">,</span>
                 <span class="n">alert</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">condition</span><span class="o">=</span><span class="s">&quot;A&quot;</span><span class="p">,</span>
-                <span class="n">form</span><span class="o">=</span><span class="s">&quot;form1&quot;</span><span class="p">),</span>
+                <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
+                <span class="n">form</span><span class="o">=</span><span class="s2">&quot;form1&quot;</span><span class="p">),</span>
             <span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-                <span class="n">secondary_condition</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">method</span><span class="o">=</span><span class="s">&quot;count_occurence_in&quot;</span><span class="p">,</span>
-                <span class="n">db_column</span><span class="o">=</span><span class="s">&quot;column2&quot;</span><span class="p">,</span>
-                <span class="n">condition</span><span class="o">=</span><span class="s">&quot;B&quot;</span><span class="p">,</span>
-                <span class="n">form</span><span class="o">=</span><span class="s">&quot;form1&quot;</span><span class="p">),</span>
+                <span class="n">secondary_condition</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;count_occurence_in&quot;</span><span class="p">,</span>
+                <span class="n">db_column</span><span class="o">=</span><span class="s2">&quot;column2&quot;</span><span class="p">,</span>
+                <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span>
+                <span class="n">form</span><span class="o">=</span><span class="s2">&quot;form1&quot;</span><span class="p">),</span>
             <span class="n">model</span><span class="o">.</span><span class="n">AggregationVariables</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-                <span class="n">secondary_condition</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">method</span><span class="o">=</span><span class="s">&quot;int_between&quot;</span><span class="p">,</span>
-                <span class="n">db_column</span><span class="o">=</span><span class="s">&quot;column3&quot;</span><span class="p">,</span>
-                <span class="n">condition</span><span class="o">=</span><span class="s">&quot;5,10&quot;</span><span class="p">,</span>
-                <span class="n">form</span><span class="o">=</span><span class="s">&quot;form1&quot;</span><span class="p">)</span>
+                <span class="n">secondary_condition</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;int_between&quot;</span><span class="p">,</span>
+                <span class="n">db_column</span><span class="o">=</span><span class="s2">&quot;column3&quot;</span><span class="p">,</span>
+                <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;5,10&quot;</span><span class="p">,</span>
+                <span class="n">form</span><span class="o">=</span><span class="s2">&quot;form1&quot;</span><span class="p">)</span>
         <span class="p">]</span>
+        <span class="n">alert_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;column1&quot;</span><span class="p">:</span> <span class="s2">&quot;column1&quot;</span><span class="p">}</span>
         <span class="n">all_locations</span> <span class="o">=</span> <span class="p">(</span><span class="n">locations</span><span class="p">,</span>
                          <span class="n">locations_by_deviceid</span><span class="p">,</span>
                          <span class="n">regions</span><span class="p">,</span>
                          <span class="n">districts</span><span class="p">)</span>
-        <span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;form1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{},</span> <span class="mi">2</span><span class="p">:</span> <span class="p">{},</span> <span class="mi">3</span><span class="p">:</span> <span class="p">{},</span> <span class="mi">4</span><span class="p">:</span> <span class="p">{}}}</span>
         <span class="k">for</span> <span class="n">av</span> <span class="ow">in</span> <span class="n">agg_variables</span><span class="p">:</span>
-            <span class="n">variables</span><span class="p">[</span><span class="n">av</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">av</span><span class="p">)</span>
+            <span class="n">variables</span><span class="p">[</span><span class="s2">&quot;form1&quot;</span><span class="p">][</span><span class="n">av</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="n">av</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">av</span><span class="p">)</span>
 
-        <span class="n">row1</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;column1&quot;</span><span class="p">:</span> <span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;column2&quot;</span><span class="p">:</span> <span class="s">&quot;B34&quot;</span><span class="p">,</span> <span class="s">&quot;column3&quot;</span><span class="p">:</span> <span class="s">&quot;7&quot;</span><span class="p">,</span>
-                <span class="s">&quot;date&quot;</span><span class="p">:</span> <span class="s">&quot;2015-10-25&quot;</span><span class="p">,</span> <span class="s">&quot;deviceid&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;meta/instanceID&quot;</span><span class="p">:</span> <span class="s">&quot;a&quot;</span><span class="p">}</span>
-        <span class="n">row2</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;index&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;column1&quot;</span><span class="p">:</span> <span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="s">&quot;column2&quot;</span><span class="p">:</span> <span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;column3&quot;</span><span class="p">:</span> <span class="s">&quot;4&quot;</span><span class="p">,</span>
-                <span class="s">&quot;date&quot;</span><span class="p">:</span> <span class="s">&quot;2015-10-25&quot;</span><span class="p">,</span> <span class="s">&quot;deviceid&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;meta/instanceID&quot;</span><span class="p">:</span> <span class="s">&quot;a&quot;</span><span class="p">}</span>
-        <span class="n">row3</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;column1&quot;</span><span class="p">:</span> <span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;column2&quot;</span><span class="p">:</span> <span class="s">&quot;C&quot;</span><span class="p">,</span> <span class="s">&quot;column3&quot;</span><span class="p">:</span> <span class="s">&quot;7&quot;</span><span class="p">,</span>
-                <span class="s">&quot;date&quot;</span><span class="p">:</span> <span class="s">&quot;2015-10-25&quot;</span><span class="p">,</span> <span class="s">&quot;deviceid&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;meta/instanceID&quot;</span><span class="p">:</span> <span class="s">&quot;a&quot;</span><span class="p">}</span>
+        <span class="n">row1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;column1&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;column2&quot;</span><span class="p">:</span> <span class="s2">&quot;B34&quot;</span><span class="p">,</span> <span class="s2">&quot;column3&quot;</span><span class="p">:</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-10-25&quot;</span><span class="p">,</span> <span class="s2">&quot;deviceid&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;meta/instanceID&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">}</span>
+        <span class="n">row2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;column1&quot;</span><span class="p">:</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;column2&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;column3&quot;</span><span class="p">:</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-10-25&quot;</span><span class="p">,</span> <span class="s2">&quot;deviceid&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;meta/instanceID&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">}</span>
+        <span class="n">row3</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;column1&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;column2&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;column3&quot;</span><span class="p">:</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-10-25&quot;</span><span class="p">,</span> <span class="s2">&quot;deviceid&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;meta/instanceID&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">}</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">alert</span> <span class="o">=</span> <span class="n">to_code</span><span class="p">(</span><span class="n">row1</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">all_locations</span><span class="p">,</span>
-                                <span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;form1&quot;</span><span class="p">)</span>
+                                <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;form1&quot;</span><span class="p">,</span> <span class="n">alert_data</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">variables</span> <span class="o">==</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">country</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">region</span> <span class="o">==</span> <span class="mi">2</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">district</span> <span class="o">==</span> <span class="mi">4</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">clinic</span> <span class="o">==</span> <span class="mi">6</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">date</span> <span class="o">==</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span> <span class="o">==</span> <span class="s">&quot;a&quot;</span>
+        <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
         <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">clinic</span> <span class="o">==</span> <span class="mi">6</span>
         <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">reason</span> <span class="o">==</span> <span class="mi">2</span>
         <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">date</span> <span class="o">==</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;column1&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">}</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">alert</span> <span class="o">=</span> <span class="n">to_code</span><span class="p">(</span><span class="n">row2</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">all_locations</span><span class="p">,</span>
-                                <span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;form1&quot;</span><span class="p">)</span>
+                                <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;form1&quot;</span><span class="p">,</span> <span class="n">alert_data</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">variables</span> <span class="o">==</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">country</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">region</span> <span class="o">==</span> <span class="mi">3</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">district</span> <span class="o">==</span> <span class="mi">5</span>
         <span class="k">assert</span> <span class="n">alert</span> <span class="ow">is</span> <span class="bp">None</span>
         <span class="n">result</span><span class="p">,</span> <span class="n">alert</span> <span class="o">=</span> <span class="n">to_code</span><span class="p">(</span><span class="n">row3</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">all_locations</span><span class="p">,</span>
-                                <span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;form1&quot;</span><span class="p">)</span>
+                                <span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;form1&quot;</span><span class="p">,</span> <span class="n">alert_data</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">variables</span> <span class="o">==</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
-        <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span> <span class="o">==</span> <span class="s">&quot;a&quot;</span>
+        <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">uuids</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
         <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">clinic</span> <span class="o">==</span> <span class="mi">7</span>
         <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">reason</span> <span class="o">==</span> <span class="mi">2</span>
         <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">date</span> <span class="o">==</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">alert</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;column1&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">}</span></div></div>
 
-</div></div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 
@@ -209,7 +209,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

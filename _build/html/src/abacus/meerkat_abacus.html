@@ -55,11 +55,11 @@
 <li><a class="reference internal" href="#">meerkat_abacus package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#meerkat-abacus-celeryconfig-module">meerkat_abacus.celeryconfig module</a></li>
-<li><a class="reference internal" href="#meerkat-abacus-config-module">meerkat_abacus.config module</a></li>
-<li><a class="reference internal" href="#meerkat-abacus-manage-module">meerkat_abacus.manage module</a></li>
-<li><a class="reference internal" href="#meerkat-abacus-model-module">meerkat_abacus.model module</a></li>
-<li><a class="reference internal" href="#meerkat-abacus-task-queue-module">meerkat_abacus.task_queue module</a></li>
+<li><a class="reference internal" href="#module-meerkat_abacus.celeryconfig">meerkat_abacus.celeryconfig module</a></li>
+<li><a class="reference internal" href="#module-meerkat_abacus.config">meerkat_abacus.config module</a></li>
+<li><a class="reference internal" href="#module-meerkat_abacus.manage">meerkat_abacus.manage module</a></li>
+<li><a class="reference internal" href="#module-meerkat_abacus.model">meerkat_abacus.model module</a></li>
+<li><a class="reference internal" href="#module-meerkat_abacus.task_queue">meerkat_abacus.task_queue module</a></li>
 <li><a class="reference internal" href="#module-meerkat_abacus">Module contents</a></li>
 </ul>
 </li>
@@ -80,9 +80,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -115,10 +112,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="meerkat_abacus.test.html">meerkat_abacus.test package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#meerkat-abacus-test-db-test-module">meerkat_abacus.test.db_test module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#meerkat-abacus-test-to-codes-test-module">meerkat_abacus.test.to_codes_test module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#meerkat-abacus-test-util-test-module">meerkat_abacus.test.util_test module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#meerkat-abacus-test-variable-test-module">meerkat_abacus.test.variable_test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#module-meerkat_abacus.test.db_test">meerkat_abacus.test.db_test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#module-meerkat_abacus.test.to_codes_test">meerkat_abacus.test.to_codes_test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#module-meerkat_abacus.test.util_test">meerkat_abacus.test.util_test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#module-meerkat_abacus.test.variable_test">meerkat_abacus.test.variable_test module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="meerkat_abacus.test.html#module-meerkat_abacus.test">Module contents</a></li>
 </ul>
 </li>
@@ -128,20 +125,473 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="meerkat-abacus-celeryconfig-module">
-<h2>meerkat_abacus.celeryconfig module<a class="headerlink" href="#meerkat-abacus-celeryconfig-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-meerkat_abacus.celeryconfig">
+<span id="meerkat-abacus-celeryconfig-module"></span><h2>meerkat_abacus.celeryconfig module<a class="headerlink" href="#module-meerkat_abacus.celeryconfig" title="Permalink to this headline">¶</a></h2>
+<p>Celery configuration file</p>
+<p>Needs the broker and backend urls, can be set by environment variable MEERKAT_BROKER_URL.</p>
+<p>We set up the get_and_proccess data task at the time interval specified in the config file.</p>
 </div>
-<div class="section" id="meerkat-abacus-config-module">
-<h2>meerkat_abacus.config module<a class="headerlink" href="#meerkat-abacus-config-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-meerkat_abacus.config">
+<span id="meerkat-abacus-config-module"></span><h2>meerkat_abacus.config module<a class="headerlink" href="#module-meerkat_abacus.config" title="Permalink to this headline">¶</a></h2>
+<p>Configuration file for meerkat_abacus</p>
+<p>This configuration file sets up application level configurations
+and imports the country specific configurations.</p>
+<p>Many of the application level configurations can be overwritten by
+environemental variables:</p>
+<p>MEERKAT_ABACUS_DB_URL: db_url</p>
+<p>DATA_DIRECTORY: path to directory where we store data csv files</p>
+<p>COUNTRY_CONFIG_DIR: path to directory with country config</p>
+<p>COUNTRY_CONFIG: name of country config file</p>
+<p>NEW_FAKE_DATA: if we should generate fake data</p>
+<p>GET_DATA_FROM_S3: if we should download data from an S3 bucket</p>
+<p>START_CELERY: if we want to star the celery hourly tasks</p>
+<dl class="function">
+<dt id="meerkat_abacus.config.from_env">
+<code class="descclassname">meerkat_abacus.config.</code><code class="descname">from_env</code><span class="sig-paren">(</span><em>env_var</em>, <em>default</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/config.html#from_env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.config.from_env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets value from envrionment variable or uses default</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>env_var</strong> &#8211; name of envrionment variable</li>
+<li><strong>default</strong> &#8211; the default value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="meerkat-abacus-manage-module">
-<h2>meerkat_abacus.manage module<a class="headerlink" href="#meerkat-abacus-manage-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-meerkat_abacus.manage">
+<span id="meerkat-abacus-manage-module"></span><h2>meerkat_abacus.manage module<a class="headerlink" href="#module-meerkat_abacus.manage" title="Permalink to this headline">¶</a></h2>
+<p>command line tool to run all database tasks</p>
 </div>
-<div class="section" id="meerkat-abacus-model-module">
-<h2>meerkat_abacus.model module<a class="headerlink" href="#meerkat-abacus-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-meerkat_abacus.model">
+<span id="meerkat-abacus-model-module"></span><h2>meerkat_abacus.model module<a class="headerlink" href="#module-meerkat_abacus.model" title="Permalink to this headline">¶</a></h2>
+<p>Database model definition</p>
+<dl class="class">
+<dt id="meerkat_abacus.model.AggregationVariables">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">AggregationVariables</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#AggregationVariables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.alert">
+<code class="descname">alert</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.alert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.alert_desc">
+<code class="descname">alert_desc</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.alert_desc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="meerkat_abacus.model.AggregationVariables.alert_setter">
+<code class="descname">alert_setter</code><span class="sig-paren">(</span><em>key</em>, <em>alert</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#AggregationVariables.alert_setter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.alert_setter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.calculation_group">
+<code class="descname">calculation_group</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.calculation_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.case_def">
+<code class="descname">case_def</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.case_def" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.category">
+<code class="descname">category</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.category" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.classification">
+<code class="descname">classification</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.classification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.classification_casedef">
+<code class="descname">classification_casedef</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.classification_casedef" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.condition">
+<code class="descname">condition</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.daily">
+<code class="descname">daily</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.daily" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="meerkat_abacus.model.AggregationVariables.daily_setter">
+<code class="descname">daily_setter</code><span class="sig-paren">(</span><em>key</em>, <em>daily</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#AggregationVariables.daily_setter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.daily_setter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.db_column">
+<code class="descname">db_column</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.db_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.form">
+<code class="descname">form</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.form" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.labs_diagnostics">
+<code class="descname">labs_diagnostics</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.labs_diagnostics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.location">
+<code class="descname">location</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.method">
+<code class="descname">method</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.name">
+<code class="descname">name</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.risk_factors">
+<code class="descname">risk_factors</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.risk_factors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.secondary_condition">
+<code class="descname">secondary_condition</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.secondary_condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.source">
+<code class="descname">source</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.source" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.source_link">
+<code class="descname">source_link</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.source_link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AggregationVariables.symptoms">
+<code class="descname">symptoms</code><a class="headerlink" href="#meerkat_abacus.model.AggregationVariables.symptoms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meerkat_abacus.model.AlertNotifications">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">AlertNotifications</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#AlertNotifications"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.AlertNotifications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AlertNotifications.alert_id">
+<code class="descname">alert_id</code><a class="headerlink" href="#meerkat_abacus.model.AlertNotifications.alert_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AlertNotifications.date">
+<code class="descname">date</code><a class="headerlink" href="#meerkat_abacus.model.AlertNotifications.date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AlertNotifications.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.AlertNotifications.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.AlertNotifications.receivers">
+<code class="descname">receivers</code><a class="headerlink" href="#meerkat_abacus.model.AlertNotifications.receivers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meerkat_abacus.model.Alerts">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">Alerts</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#Alerts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.Alerts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.clinic">
+<code class="descname">clinic</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.clinic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.data">
+<code class="descname">data</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.date">
+<code class="descname">date</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.reason">
+<code class="descname">reason</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.reason" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.region">
+<code class="descname">region</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.region" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Alerts.uuids">
+<code class="descname">uuids</code><a class="headerlink" href="#meerkat_abacus.model.Alerts.uuids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meerkat_abacus.model.Data">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">Data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#Data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.Data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.clinic">
+<code class="descname">clinic</code><a class="headerlink" href="#meerkat_abacus.model.Data.clinic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.clinic_type">
+<code class="descname">clinic_type</code><a class="headerlink" href="#meerkat_abacus.model.Data.clinic_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.country">
+<code class="descname">country</code><a class="headerlink" href="#meerkat_abacus.model.Data.country" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.date">
+<code class="descname">date</code><a class="headerlink" href="#meerkat_abacus.model.Data.date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.district">
+<code class="descname">district</code><a class="headerlink" href="#meerkat_abacus.model.Data.district" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.geolocation">
+<code class="descname">geolocation</code><a class="headerlink" href="#meerkat_abacus.model.Data.geolocation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.Data.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.region">
+<code class="descname">region</code><a class="headerlink" href="#meerkat_abacus.model.Data.region" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.uuid">
+<code class="descname">uuid</code><a class="headerlink" href="#meerkat_abacus.model.Data.uuid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Data.variables">
+<code class="descname">variables</code><a class="headerlink" href="#meerkat_abacus.model.Data.variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meerkat_abacus.model.LinkDefinitions">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">LinkDefinitions</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#LinkDefinitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.compare_lower">
+<code class="descname">compare_lower</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.compare_lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.data">
+<code class="descname">data</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.from_column">
+<code class="descname">from_column</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.from_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.from_condition">
+<code class="descname">from_condition</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.from_condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.from_date">
+<code class="descname">from_date</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.from_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.from_table">
+<code class="descname">from_table</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.from_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.name">
+<code class="descname">name</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.to_column">
+<code class="descname">to_column</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.to_condition">
+<code class="descname">to_condition</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.to_date">
+<code class="descname">to_date</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.to_id">
+<code class="descname">to_id</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.to_table">
+<code class="descname">to_table</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.LinkDefinitions.which">
+<code class="descname">which</code><a class="headerlink" href="#meerkat_abacus.model.LinkDefinitions.which" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meerkat_abacus.model.Links">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">Links</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#Links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.Links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.data">
+<code class="descname">data</code><a class="headerlink" href="#meerkat_abacus.model.Links.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.from_date">
+<code class="descname">from_date</code><a class="headerlink" href="#meerkat_abacus.model.Links.from_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.Links.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.link_def">
+<code class="descname">link_def</code><a class="headerlink" href="#meerkat_abacus.model.Links.link_def" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.link_value">
+<code class="descname">link_value</code><a class="headerlink" href="#meerkat_abacus.model.Links.link_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.to_date">
+<code class="descname">to_date</code><a class="headerlink" href="#meerkat_abacus.model.Links.to_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Links.to_id">
+<code class="descname">to_id</code><a class="headerlink" href="#meerkat_abacus.model.Links.to_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meerkat_abacus.model.Locations">
+<em class="property">class </em><code class="descclassname">meerkat_abacus.model.</code><code class="descname">Locations</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/model.html#Locations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.model.Locations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlalchemy.ext.declarative.api.Base</span></code></p>
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.case_report">
+<code class="descname">case_report</code><a class="headerlink" href="#meerkat_abacus.model.Locations.case_report" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.clinic_type">
+<code class="descname">clinic_type</code><a class="headerlink" href="#meerkat_abacus.model.Locations.clinic_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.deviceid">
+<code class="descname">deviceid</code><a class="headerlink" href="#meerkat_abacus.model.Locations.deviceid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.geolocation">
+<code class="descname">geolocation</code><a class="headerlink" href="#meerkat_abacus.model.Locations.geolocation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.id">
+<code class="descname">id</code><a class="headerlink" href="#meerkat_abacus.model.Locations.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.level">
+<code class="descname">level</code><a class="headerlink" href="#meerkat_abacus.model.Locations.level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.name">
+<code class="descname">name</code><a class="headerlink" href="#meerkat_abacus.model.Locations.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.other">
+<code class="descname">other</code><a class="headerlink" href="#meerkat_abacus.model.Locations.other" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="meerkat_abacus.model.Locations.parent_location">
+<code class="descname">parent_location</code><a class="headerlink" href="#meerkat_abacus.model.Locations.parent_location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="meerkat-abacus-task-queue-module">
-<h2>meerkat_abacus.task_queue module<a class="headerlink" href="#meerkat-abacus-task-queue-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-meerkat_abacus.task_queue">
+<span id="meerkat-abacus-task-queue-module"></span><h2>meerkat_abacus.task_queue module<a class="headerlink" href="#module-meerkat_abacus.task_queue" title="Permalink to this headline">¶</a></h2>
+<p>Task queue</p>
+<dl class="function">
+<dt id="meerkat_abacus.task_queue.set_up_task">
+<code class="descclassname">meerkat_abacus.task_queue.</code><code class="descname">set_up_task</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/task_queue.html#set_up_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.task_queue.set_up_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-meerkat_abacus">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-meerkat_abacus" title="Permalink to this headline">¶</a></h2>
@@ -171,7 +621,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

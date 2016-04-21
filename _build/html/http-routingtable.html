@@ -65,9 +65,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -83,17 +80,32 @@
 
    <div class="modindex-jumpbox">
    <a href="#cap-/aggregate"><strong>/aggregate</strong></a> | 
+   <a href="#cap-/aggregate_alerts"><strong>/aggregate_alerts</strong></a> | 
    <a href="#cap-/aggregate_category"><strong>/aggregate_category</strong></a> | 
    <a href="#cap-/aggregate_year"><strong>/aggregate_year</strong></a> | 
    <a href="#cap-/alert"><strong>/alert</strong></a> | 
    <a href="#cap-/alerts"><strong>/alerts</strong></a> | 
    <a href="#cap-/clinics"><strong>/clinics</strong></a> | 
+   <a href="#cap-/completeness"><strong>/completeness</strong></a> | 
+   <a href="#cap-/consultation_map"><strong>/consultation_map</strong></a> | 
+   <a href="#cap-/epi_week"><strong>/epi_week</strong></a> | 
+   <a href="#cap-/epi_week_start"><strong>/epi_week_start</strong></a> | 
+   <a href="#cap-/export"><strong>/export</strong></a> | 
+   <a href="#cap-/key_indicators"><strong>/key_indicators</strong></a> | 
+   <a href="#cap-/link"><strong>/link</strong></a> | 
+   <a href="#cap-/links"><strong>/links</strong></a> | 
    <a href="#cap-/location"><strong>/location</strong></a> | 
    <a href="#cap-/locations"><strong>/locations</strong></a> | 
    <a href="#cap-/locationtree"><strong>/locationtree</strong></a> | 
    <a href="#cap-/map"><strong>/map</strong></a> | 
+   <a href="#cap-/messaging"><strong>/messaging</strong></a> | 
+   <a href="#cap-/num_alerts"><strong>/num_alerts</strong></a> | 
    <a href="#cap-/query_category"><strong>/query_category</strong></a> | 
    <a href="#cap-/query_variable"><strong>/query_variable</strong></a> | 
+   <a href="#cap-/records"><strong>/records</strong></a> | 
+   <a href="#cap-/reports"><strong>/reports</strong></a> | 
+   <a href="#cap-/tot_clinics"><strong>/tot_clinics</strong></a> | 
+   <a href="#cap-/tot_map"><strong>/tot_map</strong></a> | 
    <a href="#cap-/variable"><strong>/variable</strong></a> | 
    <a href="#cap-/variables"><strong>/variables</strong></a>
    </div>
@@ -106,6 +118,14 @@
        <td></td>
        <td>
        <a href="src/meerkat_api.html#get--aggregate-(variable_id)-(location_id)"><code class="xref">GET /aggregate/(variable_id)/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/aggregate_alerts"><td></td><td>
+       <strong>/aggregate_alerts</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--aggregate_alerts"><code class="xref">GET /aggregate_alerts</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
      <tr class="cap" id="cap-/aggregate_category"><td></td><td>
@@ -157,6 +177,95 @@
        <td>
        <a href="src/meerkat_api.html#get--clinics-(location_id)"><code class="xref">GET /clinics/(location_id)</code></a></td><td>
        <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--clinics-(location_id)-(clinic_type)"><code class="xref">GET /clinics/(location_id)/(clinic_type)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/completeness"><td></td><td>
+       <strong>/completeness</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--completeness-(variable)-(number_per_week)"><code class="xref">GET /completeness/(variable)/(number_per_week)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/consultation_map"><td></td><td>
+       <strong>/consultation_map</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--consultation_map"><code class="xref">GET /consultation_map</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/epi_week"><td></td><td>
+       <strong>/epi_week</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--epi_week"><code class="xref">GET /epi_week</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--epi_week-(date)"><code class="xref">GET /epi_week/(date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/epi_week_start"><td></td><td>
+       <strong>/epi_week_start</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--epi_week_start-(year)-(epi_week)"><code class="xref">GET /epi_week_start/(year)/(epi_week)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/export"><td></td><td>
+       <strong>/export</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--export-alerts"><code class="xref">GET /export/alerts</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--export-category-(category)-(download_name)"><code class="xref">GET /export/category/(category)/(download_name)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--export-data"><code class="xref">GET /export/data</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--export-form-(form)"><code class="xref">GET /export/form/(form)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/key_indicators"><td></td><td>
+       <strong>/key_indicators</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--key_indicators"><code class="xref">GET /key_indicators</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/link"><td></td><td>
+       <strong>/link</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--link-(link_id)"><code class="xref">GET /link/(link_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/links"><td></td><td>
+       <strong>/links</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--links-(links_id)"><code class="xref">GET /links/(links_id)</code></a></td><td>
+       <em></em></td></tr>
      <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
      <tr class="cap" id="cap-/location"><td></td><td>
        <strong>/location</strong></td><td></td></tr>
@@ -189,6 +298,52 @@
        <td>
        <a href="src/meerkat_api.html#get--map-(variable_id)"><code class="xref">GET /map/(variable_id)</code></a></td><td>
        <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--map-(variable_id)-(location)"><code class="xref">GET /map/(variable_id)/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/messaging"><td></td><td>
+       <strong>/messaging</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/frontend/messaging.html#get--messaging-"><code class="xref">GET /messaging/</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/frontend/messaging.html#get--messaging-subscribe-sms_code-(string-subscriber_id)"><code class="xref">GET /messaging/subscribe/sms_code/(string:subscriber_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/frontend/messaging.html#get--messaging-subscribe-verified-(string-subscriber_id)"><code class="xref">GET /messaging/subscribe/verified/(string:subscriber_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/frontend/messaging.html#get--messaging-subscribe-verify-(string-subscriber_id)"><code class="xref">GET /messaging/subscribe/verify/(string:subscriber_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/frontend/messaging.html#post--messaging-subscribe-sms_code-(string-subscriber_id)"><code class="xref">POST /messaging/subscribe/sms_code/(string:subscriber_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/frontend/messaging.html#post--messaging-subscribe-subscribed"><code class="xref">POST /messaging/subscribe/subscribed</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/num_alerts"><td></td><td>
+       <strong>/num_alerts</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--num_alerts"><code class="xref">GET /num_alerts</code></a></td><td>
+       <em></em></td></tr>
      <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
      <tr class="cap" id="cap-/query_category"><td></td><td>
        <strong>/query_category</strong></td><td></td></tr>
@@ -200,7 +355,17 @@
      <tr>
        <td></td>
        <td>
+       <a href="src/meerkat_api.html#get--query_category-(group_by1)-(group_by2)-(only_loc)"><code class="xref">GET /query_category/(group_by1)/(group_by2)/(only_loc)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
        <a href="src/meerkat_api.html#get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)"><code class="xref">GET /query_category/(group_by1)/(group_by2)/(start_date)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--query_category-(group_by1)-(group_by2)-(start_date)-(end_date)-(only_loc)"><code class="xref">GET /query_category/(group_by1)/(group_by2)/(start_date)/(end_date)/(only_loc)</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
      <tr class="cap" id="cap-/query_variable"><td></td><td>
@@ -214,6 +379,168 @@
        <td></td>
        <td>
        <a href="src/meerkat_api.html#get--query_variable-(variable)-(group_by)-(start_date)-(end_date)"><code class="xref">GET /query_variable/(variable)/(group_by)/(start_date)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/records"><td></td><td>
+       <strong>/records</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--records-(variable)-(location_id)"><code class="xref">GET /records/(variable)/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/reports"><td></td><td>
+       <strong>/reports</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-cd_public_health-(location)"><code class="xref">GET /reports/cd_public_health/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-cd_public_health-(location)-(end_date)"><code class="xref">GET /reports/cd_public_health/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-cd_public_health-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/cd_public_health/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-cd_report-(location)"><code class="xref">GET /reports/cd_report/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-cd_report-(location)-(end_date)"><code class="xref">GET /reports/cd_report/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-cd_report-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/cd_report/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-ncd_public_health-(location)"><code class="xref">GET /reports/ncd_public_health/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-ncd_public_health-(location)-(end_date)"><code class="xref">GET /reports/ncd_public_health/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-ncd_public_health-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/ncd_public_health/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-ncd_report-(location)"><code class="xref">GET /reports/ncd_report/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-ncd_report-(location)-(end_date)"><code class="xref">GET /reports/ncd_report/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-ncd_report-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/ncd_report/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-pip-(location)"><code class="xref">GET /reports/pip/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-pip-(location)-(end_date)"><code class="xref">GET /reports/pip/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-pip-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/pip/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-public_health-(location)"><code class="xref">GET /reports/public_health/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-public_health-(location)-(end_date)"><code class="xref">GET /reports/public_health/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-public_health-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/public_health/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_cd-(location)"><code class="xref">GET /reports/refugee_cd/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_cd-(location)-(end_date)"><code class="xref">GET /reports/refugee_cd/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_cd-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/refugee_cd/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_detail-(location)"><code class="xref">GET /reports/refugee_detail/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_detail-(location)-(end_date)"><code class="xref">GET /reports/refugee_detail/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_detail-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/refugee_detail/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_public_health-(location)"><code class="xref">GET /reports/refugee_public_health/(location)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_public_health-(location)-(end_date)"><code class="xref">GET /reports/refugee_public_health/(location)/(end_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--reports-refugee_public_health-(location)-(end_date)-(start_date)"><code class="xref">GET /reports/refugee_public_health/(location)/(end_date)/(start_date)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/tot_clinics"><td></td><td>
+       <strong>/tot_clinics</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--tot_clinics-(location_id)"><code class="xref">GET /tot_clinics/(location_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
+     <tr class="cap" id="cap-/tot_map"><td></td><td>
+       <strong>/tot_map</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="src/meerkat_api.html#get--tot_map"><code class="xref">GET /tot_map</code></a></td><td>
        <em></em></td></tr>
      <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
      <tr class="cap" id="cap-/variable"><td></td><td>
@@ -256,7 +583,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

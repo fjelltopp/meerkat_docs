@@ -41,6 +41,9 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -74,28 +77,29 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Database model definition</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">,</span> <span class="n">Float</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">DDL</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.dialects.postgresql</span> <span class="kn">import</span> <span class="n">JSONB</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">validates</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.event</span> <span class="kn">import</span> <span class="n">listen</span>
 
 <span class="kn">from</span> <span class="nn">meerkat_abacus.config</span> <span class="kn">import</span> <span class="n">country_config</span>
 
 <span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 
-<span class="n">form_tables</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;case&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&quot;register&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&quot;alert&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+<span class="n">form_tables</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;case&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;register&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;alert&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
 
-<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">]:</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="n">country_config</span><span class="p">[</span><span class="s">&quot;tables&quot;</span><span class="p">][</span><span class="n">table</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">country_config</span><span class="p">[</span><span class="s2">&quot;tables&quot;</span><span class="p">]:</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="n">country_config</span><span class="p">[</span><span class="s2">&quot;tables&quot;</span><span class="p">][</span><span class="n">table</span><span class="p">]</span>
     <span class="n">form_tables</span><span class="p">[</span><span class="n">table</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">table_name</span><span class="p">,</span> <span class="p">(</span><span class="n">Base</span><span class="p">,</span> <span class="p">),</span>
-                            <span class="p">{</span><span class="s">&quot;__tablename__&quot;</span><span class="p">:</span> <span class="n">table_name</span><span class="p">,</span>
-                             <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                             <span class="s">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">),</span>
-                             <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">)})</span>
+                            <span class="p">{</span><span class="s2">&quot;__tablename__&quot;</span><span class="p">:</span> <span class="n">table_name</span><span class="p">,</span>
+                             <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                             <span class="s2">&quot;uuid&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">),</span>
+                             <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">)})</span>
 
 
 <div class="viewcode-block" id="Locations"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.Locations">[docs]</a><span class="k">class</span> <span class="nc">Locations</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;locations&#39;</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;locations&#39;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
@@ -107,36 +111,41 @@
     <span class="n">case_report</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">&quot;&lt;Location(name=&#39;</span><span class="si">%s</span><span class="s">&#39;, id=&#39;</span><span class="si">%s</span><span class="s">&#39;, parent_location=&#39;</span><span class="si">%s</span><span class="s">&#39;)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_location</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="s2">&quot;&lt;Location(name=&#39;</span><span class="si">%s</span><span class="s2">&#39;, id=&#39;</span><span class="si">%s</span><span class="s2">&#39;, parent_location=&#39;</span><span class="si">%s</span><span class="s2">&#39;)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_location</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Data"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.Data">[docs]</a><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;data&#39;</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">uuid</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">country</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">region</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">district</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">clinic</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">clinic_type</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">variables</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">geolocation</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="AggregationVariables"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.AggregationVariables">[docs]</a><span class="k">class</span> <span class="nc">AggregationVariables</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;aggregation_variables&#39;</span>
+    <span class="n">geolocation</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></div>
+<span class="n">create_index</span> <span class="o">=</span> <span class="n">DDL</span><span class="p">(</span><span class="s2">&quot;CREATE INDEX variables_gin ON data USING gin(variables);&quot;</span><span class="p">)</span>
+<span class="n">listen</span><span class="p">(</span><span class="n">Data</span><span class="o">.</span><span class="n">__table__</span><span class="p">,</span> <span class="s1">&#39;after_create&#39;</span><span class="p">,</span> <span class="n">create_index</span><span class="p">)</span>
 
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AggregationVariables"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.AggregationVariables">[docs]</a><span class="k">class</span> <span class="nc">AggregationVariables</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;aggregation_variables&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">form</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">db_column</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">method</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">location</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">condition</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-    <span class="n">category</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">)</span>
     <span class="n">daily</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
     <span class="n">classification</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">alert</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+    <span class="n">calculation_group</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">secondary_condition</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">classification_casedef</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">source</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
@@ -147,49 +156,80 @@
     <span class="n">symptoms</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">labs_diagnostics</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
 
-    <span class="nd">@validates</span><span class="p">(</span><span class="s">&quot;alert&quot;</span><span class="p">)</span>
+    <span class="nd">@validates</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="AggregationVariables.alert_setter"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.AggregationVariables.alert_setter">[docs]</a>    <span class="k">def</span> <span class="nf">alert_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">alert</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">alert</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">alert</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">alert</span>
-</div>
-    <span class="nd">@validates</span><span class="p">(</span><span class="s">&quot;daily&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">alert</span></div>
+
+    <span class="nd">@validates</span><span class="p">(</span><span class="s2">&quot;daily&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="AggregationVariables.daily_setter"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.AggregationVariables.daily_setter">[docs]</a>    <span class="k">def</span> <span class="nf">daily_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">daily</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">daily</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">daily</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">daily</span>
-</div></div>
-<div class="viewcode-block" id="Aggregation"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.Aggregation">[docs]</a><span class="k">class</span> <span class="nc">Aggregation</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;aggregation&#39;</span>
+            <span class="k">return</span> <span class="n">daily</span></div></div>
 
+<div class="viewcode-block" id="LinkDefinitions"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.LinkDefinitions">[docs]</a><span class="k">class</span> <span class="nc">LinkDefinitions</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;link_definitions&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">from_table</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">from_column</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">from_date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">to_table</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">to_column</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">to_date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">to_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">which</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Links"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.Links">[docs]</a><span class="k">class</span> <span class="nc">Links</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;links&#39;</span>
+    
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">start_time</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">)</span>
-    <span class="n">interval</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
-    <span class="n">variable</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
-    <span class="n">location</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
-    <span class="n">classification</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-    <span class="n">geo_location</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</div>
+    <span class="n">link_value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">from_date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">to_date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">to_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">link_def</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">)</span></div>
+<span class="n">create_index</span> <span class="o">=</span> <span class="n">DDL</span><span class="p">(</span><span class="s2">&quot;CREATE INDEX links_gin ON links USING gin(data);&quot;</span><span class="p">)</span>
+<span class="n">listen</span><span class="p">(</span><span class="n">Links</span><span class="o">.</span><span class="n">__table__</span><span class="p">,</span> <span class="s1">&#39;after_create&#39;</span><span class="p">,</span> <span class="n">create_index</span><span class="p">)</span>
+
+<span class="c1"># class Aggregation(Base):</span>
+<span class="c1">#     __tablename__ = &#39;aggregation&#39;</span>
+
+<span class="c1">#     id = Column(Integer, primary_key=True)</span>
+<span class="c1">#     start_time = Column(DateTime)</span>
+<span class="c1">#     interval = Column(Integer)</span>
+<span class="c1">#     variable = Column(Integer)</span>
+<span class="c1">#     location = Column(Integer)</span>
+<span class="c1">#     value = Column(Float)</span>
+<span class="c1">#     classification = Column(String)</span>
+<span class="c1">#     geo_location = Column(String)</span>
+
 <div class="viewcode-block" id="Alerts"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.Alerts">[docs]</a><span class="k">class</span> <span class="nc">Alerts</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;alerts&#39;</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;alerts&#39;</span>
 
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">)</span>
     <span class="n">reason</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-    <span class="n">location</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
-    <span class="n">uuids</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</div>
+    <span class="n">clinic</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">JSONB</span><span class="p">)</span>
+    <span class="n">uuids</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></div>
+
+    
 <div class="viewcode-block" id="AlertNotifications"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.model.AlertNotifications">[docs]</a><span class="k">class</span> <span class="nc">AlertNotifications</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&#39;alert_notifications&#39;</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;alert_notifications&#39;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">alert_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">)</span>
-    <span class="n">receivers</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</pre></div></div>
+    <span class="n">receivers</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></div>
+</pre></div>
 
           </div>
         </div>
@@ -203,6 +243,9 @@
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -211,7 +254,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

@@ -1,0 +1,177 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>meerkat_abacus.task_queue &mdash; WHO-MEERKAT 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="WHO-MEERKAT 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for meerkat_abacus.task_queue</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Task queue</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">Celery</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Celery</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.celeryconfig</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config_from_object</span><span class="p">(</span><span class="n">meerkat_abacus</span><span class="o">.</span><span class="n">celeryconfig</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.config</span> <span class="kn">as</span> <span class="nn">config</span>
+<span class="kn">import</span> <span class="nn">meerkat_abacus.data_management</span> <span class="kn">as</span> <span class="nn">data_management</span>
+<span class="kn">from</span> <span class="nn">celery.signals</span> <span class="kn">import</span> <span class="n">worker_ready</span>
+
+<span class="nd">@worker_ready.connect</span>
+<div class="viewcode-block" id="set_up_task"><a class="viewcode-back" href="../../src/abacus/meerkat_abacus.html#meerkat_abacus.task_queue.set_up_task">[docs]</a><span class="k">def</span> <span class="nf">set_up_task</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">set_up_db</span><span class="o">.</span><span class="n">delay</span><span class="p">()</span></div>
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">set_up_db</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Setting up DB for {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">country_config</span><span class="p">[</span><span class="s2">&quot;country_name&quot;</span><span class="p">]))</span>
+    <span class="n">data_management</span><span class="o">.</span><span class="n">set_up_everything</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">DATABASE_URL</span><span class="p">,</span>
+                                      <span class="bp">False</span><span class="p">,</span>
+                                      <span class="bp">True</span><span class="p">,</span>
+                                      <span class="mi">500</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Finished setting up DB&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">get_proccess_data</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; get/create new data and proccess it&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">fake_data</span><span class="p">:</span>
+        <span class="n">add_new_fake_data</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">get_data_from_s3</span><span class="p">:</span>
+        <span class="n">get_new_data_from_s3</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Import new data&quot;</span><span class="p">)</span>
+    <span class="n">import_new_data</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;To Code&quot;</span><span class="p">)</span>
+    <span class="n">new_data_to_codes</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Add Links&quot;</span><span class="p">)</span>
+    <span class="n">add_new_links</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Finished&quot;</span><span class="p">)</span>
+
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">get_new_data_from_s3</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; get new data from s3&quot;&quot;&quot;</span>
+    <span class="n">data_management</span><span class="o">.</span><span class="n">get_data_from_s3</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">s3_bucket</span><span class="p">,</span>
+                                     <span class="n">config</span><span class="o">.</span><span class="n">data_directory</span><span class="p">,</span>
+                                     <span class="n">config</span><span class="o">.</span><span class="n">country_config</span><span class="p">)</span>
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">import_new_data</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    task to check csv files and insert any new data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">data_management</span><span class="o">.</span><span class="n">import_new_data</span><span class="p">()</span>
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">add_new_fake_data</span><span class="p">(</span><span class="n">to_add</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">data_management</span><span class="o">.</span><span class="n">add_new_fake_data</span><span class="p">(</span><span class="n">to_add</span><span class="p">)</span>
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">new_data_to_codes</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    add any new data in form tables to data table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">data_management</span><span class="o">.</span><span class="n">new_data_to_codes</span><span class="p">()</span>
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">add_new_links</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">data_management</span><span class="o">.</span><span class="n">add_new_links</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

@@ -40,6 +40,9 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
@@ -51,9 +54,9 @@
   <ul>
 <li><a class="reference internal" href="#">meerkat_abacus.database_util package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-meerkat_abacus.database_util.create_fake_data">meerkat_abacus.database_util.create_fake_data module</a></li>
-<li><a class="reference internal" href="#module-meerkat_abacus.database_util.import_locations">meerkat_abacus.database_util.import_locations module</a></li>
-<li><a class="reference internal" href="#module-meerkat_abacus.database_util">Module contents</a></li>
+<li><a class="reference internal" href="#meerkat-abacus-database-util-create-fake-data-module">meerkat_abacus.database_util.create_fake_data module</a></li>
+<li><a class="reference internal" href="#meerkat-abacus-database-util-import-locations-module">meerkat_abacus.database_util.import_locations module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -91,167 +94,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-meerkat_abacus.database_util.create_fake_data">
-<span id="meerkat-abacus-database-util-create-fake-data-module"></span><h2>meerkat_abacus.database_util.create_fake_data module<a class="headerlink" href="#module-meerkat_abacus.database_util.create_fake_data" title="Permalink to this headline">¶</a></h2>
-<p>Functionality to create fake data csv files</p>
-<dl class="function">
-<dt id="meerkat_abacus.database_util.create_fake_data.create_form">
-<code class="descclassname">meerkat_abacus.database_util.create_fake_data.</code><code class="descname">create_form</code><span class="sig-paren">(</span><em>fields</em>, <em>data=None</em>, <em>N=500</em>, <em>odk=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/create_fake_data.html#create_form"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.create_fake_data.create_form" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a csv file with data form the given fields</p>
-<p>The types for fields are:
-{&#8220;integer&#8221;: [lower, upper]}</p>
-<blockquote>
-<div>random int between upper and lower</div></blockquote>
-<dl class="docutils">
-<dt>{&#8220;one&#8221;: [&#8220;choice1&#8221;,choice2&#8221;,....]}</dt>
-<dd>one random choice from the list</dd>
-<dt>{&#8220;multiple: [&#8220;choice1&#8221;,choice2&#8221;,....]}</dt>
-<dd>a random subset of choices</dd>
-<dt>{&#8220;data: &#8220;key&#8221;}</dt>
-<dd>a random choice from key in data</dd>
-</dl>
-<p>Args:
-from_name: name of the form
-fields: list of fields to include
-previous_data: data from other forms
-N: number of rows to generate
-odk: Does the form come from odk</p>
-<p>Returns:
-list_of_records: list of dicts with data</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.create_fake_data.get_value">
-<code class="descclassname">meerkat_abacus.database_util.create_fake_data.</code><code class="descname">get_value</code><span class="sig-paren">(</span><em>field</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/create_fake_data.html#get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.create_fake_data.get_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a field and returns the value</p>
-<p>Args:
-field: a field
-data: data to be used for certain field types
-Returns:
-value: A random value for the field</p>
-</dd></dl>
-
+<div class="section" id="meerkat-abacus-database-util-create-fake-data-module">
+<h2>meerkat_abacus.database_util.create_fake_data module<a class="headerlink" href="#meerkat-abacus-database-util-create-fake-data-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-meerkat_abacus.database_util.import_locations">
-<span id="meerkat-abacus-database-util-import-locations-module"></span><h2>meerkat_abacus.database_util.import_locations module<a class="headerlink" href="#module-meerkat_abacus.database_util.import_locations" title="Permalink to this headline">¶</a></h2>
-<p>Import locations from csv</p>
-<dl class="function">
-<dt id="meerkat_abacus.database_util.import_locations.import_clinics">
-<code class="descclassname">meerkat_abacus.database_util.import_locations.</code><code class="descname">import_clinics</code><span class="sig-paren">(</span><em>csv_file</em>, <em>session</em>, <em>country_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/import_locations.html#import_clinics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.import_locations.import_clinics" title="Permalink to this definition">¶</a></dt>
-<dd><p>import fistricts from csv</p>
-<p>Args:
-csv_file: path to csv file with regions
-session: SQLAlchemy session
-country_id: id of the country</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.import_locations.import_districts">
-<code class="descclassname">meerkat_abacus.database_util.import_locations.</code><code class="descname">import_districts</code><span class="sig-paren">(</span><em>csv_file</em>, <em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/import_locations.html#import_districts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.import_locations.import_districts" title="Permalink to this definition">¶</a></dt>
-<dd><p>import fistricts from csv</p>
-<p>Args:
-csv_file: path to csv file with regions
-session: SQLAlchemy session</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.import_locations.import_regions">
-<code class="descclassname">meerkat_abacus.database_util.import_locations.</code><code class="descname">import_regions</code><span class="sig-paren">(</span><em>csv_file</em>, <em>session</em>, <em>parent_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util/import_locations.html#import_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.import_locations.import_regions" title="Permalink to this definition">¶</a></dt>
-<dd><p>import regions from csv</p>
-<p>Args:
-csv_file: path to csv file with regions
-session: SQLAlchemy session
-parent_id: The id of the country</p>
-</dd></dl>
-
+<div class="section" id="meerkat-abacus-database-util-import-locations-module">
+<h2>meerkat_abacus.database_util.import_locations module<a class="headerlink" href="#meerkat-abacus-database-util-import-locations-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-meerkat_abacus.database_util">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-meerkat_abacus.database_util" title="Permalink to this headline">¶</a></h2>
-<p>Various utility functions</p>
-<dl class="function">
-<dt id="meerkat_abacus.database_util.add_new_data">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">add_new_data</code><span class="sig-paren">(</span><em>form</em>, <em>data</em>, <em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#add_new_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.add_new_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>adds rows in data that has a uuid not already in the form</p>
-<p>Args:
-form: form to add to
-data: data to potentially be added
-session: db session</p>
-<p>Returns:
-new_rows: a list of rows added</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.all_location_data">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">all_location_data</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#all_location_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.all_location_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>get all location data</p>
-<p>Args:
-session: db session</p>
-<p>Returns:
-(loction_dict,loc_by_deviceid, regions, districts)</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.get_deviceids">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_deviceids</code><span class="sig-paren">(</span><em>session</em>, <em>case_report=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_deviceids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_deviceids" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list of deviceids</p>
-<p>Args:
-session: SQLAlchemy session
-case_report: flag to only get deviceids from case</p>
-<blockquote>
-<div>reporing clinics</div></blockquote>
-<p>Returns:
-list_of_deviceids</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.get_locations">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_locations</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_locations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_locations" title="Permalink to this definition">¶</a></dt>
-<dd><p>get a location dict</p>
-<p>Args:
-session: db session</p>
-<p>Returns:
-locations : id:location dict</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.get_locations_by_deviceid">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_locations_by_deviceid</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_locations_by_deviceid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_locations_by_deviceid" title="Permalink to this definition">¶</a></dt>
-<dd><p>get a dict with deviceid: locatino:id</p>
-<p>Args:
-session: db session</p>
-<p>Returns:
-locations : deviceid:location_id</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.get_regions_districts">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">get_regions_districts</code><span class="sig-paren">(</span><em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#get_regions_districts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.get_regions_districts" title="Permalink to this definition">¶</a></dt>
-<dd><p>get list of ids for regions and districts</p>
-<p>Args:
-session: db session</p>
-<p>Returns:
-(regions,districts)</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.read_csv">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">read_csv</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#read_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.read_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads csvfile and returns list of rows</p>
-<p>Args:
-file_path: path of file to read</p>
-<p>Returns:
-rows: list of rows</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="meerkat_abacus.database_util.write_csv">
-<code class="descclassname">meerkat_abacus.database_util.</code><code class="descname">write_csv</code><span class="sig-paren">(</span><em>rows</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/meerkat_abacus/database_util.html#write_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#meerkat_abacus.database_util.write_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes rows to csvfile</p>
-<p>Args:
-rows: list of dicts with data
-file_path: path to write file to</p>
-</dd></dl>
-
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -268,6 +118,9 @@ file_path: path to write file to</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li> 
@@ -275,7 +128,7 @@ file_path: path to write file to</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

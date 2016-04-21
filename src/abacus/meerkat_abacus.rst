@@ -6,9 +6,9 @@ Subpackages
 
 .. toctree::
 
-    meerkat_abacus.aggregation
-    meerkat_abacus.database_util
+    meerkat_abacus.codes
     meerkat_abacus.test
+    meerkat_abacus.util
 
 Submodules
 ----------
@@ -25,6 +25,14 @@ meerkat_abacus.config module
 ----------------------------
 
 .. automodule:: meerkat_abacus.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+meerkat_abacus.data_management module
+-------------------------------------
+
+.. automodule:: meerkat_abacus.data_management
     :members:
     :undoc-members:
     :show-inheritance:

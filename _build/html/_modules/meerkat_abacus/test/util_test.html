@@ -41,6 +41,9 @@
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -76,50 +79,64 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">from</span> <span class="nn">meerkat_abacus.database_util</span> <span class="kn">import</span> <span class="n">create_fake_data</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">meerkat_abacus.util</span> <span class="kn">import</span> <span class="n">create_fake_data</span><span class="p">,</span> <span class="n">epi_week_start_date</span>
 
-<div class="viewcode-block" id="DbUtilTest"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.DbUtilTest">[docs]</a><span class="k">class</span> <span class="nc">DbUtilTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="UtilTest"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.UtilTest">[docs]</a><span class="k">class</span> <span class="nc">UtilTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
-<div class="viewcode-block" id="DbUtilTest.setUp"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.DbUtilTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-    </div>
-<div class="viewcode-block" id="DbUtilTest.tearDown"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.DbUtilTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-</div>
-<div class="viewcode-block" id="DbUtilTest.test_create_fake_data_get_value"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.DbUtilTest.test_create_fake_data_get_value">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_fake_data_get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="UtilTest.setUp"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.UtilTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+    
+<div class="viewcode-block" id="UtilTest.tearDown"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.UtilTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="UtilTest.test_epi_week_start_date"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.UtilTest.test_epi_week_start_date">[docs]</a>    <span class="k">def</span> <span class="nf">test_epi_week_start_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">first</span> <span class="o">==</span> <span class="n">epi_week_start_date</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span> <span class="s2">&quot;international&quot;</span><span class="p">)</span>
+
+        <span class="n">first_saturday</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">first_saturday</span> <span class="o">==</span> <span class="n">epi_week_start_date</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span> <span class="s2">&quot;day:5&quot;</span><span class="p">)</span>
+
+        <span class="n">first_tuesday</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">first_tuesday</span> <span class="o">==</span> <span class="n">epi_week_start_date</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span> <span class="s2">&quot;day:1&quot;</span><span class="p">)</span>
+
+        <span class="n">first_wednesday</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">first_wednesday</span> <span class="o">==</span> <span class="n">epi_week_start_date</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span> <span class="s2">&quot;day:2&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="UtilTest.test_create_fake_data_get_value"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.UtilTest.test_create_fake_data_get_value">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_fake_data_get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test get value&quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span>
-            <span class="p">{</span><span class="s">&quot;integer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]},</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="p">{</span><span class="s2">&quot;integer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]},</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">1</span>
         <span class="k">assert</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">2</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span>
-            <span class="p">{</span><span class="s">&quot;one&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;one&quot;</span><span class="p">,</span> <span class="s">&quot;two&quot;</span><span class="p">]},</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;one&quot;</span><span class="p">,</span> <span class="s">&quot;two&quot;</span><span class="p">]</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;deviceids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}</span>
+            <span class="p">{</span><span class="s2">&quot;one&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">]},</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;deviceids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span>
-            <span class="p">{</span><span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="s">&quot;deviceids&quot;</span><span class="p">},</span> <span class="n">data</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&quot;deviceids&quot;</span><span class="p">]</span>
-</div>
-<div class="viewcode-block" id="DbUtilTest.test_create_fake_data"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.DbUtilTest.test_create_fake_data">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_fake_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;deviceids&quot;</span><span class="p">},</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;deviceids&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="UtilTest.test_create_fake_data"><a class="viewcode-back" href="../../../src/abacus/meerkat_abacus.test.html#meerkat_abacus.test.util_test.UtilTest.test_create_fake_data">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_fake_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test creating form data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;integer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
-                  <span class="s">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;one&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;one&quot;</span><span class="p">,</span> <span class="s">&quot;two&quot;</span><span class="p">]}}</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;integer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]},</span>
+                  <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;one&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">]}}</span>
         <span class="n">records</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">create_form</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">odk</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">50</span>
-        <span class="k">assert</span> <span class="s">&quot;a&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="s">&quot;b&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;deviceids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+        <span class="k">assert</span> <span class="s2">&quot;a&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="s2">&quot;b&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;deviceids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
         <span class="n">records</span> <span class="o">=</span> <span class="n">create_fake_data</span><span class="o">.</span><span class="n">create_form</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span>
                                                <span class="n">N</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
                                                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
                                                <span class="n">odk</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="s">&quot;deviceid&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="s">&quot;start&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&quot;index&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">49</span>
-        </div></div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="s2">&quot;deviceid&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="s2">&quot;start&quot;</span> <span class="ow">in</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">records</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;index&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">49</span></div></div>
+        
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 
@@ -135,6 +152,9 @@
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">WHO-MEERKAT 0.1 documentation</a> &raquo;</li>
@@ -143,7 +163,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gunnar Ro, Kenrick Turner, Jonathan Berry, Jyri Soppela.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

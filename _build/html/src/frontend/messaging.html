@@ -127,6 +127,7 @@
 <li><strong>/subscribe</strong> to create a new subscriber.</li>
 <li><strong>/verify</strong> to verify a new subscriber.</li>
 </ul>
+<p>It also requires the Bower Component intl-tel-input, to draw the form&#8217;s phone number input.</p>
 </div>
 <div class="section" id="python-documentation">
 <h2>Python Documentation<a class="headerlink" href="#python-documentation" title="Permalink to this headline">¶</a></h2>
@@ -154,9 +155,9 @@ Meerkat Hermes to send it out.</p>
 out a confirmation email as well.</p>
 </dd></dl>
 
-<dl class="post">
-<dt id="post--messaging-subscribe-sms_code-(string-subscriber_id)">
-<code class="descname">POST </code><code class="descname">/messaging/subscribe/sms_code/</code><span class="sig-paren">(</span><em class="property">string: </em><em>subscriber_id</em><span class="sig-paren">)</span><a class="headerlink" href="#post--messaging-subscribe-sms_code-(string-subscriber_id)" title="Permalink to this definition">¶</a></dt>
+<dl class="get">
+<dt id="get--messaging-subscribe-sms_code-(string-subscriber_id)">
+<code class="descname">GET </code><code class="descname">/messaging/subscribe/sms_code/</code><span class="sig-paren">(</span><em class="property">string: </em><em>subscriber_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--messaging-subscribe-sms_code-(string-subscriber_id)" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chooses, sets and checks SMS verification codes for the subscriber corresponding
 to the ID given in the URL. If a POST request is made to this URL it checks whether the
 code supplied in the POST request form data matches the code sent to the phone. If it does,
@@ -166,9 +167,9 @@ selects a new code and sends the code out to the phone. It then redirects to Sta
 flash message informing the user whether the new code has been succesffully sent</p>
 </dd></dl>
 
-<dl class="get">
-<dt id="get--messaging-subscribe-sms_code-(string-subscriber_id)">
-<code class="descname">GET </code><code class="descname">/messaging/subscribe/sms_code/</code><span class="sig-paren">(</span><em class="property">string: </em><em>subscriber_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--messaging-subscribe-sms_code-(string-subscriber_id)" title="Permalink to this definition">¶</a></dt>
+<dl class="post">
+<dt id="post--messaging-subscribe-sms_code-(string-subscriber_id)">
+<code class="descname">POST </code><code class="descname">/messaging/subscribe/sms_code/</code><span class="sig-paren">(</span><em class="property">string: </em><em>subscriber_id</em><span class="sig-paren">)</span><a class="headerlink" href="#post--messaging-subscribe-sms_code-(string-subscriber_id)" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chooses, sets and checks SMS verification codes for the subscriber corresponding
 to the ID given in the URL. If a POST request is made to this URL it checks whether the
 code supplied in the POST request form data matches the code sent to the phone. If it does,

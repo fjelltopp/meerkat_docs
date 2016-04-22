@@ -42,6 +42,8 @@ This component primarily depends upon the Meerkat Hermes REST API:
 * **/subscribe** to create a new subscriber.
 * **/verify** to verify a new subscriber.
 
+It also requires the Bower Component intl-tel-input, to draw the form's phone number input. 
+
 Python Documentation
 --------------------
 

@@ -16,7 +16,7 @@ Components
 
 * :doc:`frontend/messaging` (or Notifications service) subscribes users to receive email and sms updates of system alerts and reports. The messages are sent by our purpose built Meerkat Hermes module, controlled through a secured REST API. 
 
-* **The Explore Data** component allows users to draw and export the tables and charts that they want to see, picking which categories to show along each access and filtering/ording the records as they desire. 
+* :doc:`frontend/explore` allows users to draw and export the tables and charts that they want to see, picking which categories to show along each access and filtering/ording the records as they desire. 
 
 * :doc:`frontend/download` provides a means of downloading pre-pared data sets and any raw data that the user desires for their own analysis.
 

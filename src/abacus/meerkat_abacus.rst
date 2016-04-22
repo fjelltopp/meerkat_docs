@@ -62,7 +62,7 @@ meerkat_abacus.task_queue module
     :show-inheritance:
        
 .. automethod:: meerkat_abacus.task_queue.set_up_db()
-.. automethod:: meerkat_abacus.task_queue.get_process_data()
+.. automethod:: meerkat_abacus.task_queue.get_proccess_data()
 .. automethod:: meerkat_abacus.task_queue.get_new_data_from_s3()
 .. automethod:: meerkat_abacus.task_queue.import_new_data()
 .. automethod:: meerkat_abacus.task_queue.add_new_fake_data()

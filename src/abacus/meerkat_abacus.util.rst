@@ -12,14 +12,6 @@ meerkat_abacus.util.create_fake_data module
     :undoc-members:
     :show-inheritance:
 
-meerkat_abacus.util.import_locations module
--------------------------------------------
-
-.. automodule:: meerkat_abacus.util.import_locations
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

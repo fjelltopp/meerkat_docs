@@ -5,4 +5,3 @@ meerkat_abacus
    :maxdepth: 4
 
    meerkat_abacus
-   setup

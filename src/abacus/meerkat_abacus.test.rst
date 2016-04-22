@@ -12,6 +12,14 @@ meerkat_abacus.test.db_test module
     :undoc-members:
     :show-inheritance:
 
+meerkat_abacus.test.link_test module
+------------------------------------
+
+.. automodule:: meerkat_abacus.test.link_test
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 meerkat_abacus.test.to_codes_test module
 ----------------------------------------
 

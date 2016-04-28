@@ -34,7 +34,13 @@ The Explore Component requires a number of Meerkat API calls to be available:
 * **/variables/<category>** to get the variable details for a category.
 * **/variable/<variable ID>** to get the variable details for a given variable ID
 
-It also depends upon the Bower Component **Bootstrap Tables** to draw the tables. 
+It also depends upon the following 3rd party components:
+
+* **Bootstrap Tables** is installed through Bower to draw the tables. 
+* **eonasdan-bootsrtap-datetimepicker** is installed through Bower to draw the date pickers.
+* **flag-icon-css** is installed through Bower to render images of the flags in the report headers.
+* **Bootstrap** installed through Bower to format the HTMl in a responsive and neat manner.
+* **JQuery** is installed through Bower and used to enhance the Javascript across the site.
 
 Javascript Documentation
 ------------------------

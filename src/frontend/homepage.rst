@@ -1,6 +1,6 @@
-=============
+=======================
 The Home Page Component
-=============
+=======================
 
 The Home Page is a Jinja2 template with a significant amount of Javascript.  Only a small amount of core python code is used to render the Jinja2 template using variables from the configuration file.  Much of the javascript is included in the Jinja2 template, rather than served as a static asset, as it depends upon the config variables specified in the configuration file and sent from the server. 
 
@@ -19,10 +19,20 @@ We recommend taking an already existing config file and editing it to create a n
 Dependancies
 ------------
 
-The homepage requires some other data to be readily available:
+The homepage requires some other data to be readily available from the Meerkat API (root specified in the main configuration file):
 
-* The key indicator data is taken from the Meerkat_API which should be available at the HOMEPAGE_API_ROOT as specified in the config.py file.
-* The map data is also taken from the Meerkat_API which should be available at the HOMEPAGE_API_ROOT as specified in the config.py file.
-* The regional kml, specifying the area of each region in the country, should be served as a static asset by the server.  It's location is specified in the homepage configuration file.
+* **/consultation_map** to get the number of consultations for each facility and the facility location.
+* **/tot_map** to get the total number of cases for each facility and the facility location.
+* **/key_indicators** to get other key indicator fields used in the key indicator section.
+* **/num_alerts** to get the number of alerts used in the key indicator section.
 
+Th homepage also requires the regional kml, specifying the area of each region in the country. It should be served as a static asset by the server and its location is specified in the homepage configuration file.
 
+The following third-party software components are also used:
+
+* **Leaflet** is installed through Bower for drawing maps. The following extensions to leaflet are also used:
+	* **Leaflet Markercluster** is installed through Bower for creating cluster maps of the data.
+	* **Leaflet omnivore** is installed through Bower to enable Leaflet to work with KML data (used to deifne regions).
+* **flag-icon-css** is installed through Bower to render images of the country flag in the navbar.
+* **Bootstrap** installed through Bower to format the entire site's HTMl in a responsive and neat manner.
+* **JQuery** is installed through Bower and used to enhance the Javascript across the site.

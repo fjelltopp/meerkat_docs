@@ -12,7 +12,7 @@ Components
 
 * :doc:`frontend/technical` displays detailed information and is only accesible with a password. It can display data for any selected location from the country to the individual clinic, and includes pages showing demographics, disease distributions, geographical distributions and epi-curves.
 
-* **The Reports** component generates neat detailed summaries of the data in the system that can be shared publicly with other people. Weekly reports can be generated for user's desired time period and location. 
+* :doc:`frontend/reports` generates neat detailed summaries of the data in the system that can be shared publicly with other people. Weekly reports can be generated for user's desired time period and location. 
 
 * :doc:`frontend/messaging` (or Notifications service) subscribes users to receive email and sms updates of system alerts and reports. The messages are sent by our purpose built Meerkat Hermes module, controlled through a secured REST API. 
 
@@ -24,13 +24,7 @@ Components
 Structure
 ---------
 
-As a Python flask app, Meerkat Frontend is made up of static assets, Jinja2 templates and Python modules.  Further folders and files exist to manage the app's testing, and to abstract country specifics into configuration files, and bundle it up as a python package.  
-
-Meerkat Frontend depends upon three package management systems: Python's PIP, Javascript's Node Package Manager (NPM) and the client-side package manager Bower.  The dependieces required from each package manager are stored in the files **setup.py**, **package.json** and **bower.json** respectively. After pulling the repository from **GitHub**, the following commands need to be run from the package's root folder to install the necessary dependancies, ``python setup.py install``, ``npm install``, and ``bower install``. 
-
-One of the packages installed by NPM is the build tool **Gulp**. Gulp performs a number of build-related processes specified in the file **gulp.js**. Among other things Gulp optimises images, builds the SASS files into CSS files, runs **JSHint** on the Javascript, draws all the Javascript and CSS files together into large single files (reducing the number of requests to load a web page), cleans out our static assets folder, and then re-assembles the updated static assets ready to be used. *NOTE:* static assets are assembled from the **meerkat_frontend/src** folder, **bower_components** folder and **node_modules** folder, and then placed in the **meerkat_frontend/static** folder; *there is no need to directly edit anything in the static assets folder*.  In order to run Gulp, you must first clean the static assets using the **clean** task specified in gulp.js, we therefore suggest using the following command to build the project ``gulp clean && gulp``. 
-
-Files and folders of particular note include:
+As a Python flask app, Meerkat Frontend is made up of static assets, Jinja2 templates and Python modules.  Further folders and files exist to manage the app's testing, and to abstract country specifics into configuration files, and bundle it up as a python package.  Files and folders of particular note include:
 
 **runserver.py** - Runs a development/testing server for the app. Note that it is advised to run this inside the development or production environments built in the Meerkat Infrastructure repository. 
 
@@ -42,6 +36,8 @@ Files and folders of particular note include:
 
    **apiData/**  A folder containing data for a static API, used for testing and development instead of the live API.
 
+   **src/** A folder containing source files for building the static assets (images, Javascript, CSS etc...). These files are built by by **Gulp** and placed in the **/static** folder. You should never need to edit documents in the **/static** folder. Read "Getting Started" below for more information.
+
    **test/** A folder containing our testing harness for Meerkat_Frontend
 
    **views/** A folder containing the python flask view modules. There is a different view for each component.  This is where much of the server-side work happens.
@@ -52,11 +48,26 @@ Files and folders of particular note include:
 
       **includes/** A folder containing recurring fragments of templates.
 
+---------------
+Getting Started
+---------------
+
+Meerkat Frontend depends upon three package management systems: Python's PIP, Javascript's Node Package Manager (NPM) and the client-side package manager Bower.  The packages required from each package manager are stored in the files **setup.py**, **package.json** and **bower.json** respectively. After pulling the repository from **GitHub**, the following commands need to be run from the package's root folder to install the necessary dependancies, ``python setup.py install``, ``npm install``, and ``bower install``. 
+
+One of the packages installed by NPM is the build tool **Gulp**. Gulp performs a number of build-related processes specified in the file **gulp.js**. Among other things Gulp optimises images, builds the SASS files into CSS files, runs **JSHint** on the Javascript, draws all the Javascript and CSS files together into large single files (reducing the number of requests to load a web page), cleans out our static assets folder, and then re-assembles the updated static assets ready to be used. 
+
+***NOTE:*** static assets are assembled from the **meerkat_frontend/src** folder, **bower_components** folder and **node_modules** folder, and then placed in the **meerkat_frontend/static** folder; *there is no need to directly edit anything in the static assets folder*.  In order to run Gulp, you must first clean the static assets using the **clean** task specified in gulp.js, we therefore suggest using the following shell command to build the project ``gulp clean && gulp``. 
 
 -------------
 Documentation
 -------------
-To see the specific  `documentation`_.
 
-.. _documentation: frontend/modules.html 
+The following specific code documentation is available here:
+
+.. toctree::
+   :maxdepth: 4
+
+   frontend/messagingPython
+   frontend/reportsPython
+   frontend/technicalJS
 

@@ -40,7 +40,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinxarg.ext',
-    'sphinxcontrib.autohttp.flask'
+    'sphinxcontrib.autohttp.flask',
+    'sphinxcontrib.autojs'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -42,14 +42,17 @@ This component primarily depends upon the Meerkat Hermes REST API:
 * **/subscribe** to create a new subscriber.
 * **/verify** to verify a new subscriber.
 
-It also requires the Bower Component intl-tel-input, to draw the form's phone number input. 
+It also requires the following third party components:
+
+* **intl-tel-input** is installed through Bower to draw the form's phone number input. 
+* **flag-icon-css** is installed through Bower to render images of the flags in the report headers.
+* **Bootstrap** installed through Bower to format the HTMl in a responsive and neat manner.
+* **JQuery** is installed through Bower and used to enhance the Javascript across the site.
 
 Python Documentation
 --------------------
 
-The python documentation can be found here.
 
-.. autoflask:: meerkat_frontend:app
-   :blueprints: messaging
+The complete Python documentation can be found here: :doc:`messagingPython`.
 
 

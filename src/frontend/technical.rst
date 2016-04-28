@@ -42,7 +42,7 @@ The file *static/js/technical/misc.js* contains a number of other javascript fun
 
 * `makeDataObject( *args*)` - a function that orders all the data given in the arguments into a uniform pattern that can be understood by multiple drawing functions from the files *chartManager.js* and *tableManager.js*. The same data object that this function returns can be used to draw both a table and a chart. These data objects are also used in the *categorySummation()* method.
 
-The code should be well commented. **Detailed documention for key javascript functions are available here.**
+The code should be well commented. 
 
 The Configuration File
 ----------------------
@@ -54,6 +54,31 @@ The configuration file is a json file loaded into the flask app in the meerkat_f
 * **Map** details are stored for the *Map* tab, should it be included in the specified array of tabs. 
 * **Central Reviews** are required by Jordan only.  A flag specifying whether they should be included in the technical site is specified here. 
 
+Dependancies
+------------
+The technical component makes use of a large number of API calls:
+
+* **/aggregate_category/<category ID>/<location ID>/<year>** to draw graphs and tables of the number cases reported in each variable of the given category. Most notably called by the ```categorySummation()``` function. 
+* **/aggregate_year/<variable ID>/<location ID>** to aggregate total number of cases for a single variable over a given year. This is used in the ```categorySummation()``` function to caluclate denominators for some percentages (the percentage of total yearly cases anumber might be). 
+* **/variables/<category ID>** to get the complete details for each variable in a given category.  
+* **/locations** to get a list of locations, with names and IDs.
+* **/records/<variable ID>/<location ID>** to get records corresponding to a certain variable and location when drawing the PIP table.
+* **/links/<links ID>** to get the details of a given link from one object to another in Abacus. 
+* **/completeness/<category ID>/<number per week>** used to calulate the percentage completeness of reporting for a given category ID (primarily used int he Completeness tab).  The specified number per week ,is the expected number per week against which to calulate percentages. 
+* **map/<variable ID>/<location>** used to map a given variable's number of cases to their facilities.
 
 
+The following third-party software components are also used:
+
+* **Leaflet** is installed through Bower for drawing maps.
+* **High Charts** is installed through Bower for drawing graphs. 
+* **Tree Model** is installed through NPM, for modelling the location tree (taken from Meerkat API) in the Javascript. 
+* **flag-icon-css** is installed through Bower to render images of the country flag in the navbar.
+* **Bootstrap** installed through Bower to format the entire site's HTMl in a responsive and neat manner.
+* **JQuery** is installed through Bower and used to enhance the Javascript across the site.
+
+Javascript Documentation
+------------------------
+
+Detailed documention for key javascript functions are available here: :doc:`technicalJS`.
 

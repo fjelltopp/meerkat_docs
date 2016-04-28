@@ -70,4 +70,5 @@ The following specific code documentation is available here:
    frontend/messagingPython
    frontend/reportsPython
    frontend/technicalJS
+   frontend/exploreJS
 

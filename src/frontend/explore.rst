@@ -44,3 +44,5 @@ It also depends upon the following 3rd party components:
 
 Javascript Documentation
 ------------------------
+Detailed documention for key javascript functions are available here: :doc:`exploreJS`.
+

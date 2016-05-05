@@ -67,6 +67,7 @@ The following specific code documentation is available here:
 .. toctree::
    :maxdepth: 4
 
+   frontend/sharedPython
    frontend/messagingPython
    frontend/reportsPython
    frontend/technicalJS

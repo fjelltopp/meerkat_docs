@@ -18,6 +18,7 @@ Contents:
    src/meerkat_abacus
    src/meerkat_api
    src/meerkat_frontend
+   src/meerkat_hermes
    src/specifications
 
 Indices and tables

@@ -58,15 +58,16 @@ One of the packages installed by NPM is the build tool **Gulp**. Gulp performs a
 
 ***NOTE:*** static assets are assembled from the **meerkat_frontend/src** folder, **bower_components** folder and **node_modules** folder, and then placed in the **meerkat_frontend/static** folder; *there is no need to directly edit anything in the static assets folder*.  In order to run Gulp, you must first clean the static assets using the **clean** task specified in gulp.js, we therefore suggest using the following shell command to build the project ``gulp clean && gulp``. 
 
--------------
-Documentation
--------------
+------------------
+Code Documentation
+------------------
 
 The following specific code documentation is available here:
 
 .. toctree::
    :maxdepth: 4
 
+   frontend/sharedPython
    frontend/messagingPython
    frontend/reportsPython
    frontend/technicalJS

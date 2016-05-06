@@ -1,7 +1,7 @@
 ==================
 Meerkat API
 ==================
-Meerkat API gives access to the data proccessed by meerkat abacus. It is build using flask and communicates with DB setup by Abacus. The main functionality is to aggregate data over time and location and give access to all the variables and locations in the DB. The API provides all the data for Meerkat Frontend and could be accessed by other applications. To access most methods an api-key is required. The api-key is set in the config. 
+Meerkat API gives access to the data processed by meerkat abacus. It is build using flask and communicates with DB setup by Abacus. The main functionality is to aggregate data over time and location and give access to all the variables and locations in the DB. The API provides all the data for Meerkat Frontend and could be accessed by other applications. To access most methods an api-key is required. The api-key is set in the config. 
 
 We use flaskRESTful to create the API and flask-sqlalcemy to access the db
 
@@ -9,9 +9,9 @@ We use flaskRESTful to create the API and flask-sqlalcemy to access the db
 Structure
 ---------------
 
-__init__.py: sets up the flask app and all the urls
+__init__.py: sets up the flask app and all the URLs
 
-authentication.py: Methods for authtication
+authentication.py: Methods for authentication
 
 util/__init__.py: Various utility methods
 
@@ -23,11 +23,11 @@ resources/: Folder containing the following files:
 * alerts.py: Access to alerts and alert_investigations
 * epi_week.py: Calculating epi weeks
 * explore.py: Export various data as csv-files
-* export_data.py: Gives options to look at cross tables and timelines of data
+* export_data.py: Gives options to look at cross tables and time-lines of data
 * map.py: Mapping different data
 * reports.py: Data for specified reports
 * completeness.py: Calculating completeness of reporting
-* links.py: Retrive link information
+* links.py: Retrieve link information
 * frontpage.py: High level information that can be access without an api_key
   
 ----------
@@ -41,6 +41,30 @@ API urls
 .. autoflask:: meerkat_api:app
    :undoc-static:
 
+----------------
+Testing
+----------------
+When new features for the API are developed they should be properly tested. The test are done using the python unittest library. All the tests are in the meerkat_api/test directory. For tests of indivudal function we use data inserted into the database for that specific test. The db_util.py file contains utilities for inserting data from data test_data directory. See the documentation below. We also have some general tests in the __init__.py file. We test that all urls return a 200 status code and that the authentication is set up properly. When adding new url endpoints it is important to make sure that these tests pass. Any arugments to these function needs to be given values that make sense (not nesccesary that all the functions return real results, but all urls should return status code 200). As some endpoints return csv format instead of json we need to handle them differently. Any new endpoints that return a csv format needs to be added to the csv_representations in need_csv_representations.
+
+We also test that authentication is set up properly. We assume that all urls need authentication and the few urls that do not need authentication have to be specified in the urls_without_authentication list in the test_authentication function in __init__.py.
+
+**Functions that are used to test all urls**
+
+.. automodule:: meerkat_api.test
+   :members: valid_urls, need_csv_representation
+
+
+
+**DB Util**
+
+.. automodule:: meerkat_api.test.db_util
+   :members:
+
+
+
+
+
+      
 ------------------
 Utility Functions
 ------------------

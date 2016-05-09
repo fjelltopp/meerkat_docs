@@ -6,7 +6,7 @@
 Welcome to the MEERKAT documentation!
 =========================================
 
-This documentation describes how to set-up, run and continue develop the Meerkat software for public health surveillance. 
+This documentation describes the Meerkat Online Framework for public health surveillance. 
 
 Contents:
 
@@ -19,7 +19,6 @@ Contents:
    src/meerkat_api
    src/meerkat_frontend
    src/meerkat_hermes
-   src/specifications
 
 Indices and tables
 ==================

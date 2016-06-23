@@ -20,10 +20,10 @@ Contents:
    src/meerkat_frontend
    src/meerkat_hermes
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+..
+   Indices and tables
+   ==================
+      * :ref:`genindex`
+      * :ref:`modindex`
+      * :ref:`search`
 

@@ -60,7 +60,9 @@ This is a key principle behind the **Unsubscribe resource**. In each message sen
 Deployment
 ----------
 
-Unlike the other components of the Meerkat Project, Meerkat Hermes is currently only deployed once for all countries.  The single deployment on a seperate Amazon EC2 Server handles all the Meerkat Messaging needs.  No web server is installed on the Hermes server, but uWSGI is required to interface with the Master NGINX EC2 server. 
+Unlike the other components of the Meerkat Project, Meerkat Hermes is currently only deployed once for all countries.  The single deployment on a seperate Amazon EC2 Server handles all the Meerkat Messaging needs.  No web server is installed on the Hermes server, but uWSGI is required to interface with the Master NGINX EC2 server.  To redeploy Meerkat Hermes on our hermes EC2 server, one simply has to ssh into the server, change directory `/var/www/meerkat_hermes`, pull the master branch of the repository, and finally stop and start uwsgi:
+```sudo stop uwsgi-hermes
+sudo start uwsgi-hermes ```
 
 ------------------
 Code Documentation

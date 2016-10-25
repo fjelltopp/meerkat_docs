@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.abspath('../meerkat_abacus'))
 sys.path.insert(0, os.path.abspath('../meerkat_api'))
 sys.path.insert(0, os.path.abspath('../meerkat_frontend'))
 sys.path.insert(0, os.path.abspath('../meerkat_hermes'))
+sys.path.insert(0, os.path.abspath('../meerkat_auth'))
 
 # -- General configuration ------------------------------------------------
 

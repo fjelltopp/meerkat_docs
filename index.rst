@@ -19,7 +19,7 @@ Contents:
    src/meerkat_api
    src/meerkat_frontend
    src/meerkat_hermes
-
+   src/meerkat_auth
 ..
    Indices and tables
    ==================

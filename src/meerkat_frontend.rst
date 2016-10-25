@@ -2,7 +2,7 @@
 Meerkat Frontend
 ================
 
-**Meerkat Frontend** presents the data drawn from **Meerkat API** and **Meerkat Abacus** in a web app.   It has been designed in collaboration with our various stakeholders to meet their speicifc needs (most notably the Jordinian Ministry of Health). At the heart of the frontend is the "Technical Site", which offers the most complete means to explore the data through a large array of tools, including a "dashboard" of tables and charts, auto-generated summary reports, an alerts notification service, and specialist tools for visualisaing and downloading data. 
+**Meerkat Frontend** presents the data drawn from **Meerkat API** and **Meerkat Abacus** in a web app.   It has been designed in collaboration with our various stakeholders to meet their speicifc needs (most notably the Jordinian Ministry of Health). The frontend offers the most complete means to explore the data through a large array of tools, including a "dashboard" of tables and charts, auto-generated summary reports, an alerts notification service, and specialist tools for visualisaing and downloading data. 
 
 ----------
 Components

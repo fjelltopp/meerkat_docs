@@ -17,6 +17,7 @@ To start of you will need to clone the three meerkat repositories (abacus, front
     - meerkat_frontend
     - meerkat_docs
     - meerkat_demo
+    - meerkat_auth
 
 To start the whole site it should only be required to start docker-compose in the meerkat_demo folder by running::
 
@@ -46,6 +47,7 @@ If using the infrastructure repository instead of the meerkat_demo repo you can 
 * meerkat_infrastructure
 * meerkat_docs
 * meerkat_hermes
+* meerkat_auth
 * meerkat_[country code] where country code can be "jordan", "mad" "dji" or "rms". 
 
 The final repos are the country configs , and required for running any single country in the dev environment. Some of the repos require a connection to our Amazon Web Services (AWS) e.g. jordan and mad in order to include live data in the site.  To do this you will have to setup your aws credentials using the AWS CLI command `aws configure`. 

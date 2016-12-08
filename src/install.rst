@@ -56,6 +56,7 @@ Known Issues:
 
 * When copying credentials into the docker container (in `meerkat_infrastructure/dev/[country code].yml`) we assume credentials are stored in `~/.aws/credentials`. Note that if running docker-compose with sudo, it may look for the credentials in your root home directory not your personal home directory.
 * On some systems (Fedora, RHEL) SELinux might be enabled causing permission errors when running some containers. Disabling it should solve permissions problems e.g. `requirements.txt not opened. Permission denied.`
+* Problems running with docker-compose version 1.9 rc2: `.aws/credentials not a directory` - seems to struggle with creating "volumes" from single files. This is fixed in rc3, so just upgrade. 
 
 
 

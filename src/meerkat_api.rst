@@ -1,7 +1,7 @@
 ==================
 Meerkat API
 ==================
-Meerkat API gives access to the data processed by meerkat abacus. It is build using flask and communicates with DB setup by Abacus. The main functionality is to aggregate data over time and location and give access to all the variables and locations in the DB. The API provides all the data for Meerkat Frontend and could be accessed by other applications. To access most methods an api-key is required. The api-key is set in the config. 
+Meerkat API gives access to the data processed by meerkat abacus. It is build using flask and communicates with DB setup by Abacus. The main functionality is to aggregate data over time and location and give access to all the variables and locations in the DB. The API provides all the data for Meerkat Frontend and could be accessed by other applications. Access is granted through the meerkat_auth module. 
 
 We use flaskRESTful to create the API and flask-sqlalcemy to access the db
 
@@ -22,18 +22,19 @@ resources/: Folder containing the following files:
 * data.py: Aggregated data over time and locations
 * alerts.py: Access to alerts and alert_investigations
 * epi_week.py: Calculating epi weeks
+* incidence.py: Calculating incidence rates.
 * explore.py: Export various data as csv-files
 * export_data.py: Gives options to look at cross tables and time-lines of data
 * map.py: Mapping different data
 * reports.py: Data for specified reports
 * completeness.py: Calculating completeness of reporting
 * links.py: Retrieve link information
-* frontpage.py: High level information that can be access without an api_key
+* frontpage.py: High level information
   
 ----------
 Config
 ----------
-The API key needs to specified in a file pointed to by the environmental variable MEERKAT_API_SETTINGS. We use a random uuid as the api-key. This api-key will give access to all of the api. 
+The API key needs to specified in a file pointed to by the environmental variable MEERKAT_API_SETTINGS. Authentication is handled by the meerkat_auth module. 
 
 -------------------
 API urls
@@ -68,6 +69,13 @@ We also test that authentication is set up properly. We assume that all urls nee
 ------------------
 Utility Functions
 ------------------
+The most important utility function is thi query_sum function. It counts adds up the value of the variables submitted to it between the start_date and end_date. It can be used to get either an overall total, a weekly breakdown or breakdown by location level. The variables keyword is a list of variables that are required. For the variables that have values other than just 1 or 0, we sum up the values of the first variable in the list. Setting weeks=True gives a breakdown by weeks and setting level=region,district or clinic gives a breakdown by this level.
+
+.. automodule:: meerkat_api.util.data_query
+   :members:
+
+Other util functions: 
+      
 .. automodule:: meerkat_api.util
    :members:
 

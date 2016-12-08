@@ -45,13 +45,11 @@ When celery is stared in meerkat_abacus, we start by setting up the database. Th
 4. Download data from S3 or create new *fake* data.
    This data consists of csv-files, one for each from. We always have three forms, a case report, a daily register and alert investigations forms. We can add more forms in the config file. 
 5. Import data in to db.
-   We import all the data from the csv-files into the db, making sure only data from approved tablets are imported. We store all the form data by rows in a JSONB database column. This means that we make no assumptions about what fields exists or how the data is structured.
-6. We translate raw data into structured data.
-   The variables we have imported tells us how to translate raw data from the forms into structured data. E.g the variables for gender tells us what field in the raw_data should be treated as gender. After this translation one should not need to know any details about the structure of the raw data. This step is the most time-consuming and some effort has been spent to optimise the speed.
-7. Add alerts and send alert notifications
-   Certain codes for some important communicable diseases should trigger alerts. Alerts are stored in a separate table and needs to be investigated on the ground. By using meerkat_heremes we sent emails and sms notifications for alerts. 
-8. We add link
-   We need to add links between data in different (or potentially the same) tables. For example we want to link alerts to alert investigations.
+   We import all the data from the csv-files into the db, making sure only data from approved tablets are imported. We store all the form data by rows in a JSONB database column. This means that we make no assumptions about what fields exists or how the data is structured. We can also define quality controls on the data to remove wrong data. These quality controls are implemented in the codes file. 
+6. We translate raw data into structured data. The structured data has on out of three types. Case, Visit or Register. A Case is record that spans the whole history of a patient for one disease. So a patient could have two cases if the system registered them with two different diseases. A visit is one visit to the clinic, either a new visit or a return visit. A register is for aggregated data entry, mainly used for the daily registers.
+6.1 We go through each data type in the data_types.csv file to determine which rows in the raw data correspond to this data type. We then find all the linked rows to this data row.
+6.2  The variables we have imported tells us how to translate raw data from the forms into structured data. E.g the variables for gender tells us what field in the raw_data should be treated as gender. After this translation one should not need to know any details about the structure of the raw data. This step is the most time-consuming and some effort has been spent to optimise the speed. Indivdual alerts are added at this stage.
+7. We determine threshold based alerts. 
 9. The data is ready for use by the API and frontend. 
 
 
@@ -64,43 +62,13 @@ The main abstraction in meerkat_abacus is that we translate raw data from forms 
 
 The codes are specified in a codes.csv file, e.g country_config/demo_codes.csv. Abacus currently supports the following codes:
 
-* count - Counts all rows with non-zero entry in the specified field of the form
-* count_occurrence - Counts rows where condition appears in field
-* count_occurrence_in - Counts rows where condition is a sub string of the value in the field
-* int_between - An integer between the two numbers specified in condition
-* count_occurrence_int_between - must both full fill a count_occurrence and a int_between on two different columns
-* count_occurrence_in_int_between - must both full fill a count_occurrence_in and a int_between on two different columns
-* sum - Returns the numerical value of the field
-* not_null - true for non-null values of the field
-* calc_between - allows you to specify a mathematical expression of multiple columns in the row. The calculated value should then be between the given boundaries
+* match: The value has to match exactly any of the conditions
+* sub_match: A substring of the value has to match any of the conditions
+* between: We calculate a value that has to be between the two condtions.
+* calc: We calcaulate a value and return that
+* value: We return the value
 
-For each variable we can also have a secondary condition which requires that a specified column has a specified value.
-
-It is then important that once a code has been given an ID it should not change. If two countries have the same code, the codes should have the same id.
-
-We use the following codes:
-
-* Total: tot_1
-* Gender: gen_n
-* Nationality: nat_n
-* Age(including the gender age breakdown): age_n
-* Status: sta_n
-* Cd tab: cmd_n
-* Ncd tab: ncd_n
-* ICD Chapters: icc_n
-* ICD Blocks: icb_n
-* Mhgap: mhg_n
-* IMCI: imc_n
-* Vaccination: vac_n
-* Smoking: smo_1
-* Modules: mod_n
-* Visit type: vis_n
-* Pregnancy: pre_n
-* From Daily Register: reg_n
-* Individual icd codes: icd_n
-
-We have the following category names:
-
+This basic types can be compined with "and" and "or". 
 
 * Gender: gender
 * Nationality: nationality
@@ -168,52 +136,7 @@ Each level needs a different csv file with locations. For clinics, each record i
 Codes
 ------
 A codes file is needed to specify how to translate the raw data into useful data. See variables for details on naming conventions
-  
-Links
-------
-
-Links implement links between two tables in the database. This could for example be Alert Investigations linking alerts to alert_investigations. Links are defined in the country_config/demo_links.py file.
-
-A link definition looks like this::
-
-      {
-        "id": "alert_investigation",
-        "name": "Alert Investigation",
-        "from_table": "Alerts",
-        "from_column": "id",
-        "from_date": "date",
-        "to_table": "alert",
-        "to_column": "pt./alert_id",
-        "to_date": "end",
-        "which": "last",
-        "data": {
-            "status": {
-                "Ongoing": {"column": "alert_labs./return_lab",
-                            "condition": ["", "unsure"]},
-                "Confirmed": {"column": "alert_labs./return_lab",
-                              "condition": "yes"},
-                "Disregarded": {"column": "alert_labs./return_lab",
-                                "condition": "no"}
-            },
-            "checklist": {
-                "Referral": {"column": "pt./checklist",
-                             "condition": "referral"},
-                "Case Managment": {"column": "pt./checklist",
-                                   "condition": "case_management"},
-                "Contact Tracing": {"column": "pt./checklist",
-                                    "condition": "contact_tracing"},
-                "Laboratory Diagnosis": {"column": "pt./checklist",
-                                         "condition": "return_lab"},
-            },
-            "investigator": {
-                "investigator": {"column": "deviceid",
-                                 "condition": "get_value"
-                                 }
-                }
-        }
-
-    }
-We have a *from* table linked to a *to* table linked on the same value in *from_column* and *to_column*. The data structure defines what data from the *to* table we store with the link. The *which* key determines how we deal with multiple *to* records linking to one *from*. With *last* we take the latest *to* row that matches. 
+ 
 
 ----------------------------
 Documentation

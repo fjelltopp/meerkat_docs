@@ -58,7 +58,6 @@ One of the packages installed by NPM is the build tool **Gulp**. Gulp performs a
 
 ***NOTE:*** static assets are assembled from the **meerkat_frontend/src** folder, **bower_components** folder and **node_modules** folder, and then placed in the **meerkat_frontend/static** folder; *there is no need to directly edit anything in the static assets folder*.  In order to run Gulp, you must first clean the static assets using the **clean** task specified in gulp.js, we therefore suggest using the following shell command to build the project ``gulp clean && gulp``. 
 
-
 ------------------
 Translation
 ------------------
@@ -71,10 +70,12 @@ In python files text needs to be fed through the gettext function.
 
 For javascript files we use i18n.gettext(). I18n is javascript jed object that contains all the translations and is included on every page.
 
-* Translation of text from config files (translation.csv) *
+**Translation of text from config files (translation.csv)**
+
 For the implementation specifc text a csv file has to be prepared in the country repositiry called translation.csv. It has at least to columns, one called **source** and one called **text**. It can also include any number of columns with a two letter language code. The **source** column gives the source of the text, the **text** column the english text and all other columns can be used to optionally specify translations in the given langauge. All text from the country configs that will be displayed on the website needs to be in this file. It has to be copied from the config files and the codes file (_the file is not generated automatically!_). Translations for this text can either be added in the csv file or later in the .po file.
 
-* Translation workflow
+**Translation workflow**
+
 The workflow for translation is as follows:
  1. Extract all text to be translated into .pot filed
  2. Update(or create new) existing .po files with the translations from the .pot file
@@ -91,8 +92,9 @@ The **translate.py** file in the frontend repository provides some simple functi
 
 The translation.csv file we described above. The country_repository/translations will contain .po files generated from the translation.csv file. The files in meerkat_frontend/translations are the .po files from the general text. The files in meerkat_frontend/meerkat_fronted/translations are automatically generated and should never be edited. We will have one .po file for each language we use(except for english).
 
-* Preparing files for translation by a human translator and adding changes
-So to extract english text from **both** the meerkat frontend code and the translation.csv file run the following command:
+**Preparing files for translation by a human translator and adding changes**
+
+To extract english text from **both** the meerkat frontend code and the translation.csv file run the following command:
 
 ``python translate.py update-po``
 
@@ -109,6 +111,7 @@ These .po files will now need to be translated. The previous command will update
 This will combine all the .po files and transfer them to meerkat_frontend/meerkat_frontend/translations and compile this combined .po file to a .mo file. The last step is then to compile the .po file to JSON for **jed**. This is done by gulp, so just running gulp after the compile command should do it.
 
 If preparing this for deployment the last step of compiling is not nescessary as the deploy script will also do this. 
+
 
 ------------------
 Code Documentation

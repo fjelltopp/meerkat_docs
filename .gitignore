@@ -1,6 +1,7 @@
 # built docs
 
-_build/*
+build/*
+source/services/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

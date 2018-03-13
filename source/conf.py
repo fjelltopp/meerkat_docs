@@ -182,7 +182,7 @@ texinfo_documents = [
 DOCUMENTED_REPOS = [
     'meerkat_auth',
     'meerkat_hermes',
-    'meerkat_libs'
+    'meerkat_api'
 ]
 REPO_DIRECTORY = "/var/www/"
 SERVICES_DIRECTORY = "services/"
@@ -218,6 +218,21 @@ def setup_extensions():
             logging.warning("No docs configuration for {}".format(package))
     return extensions
 
+
+def setup_mocks():
+    autodoc_mock_imports = set([])
+    services_package = SERVICES_DIRECTORY[:-1] + "."
+    for package in DOCUMENTED_REPOS:
+        try:
+            conf = importlib.import_module(services_package+package+'.conf')
+            autodoc_mock_imports.update(conf.autodoc_mock_imports)
+        except ImportError:
+            logging.warning("No docs configuration for {}".format(package))
+    return list(autodoc_mock_imports)
+
+
 install_packages()
 assemble_source()
+autodoc_mock_imports = setup_mocks()
+print(autodoc_mock_imports)
 extensions += setup_extensions()

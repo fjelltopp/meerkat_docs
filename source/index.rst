@@ -12,6 +12,7 @@ Welcome to Meerkat's documentation!
 
    services/meerkat_auth/index
    services/meerkat_hermes/index
+   services/meerkat_api/index
 
 
 Indices and tables

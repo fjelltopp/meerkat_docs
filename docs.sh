@@ -17,5 +17,4 @@ docker run -ti -v $CURPATH/meerkat_docs:/var/www/meerkat_docs \
        -v $CURPATH/meerkat_dev:/var/www/meerkat_dev\
        -v $CURPATH/meerkat_analysis:/var/www/meerkat_analysis\
        --env "MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_frontend/country_config/null_config.py" \
-       --env "MEERKAT_NEST_DB_URL=postgresql+psycopg2://postgres:postgres@db/meerkat_db" \
        meerkat-docs bash

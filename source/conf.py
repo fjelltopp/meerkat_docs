@@ -21,11 +21,14 @@ import pip
 import shutil
 import importlib
 import os
+from shutil import copyfile
 import sys
 import logging
-
+from collections import OrderedDict
+from unittest.mock import MagicMock
 sys.path.insert(0, os.path.abspath('.'))
 
+ 
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -51,8 +54,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Meerkat'
-copyright = '2018, Jonathan Berry'
-author = 'Jonathan Berry'
+copyright = '2018, Meerkat Developers'
+author = 'Meerkat Developers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -87,7 +90,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'classic'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -182,7 +185,15 @@ texinfo_documents = [
 DOCUMENTED_REPOS = [
     'meerkat_auth',
     'meerkat_hermes',
-    'meerkat_api'
+    'meerkat_api',
+    'meerkat_abacus',
+    'meerkat_libs',
+    'meerkat_frontend',
+    'meerkat_infrastructure',
+    'meerkat_nest',
+    'meerkat_dev',
+    'meerkat_analysis'
+    
 ]
 REPO_DIRECTORY = "/var/www/"
 SERVICES_DIRECTORY = "services/"
@@ -190,9 +201,23 @@ SERVICES_DIRECTORY = "services/"
 
 def install_packages():
     for package in DOCUMENTED_REPOS:
+
         logging.info("\n-- Now installing {} --\n".format(package))
         sys.path.insert(0, REPO_DIRECTORY + package)
-        pip.main(['install', '-r', REPO_DIRECTORY + package + "/requirements.txt"])
+        requirements_file_path = REPO_DIRECTORY + package + "/requirements.txt"
+        if os.path.exists(REPO_DIRECTORY + package + "/docs/requirements.txt"):
+            requirements_file_path = REPO_DIRECTORY + package + "/docs/requirements.txt"
+
+        copyfile(requirements_file_path, "req.txt")
+        with open("new-req.txt", "w") as f:
+            with open("req.txt") as f2:
+                for line in f2:
+                    if "python-dateutil" in line:
+                        f.write("python-dateutil==2.6\n")
+                    else:
+                        f.write(line.split("==")[0] + "\n")
+        pip.main(['install', '-r', "new-req.txt"])
+        pip.main(['install', '--no-deps', '-e', REPO_DIRECTORY + package])
 
 
 def assemble_source():
@@ -216,10 +241,10 @@ def setup_extensions():
             extensions += conf.extensions
         except ImportError:
             logging.warning("No docs configuration for {}".format(package))
-    return extensions
+    return list(OrderedDict.fromkeys(extensions))
 
 
-def setup_mocks():
+def setup_autodoc_mocks():
     autodoc_mock_imports = set([])
     services_package = SERVICES_DIRECTORY[:-1] + "."
     for package in DOCUMENTED_REPOS:
@@ -228,11 +253,29 @@ def setup_mocks():
             autodoc_mock_imports.update(conf.autodoc_mock_imports)
         except ImportError:
             logging.warning("No docs configuration for {}".format(package))
+        except AttributeError:
+            logging.warning("No mocks for {}".format(package))
     return list(autodoc_mock_imports)
+
+    
+def remove_package(to_remove, mocks):
+    final = []
+    for m in mocks:
+        found = False
+        for remove in to_remove:
+            if remove in m:
+                found = True
+                break
+        if not found:
+            final.append(m)
+    return final
 
 
 install_packages()
 assemble_source()
-autodoc_mock_imports = setup_mocks()
+
+autodoc_mock_imports = remove_package(DOCUMENTED_REPOS, setup_autodoc_mocks())
+# mock_modules(manual_mocks)
 print(autodoc_mock_imports)
+
 extensions += setup_extensions()

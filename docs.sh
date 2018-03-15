@@ -16,5 +16,7 @@ docker run -ti -v $CURPATH/meerkat_docs:/var/www/meerkat_docs \
        -v $CURPATH/meerkat_nest:/var/www/meerkat_nest\
        -v $CURPATH/meerkat_dev:/var/www/meerkat_dev\
        -v $CURPATH/meerkat_analysis:/var/www/meerkat_analysis\
+       -v $CURPATH/meerkat_country_server:/var/www/meerkat_country_server\
+       -v $CURPATH/meerkat_drill:/var/www/meerkat_drill\
        --env "MEERKAT_FRONTEND_SETTINGS=/var/www/meerkat_frontend/country_config/null_config.py" \
        meerkat-docs bash

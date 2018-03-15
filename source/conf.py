@@ -40,6 +40,12 @@ sys.path.insert(0, os.path.abspath('.'))
 # ones.
 extensions = []
 
+from recommonmark.parser import CommonMarkParser
+
+source_parsers = {
+    '.md': CommonMarkParser,
+}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -192,7 +198,9 @@ DOCUMENTED_REPOS = [
     'meerkat_infrastructure',
     'meerkat_nest',
     'meerkat_dev',
-    'meerkat_analysis'
+    'meerkat_analysis',
+    'meerkat_country_server',
+    'meerkat_drill'
     
 ]
 REPO_DIRECTORY = "/var/www/"

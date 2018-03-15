@@ -23,6 +23,8 @@ Welcome to Meerkat's documentation!
    services/meerkat_nest/index
    services/meerkat_analysis/index
    services/meerkat_dev/index
+   services/meerkat_drill/index
+   services/meerkat_country_server/index
 
 
 

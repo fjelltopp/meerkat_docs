@@ -112,6 +112,7 @@ This will combine all the .po files and transfer them to meerkat_frontend/meerka
 
 If preparing this for deployment the last step of compiling is not nescessary as the deploy script will also do this. 
 
+NOTE: It can be quite confusing so it is important to realise that after editing `translations/fr/LC_MESSAGES/messages.po` the only required action is running `gulp`.
 
 ------------------
 Code Documentation

@@ -79,7 +79,7 @@ For the implementation specifc text a csv file has to be prepared in the country
 The workflow for translation is as follows:
  1. Extract all text to be translated into .pot filed
  2. Update(or create new) existing .po files with the translations from the .pot file
- 3. Translate the .po files
+ 3. Translate the .po files (the ones in `meerkat_frontend/translations` not `meerkat_frontend/meerkat_frontend/translations`)
  4. Combine the two separate sources of translations into one
  5. Compile the .po files into .mo files and json-files.
 
@@ -90,7 +90,7 @@ The **translate.py** file in the frontend repository provides some simple functi
 - `meerkat_frontend/translations/` (`*.po` files with translations of general text)
 - `meerkat_frontend/meerkat_frontend/translations` (never edit)
 
-The translation.csv file we described above. The country_repository/translations will contain .po files generated from the translation.csv file. The files in meerkat_frontend/translations are the .po files from the general text. The files in meerkat_frontend/meerkat_fronted/translations are automatically generated and should never be edited. We will have one .po file for each language we use(except for english).
+The translation.csv file we described above. The country_repository/translations will contain .po files generated from the translation.csv file. The files in meerkat_frontend/translations are the .po files from the general text (NOTE: file in `meerkat_frontend/meerkat_frontend/translations/` is something different). The files in meerkat_frontend/meerkat_fronted/translations are automatically generated and should never be edited. We will have one .po file for each language we use(except for english).
 
 **Preparing files for translation by a human translator and adding changes**
 
